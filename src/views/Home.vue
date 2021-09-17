@@ -8,6 +8,9 @@
   <div>我是Home组件</div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Head from "../components/Head.vue";
+import Foot from "../components/Foot.vue";
+</script>
 
 <style lang="scss" scoped></style>
