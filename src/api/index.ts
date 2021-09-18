@@ -8,4 +8,4 @@
 import http from "./http";
 
 //获取banner数据
-export const reqBanner = () => http("/banner");
+export const reqBanner = (): { banners: []; code: number } => http("/banner");

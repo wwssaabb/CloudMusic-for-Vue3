@@ -1,11 +1,14 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-17 16:24:12
- * @LastEditTime: 2021-09-18 14:16:07
+ * @LastEditTime: 2021-09-18 17:39:52
  * @FilePath: \CloudMusic-for-Vue3\src\components\head.vue
 -->
 <template>
-  <div class="head-wrap fpbc">
+  <div
+    class="head-wrap fpbc"
+    :class="features.find((i) => i.id === chooseId)?.menu ? 'pb35' : 'pb5'"
+  >
     <div class="left fsc">
       <div class="logo">
         <a hidefocus="true" href="/#">网易云音乐</a>
@@ -131,6 +134,15 @@ $--fixed_width: 1100px; //内容的宽度
   height: 100%;
   flex-shrink: 0;
 
+  &.pb5 {
+    height: 75px;
+    padding-bottom: 5px;
+  }
+  &.pb35 {
+    height: 105px;
+    padding-bottom: 35px;
+  }
+
   .left {
     position: relative;
     height: 100%;
@@ -210,8 +222,8 @@ $--fixed_width: 1100px; //内容的宽度
         width: 100vw;
         height: inherit;
         top: inherit;
-        left: calc(#{$--fixed_width} / 2 - 50vw);
         background-color: #c20c0c;
+        left: calc(#{$--fixed_width} / 2 - 50vw);
       }
 
       .tab-list {

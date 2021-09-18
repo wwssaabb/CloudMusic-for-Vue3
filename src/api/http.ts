@@ -63,8 +63,8 @@ axios.interceptors.response.use(
 export default function (
   url: string,
   data?: object | null,
-  method: InstanceMethods = "get",
-  headers?: object | null
+  method: InstanceMethods = "get"
+  // headers?: object | null
 ) {
   return new Promise((resolve) => {
     if (!acceptMethods.includes(method)) {
@@ -78,7 +78,9 @@ export default function (
     }
 
     promise
-      .then((res: AxiosResponse) => resolve(res.data))
+      .then((res: { data: { banners: []; code: number } }): void =>
+        resolve(res.data)
+      )
       .catch((err) => ElMessage.error(err));
   });
 }
