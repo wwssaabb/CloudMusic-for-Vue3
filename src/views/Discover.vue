@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-17 16:07:22
- * @LastEditTime: 2021-09-18 18:01:49
+ * @LastEditTime: 2021-09-19 20:52:27
  * @FilePath: \CloudMusic-for-Vue3\src\views\Discover.vue
 -->
 <template>
@@ -24,7 +24,10 @@
           /></swiper-slide>
         </swiper>
       </div>
-      <div class="download"></div>
+      <div class="download">
+        <div class="btn"></div>
+        <p>PC 安卓 iPhone WP iPad Mac 六大客户端</p>
+      </div>
       <div
         class="bgimg"
         :style="{
@@ -48,9 +51,6 @@ import { computed, ref, Ref, reactive } from "vue";
 import { reqBanner } from "../api/index";
 import { onMounted } from "vue-demi";
 import { watch } from "fs";
-
-//http://p1.music.126.net/iiwcSSXUnch088qf4uaHig==/109951166422685262.jpg
-//http://p1.music.126.net/w8YI8U1AmbMDGM4rSsoG7Q==/109951166422689599.jpg?imageView&blur=40x20
 
 //banner相关
 type BannerType = {
@@ -114,11 +114,39 @@ $fixed_width: 1100px;
     }
   }
   .download {
+    position: relative;
     width: 254px;
     height: 100%;
     background-color: #fff;
-    background: url("https://music.163.com/style/web2/img/index/download.png?8d6503c9a35580cb0878815b8e054f5");
+    background: url("https://music.163.com/style/web2/img/index/download.png?8d6503c9a35580cb0878815b8e054f5") ;
     z-index: 5;
+
+    .btn{
+      position: absolute;
+      left: 19px;
+      bottom: 43px;
+      width: 216px;
+      height: 58px;
+      background: url("https://music.163.com/style/web2/img/index/download.png?8d6503c9a35580cb0878815b8e054f5");
+      background-repeat: no-repeat;
+      background-position: 0 -288px ;
+      filter: brightness(1.2);
+      &:hover{
+        filter: brightness(1);
+      }
+    }
+
+    p{
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      font-size: 12px;
+      color: #8d8d8d;
+      line-height: 16px;
+      padding: 10px 0;
+      text-align: center;
+    }
   }
 
   .bgimg {

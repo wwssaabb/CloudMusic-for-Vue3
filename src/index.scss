@@ -83,6 +83,24 @@
   }
 }
 
+.p {
+  &r {
+    position: relative;
+  }
+
+  &a {
+    position: absolute;
+  }
+
+  &f {
+    position: fixed;
+  }
+
+  &s {
+    position: sticky;
+  }
+}
+
 $--fixed_width:1100px; //内容的宽度
 $--head_color:#242424; //头部的背景色
 $--content_color:#fff; //中间内容的背景色
