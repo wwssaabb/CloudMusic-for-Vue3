@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-17 16:07:22
- * @LastEditTime: 2021-09-19 20:52:27
+ * @LastEditTime: 2021-09-20 21:50:40
  * @FilePath: \CloudMusic-for-Vue3\src\views\Discover.vue
 -->
 <template>
@@ -39,6 +39,21 @@
         }"
       ></div>
     </div>
+    <div class="hot-recommend">
+      <div class="title fpbc pr">
+        <div class="content fcc">
+          <span>热门推荐</span>
+          <div class="tags">
+            <span class="tag" v-for="item in tags" :key="item.id">{{item.name}}</span>
+          </div>
+        </div>
+        <div class="more fcc">
+          <span>更多</span>
+          <i></i>
+        </div>
+      </div>
+
+    </div>
   </div>
 </template>
 
@@ -48,9 +63,10 @@ import Foot from "../components/Foot.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import SwiperClass from "swiper/types/swiper-class";
 import { computed, ref, Ref, reactive } from "vue";
-import { reqBanner } from "../api/index";
+import { reqBanner,reqDiscoverRecommendCategory } from "../api/index";
 import { onMounted } from "vue-demi";
 import { watch } from "fs";
+import { on } from "events";
 
 //banner相关
 type BannerType = {
@@ -76,10 +92,23 @@ const onSwiper = (swiper: SwiperClass) => {
 const onSlideChange = (val: SwiperClass) => {
   chooseBanner.value = banners.value[val.activeIndex];
 };
+
+
+//热门推荐相关
+const tags=ref([])
+onMounted(async ()=>{
+  let res=await reqDiscoverRecommendCategory()
+  tags.value=res.tags.slice(0,5)
+  console.log(tags.value)
+})
+
+
+
 </script>
 
 <style lang="scss" scoped>
 $fixed_width: 1100px;
+$fixed_width_left: 730px;
 .pt5 {
   padding-top: 5px;
 }
@@ -156,6 +185,62 @@ $fixed_width: 1100px;
     height: 283.89px;
     z-index: 1;
     left: calc(#{$fixed_width} / 2 - 50vw);
+  }
+}
+.hot-recommend{
+  width: $fixed_width_left;
+  height: 500px;
+  padding: 20px 20px 40px;
+  border-left: 1px solid #d3d3d3;
+
+  .title{
+    border-bottom:2px solid #C10D0C;
+    line-height: 28px;
+    padding: 0 10px 0 34px;
+
+    &::after{
+      position: absolute;
+      content:'';
+      top: 0;
+      left: 0;
+      width: 34px;
+      height: 34px;
+      background:url('https://s2.music.126.net/style/web2/img/index/index.png?f2aae9f5087098b4f6cd335f144555df') no-repeat -224px -158px;
+    }
+
+    span{
+      font-size: 12px;
+      color: #666;
+    }
+
+    .content{
+      &>span{
+        font-size: 20px;
+        color: #333;
+        margin-right: 10px;
+      }
+      .tags{
+        span{
+          padding: 0 10px;
+          &:not(:last-child){
+            border-right: 1px solid #ccc;
+          }
+        }
+      }
+    }
+
+    .more{
+      span{
+        margin-right: 5px;
+      }
+
+      i{
+        width: 12px;
+        height: 12px;
+        background:url('https://s2.music.126.net/style/web2/img/index/index.png?f2aae9f5087098b4f6cd335f144555df') no-repeat 0 -241px;
+        
+      }
+    }
   }
 }
 </style>
