@@ -9,6 +9,11 @@
 
 /* 配置常用的flex布局 */
 .f {
+
+  &dc {
+    flex-direction: column;
+  }
+
   &c {
     &c {
       display: flex;
@@ -83,6 +88,7 @@
   }
 }
 
+/* position 常用定位 */
 .p {
   &r {
     position: relative;
@@ -99,6 +105,11 @@
   &s {
     position: sticky;
   }
+}
+
+/* position 换行 */
+.fw {
+  flex-wrap: wrap;
 }
 
 $--fixed_width:1100px; //内容的宽度

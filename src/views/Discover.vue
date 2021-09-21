@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-17 16:07:22
- * @LastEditTime: 2021-09-20 21:50:40
+ * @LastEditTime: 2021-09-22 06:55:19
  * @FilePath: \CloudMusic-for-Vue3\src\views\Discover.vue
 -->
 <template>
@@ -52,7 +52,17 @@
           <i></i>
         </div>
       </div>
-
+      <div class="recommend-list fss fw">
+        <div class="item" v-for="item in 8" :key="item">
+          <div class="cover pr">
+            <div class="bot pa fpbc">
+              <span>{{'left'}}</span>
+              <span>{{'right'}}</span>
+            </div>
+          </div>
+          <div class="desc text_line3">{{'111111111111111111111111111111111111111'}}</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -96,7 +106,12 @@ const onSlideChange = (val: SwiperClass) => {
 
 //热门推荐相关
 const tags=ref([])
-onMounted(async ()=>{
+onMounted(async ()=>{ //获取热门推荐分类
+  let res=await reqDiscoverRecommendCategory()
+  tags.value=res.tags.slice(0,5)
+  console.log(tags.value)
+})
+onMounted(async ()=>{ //获取热门推荐列表
   let res=await reqDiscoverRecommendCategory()
   tags.value=res.tags.slice(0,5)
   console.log(tags.value)
@@ -109,6 +124,14 @@ onMounted(async ()=>{
 <style lang="scss" scoped>
 $fixed_width: 1100px;
 $fixed_width_left: 730px;
+
+.text_line3{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
 .pt5 {
   padding-top: 5px;
 }
@@ -119,7 +142,7 @@ $fixed_width_left: 730px;
   position: relative;
   width: 100%;
   height: 283.89px;
-  background-color: skyblue;
+  background-color: #c20c0c;
   .banner {
     position: relative;
     width: 730px;
@@ -238,7 +261,42 @@ $fixed_width_left: 730px;
         width: 12px;
         height: 12px;
         background:url('https://s2.music.126.net/style/web2/img/index/index.png?f2aae9f5087098b4f6cd335f144555df') no-repeat 0 -241px;
-        
+      }
+    }
+  }
+
+  .recommend-list{
+    padding: 20px 0;
+
+    .item{
+      width: 140px;
+      border: 1px solid #eee;
+
+      &:not(:nth-child(4n+1)){
+        margin: 0 0 30px 42px;
+      }
+
+      .cover{
+        width: 140px;
+        height: 140px;
+        margin-bottom: 10px;
+        // background: radial-gradient(cricle at left top,#d2d2d2 0%,#d2d2d2 50%,#181818 51%,#181818 100%);
+        background: radial-gradient(circle at -200% -200%,transparent, rgba(255,255,255,.3) 85%, rgba(0,0,0,.05) 85.5%,rgba(0,0,0,.05) 100%) ,url('http://p1.music.126.net/7M0_Ae5lbBV4S9cb8nFrbA==/109951165837009153.jpg?param=140y140');
+
+
+        .bot{
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          padding: 5px;
+        }
+      }
+
+      .desc{
+        width: 140px;
+        word-wrap: break-word;
+        line-height: 20px;
+        max-height: 60px;
       }
     }
   }
