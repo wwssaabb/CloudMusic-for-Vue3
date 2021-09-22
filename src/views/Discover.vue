@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-17 16:07:22
- * @LastEditTime: 2021-09-22 06:55:19
+ * @LastEditTime: 2021-09-22 08:59:21
  * @FilePath: \CloudMusic-for-Vue3\src\views\Discover.vue
 -->
 <template>
@@ -43,8 +43,10 @@
       <div class="title fpbc pr">
         <div class="content fcc">
           <span>热门推荐</span>
-          <div class="tags">
-            <span class="tag" v-for="item in tags" :key="item.id">{{item.name}}</span>
+          <div class="tags" v-loading="tags.length === 0">
+            <span class="tag" v-for="item in tags" :key="item.id">{{
+              item.name
+            }}</span>
           </div>
         </div>
         <div class="more fcc">
@@ -52,15 +54,28 @@
           <i></i>
         </div>
       </div>
-      <div class="recommend-list fss fw">
-        <div class="item" v-for="item in 8" :key="item">
-          <div class="cover pr">
+      <div class="recommend-list fss fw" v-loading="recommendList.length === 0">
+        <div class="item" v-for="item in recommendList" :key="item.id">
+          <div
+            class="cover pr"
+            :style="{
+              background:
+                'radial-gradient(circle at -200% -200%,transparent,rgba(255, 255, 255, 0.3) 85%,rgba(0, 0, 0, 0.05) 85.5%,rgba(0, 0, 0, 0.05) 100%),url(' +
+                item.picUrl +
+                '?param=140y140)',
+            }"
+          >
             <div class="bot pa fpbc">
-              <span>{{'left'}}</span>
-              <span>{{'right'}}</span>
+              <span class="fsc"
+                ><i class="bg_cover_icon"></i
+                >{{ playCountFormat(item.playCount) }}</span
+              >
+              <i class="bg_cover_icon play_icon"></i>
             </div>
           </div>
-          <div class="desc text_line3">{{'111111111111111111111111111111111111111'}}</div>
+          <div class="desc text_line3">
+            {{ item.name }}
+          </div>
         </div>
       </div>
     </div>
@@ -71,9 +86,13 @@
 import Head from "../components/Head.vue";
 import Foot from "../components/Foot.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
-import SwiperClass from "swiper/types/swiper-class";
+// import SwiperClass from "swiper/types/swiper-class";
 import { computed, ref, Ref, reactive } from "vue";
-import { reqBanner,reqDiscoverRecommendCategory } from "../api/index";
+import {
+  reqBanner,
+  reqDiscoverRecommendCategory,
+  reqDiscoverRecommendList,
+} from "../api/index";
 import { onMounted } from "vue-demi";
 import { watch } from "fs";
 import { on } from "events";
@@ -103,29 +122,36 @@ const onSlideChange = (val: SwiperClass) => {
   chooseBanner.value = banners.value[val.activeIndex];
 };
 
-
 //热门推荐相关
-const tags=ref([])
-onMounted(async ()=>{ //获取热门推荐分类
-  let res=await reqDiscoverRecommendCategory()
-  tags.value=res.tags.slice(0,5)
-  console.log(tags.value)
-})
-onMounted(async ()=>{ //获取热门推荐列表
-  let res=await reqDiscoverRecommendCategory()
-  tags.value=res.tags.slice(0,5)
-  console.log(tags.value)
-})
-
-
-
+const tags = ref([]);
+const recommendList = ref([]);
+onMounted(async () => {
+  //获取热门推荐分类
+  let res = await reqDiscoverRecommendCategory();
+  tags.value = res.tags.slice(0, 5);
+  console.log(tags.value);
+});
+onMounted(async () => {
+  //获取热门推荐列表
+  let res = await reqDiscoverRecommendList();
+  recommendList.value = res.result;
+  console.log(recommendList.value);
+});
+const playCountFormat = (num: number): string | number => {
+  return num > 10000 ? (num / 1000).toFixed(0) + "万" : num;
+};
 </script>
 
 <style lang="scss" scoped>
 $fixed_width: 1100px;
 $fixed_width_left: 730px;
 
-.text_line3{
+.bg_cover_icon {
+  background: url("https://music.163.com/style/web2/img/iconall.png?3b842806447563578eadc3999414e2e1")
+    no-repeat;
+}
+
+.text_line3 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
@@ -170,10 +196,10 @@ $fixed_width_left: 730px;
     width: 254px;
     height: 100%;
     background-color: #fff;
-    background: url("https://music.163.com/style/web2/img/index/download.png?8d6503c9a35580cb0878815b8e054f5") ;
+    background: url("https://music.163.com/style/web2/img/index/download.png?8d6503c9a35580cb0878815b8e054f5");
     z-index: 5;
 
-    .btn{
+    .btn {
       position: absolute;
       left: 19px;
       bottom: 43px;
@@ -181,14 +207,14 @@ $fixed_width_left: 730px;
       height: 58px;
       background: url("https://music.163.com/style/web2/img/index/download.png?8d6503c9a35580cb0878815b8e054f5");
       background-repeat: no-repeat;
-      background-position: 0 -288px ;
+      background-position: 0 -288px;
       filter: brightness(1.2);
-      &:hover{
+      &:hover {
         filter: brightness(1);
       }
     }
 
-    p{
+    p {
       position: absolute;
       left: 0;
       bottom: 0;
@@ -210,89 +236,117 @@ $fixed_width_left: 730px;
     left: calc(#{$fixed_width} / 2 - 50vw);
   }
 }
-.hot-recommend{
+.hot-recommend {
   width: $fixed_width_left;
-  height: 500px;
   padding: 20px 20px 40px;
   border-left: 1px solid #d3d3d3;
 
-  .title{
-    border-bottom:2px solid #C10D0C;
+  .title {
+    border-bottom: 2px solid #c10d0c;
     line-height: 28px;
     padding: 0 10px 0 34px;
 
-    &::after{
+    &::after {
       position: absolute;
-      content:'';
+      content: "";
       top: 0;
       left: 0;
       width: 34px;
       height: 34px;
-      background:url('https://s2.music.126.net/style/web2/img/index/index.png?f2aae9f5087098b4f6cd335f144555df') no-repeat -224px -158px;
+      background: url("https://s2.music.126.net/style/web2/img/index/index.png?f2aae9f5087098b4f6cd335f144555df")
+        no-repeat -224px -158px;
     }
 
-    span{
+    span {
       font-size: 12px;
       color: #666;
     }
 
-    .content{
-      &>span{
+    .content {
+      & > span {
         font-size: 20px;
         color: #333;
         margin-right: 10px;
       }
-      .tags{
-        span{
+      .tags {
+        span {
           padding: 0 10px;
-          &:not(:last-child){
+          &:not(:last-child) {
             border-right: 1px solid #ccc;
           }
         }
       }
     }
 
-    .more{
-      span{
+    .more {
+      span {
         margin-right: 5px;
       }
 
-      i{
+      i {
         width: 12px;
         height: 12px;
-        background:url('https://s2.music.126.net/style/web2/img/index/index.png?f2aae9f5087098b4f6cd335f144555df') no-repeat 0 -241px;
+        background: url("https://s2.music.126.net/style/web2/img/index/index.png?f2aae9f5087098b4f6cd335f144555df")
+          no-repeat 0 -241px;
       }
     }
   }
 
-  .recommend-list{
+  .recommend-list {
     padding: 20px 0;
 
-    .item{
+    .item {
       width: 140px;
-      border: 1px solid #eee;
 
-      &:not(:nth-child(4n+1)){
+      &:not(:nth-child(4n + 1)) {
         margin: 0 0 30px 42px;
       }
 
-      .cover{
+      .cover {
         width: 140px;
         height: 140px;
         margin-bottom: 10px;
-        // background: radial-gradient(cricle at left top,#d2d2d2 0%,#d2d2d2 50%,#181818 51%,#181818 100%);
-        background: radial-gradient(circle at -200% -200%,transparent, rgba(255,255,255,.3) 85%, rgba(0,0,0,.05) 85.5%,rgba(0,0,0,.05) 100%) ,url('http://p1.music.126.net/7M0_Ae5lbBV4S9cb8nFrbA==/109951165837009153.jpg?param=140y140');
+        border-radius: 5px 5px 0 0;
+        overflow: hidden;
 
-
-        .bot{
+        .bot {
           left: 0;
           bottom: 0;
           width: 100%;
-          padding: 5px;
+          height: 30px;
+          padding: 0 5px;
+          color: #ccc;
+          background: rgba(0, 0, 0, 0.6);
+          &::after {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #aaa;
+            transform: scaleY(0.2);
+          }
+
+          span {
+            font-size: 12px;
+            i {
+              width: 16px;
+              height: 16px;
+              background-position: 0 -20px;
+              margin-right: 5px;
+            }
+          }
+
+          .play_icon {
+            width: 16px;
+            height: 16px;
+            background-position: 0 0;
+          }
         }
       }
 
-      .desc{
+      .desc {
         width: 140px;
         word-wrap: break-word;
         line-height: 20px;

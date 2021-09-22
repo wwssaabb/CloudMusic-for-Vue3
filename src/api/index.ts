@@ -12,3 +12,6 @@ export const reqBanner = () => http("/banner");
 
 //获取首页推荐歌单分类
 export const reqDiscoverRecommendCategory = () => http("/playlist/hot");
+
+//获取首页推荐歌单列表
+export const reqDiscoverRecommendList = () => http("/personalized?limit=8");
