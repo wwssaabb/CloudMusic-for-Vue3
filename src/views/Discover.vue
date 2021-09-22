@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-17 16:07:22
- * @LastEditTime: 2021-09-22 08:59:21
+ * @LastEditTime: 2021-09-22 14:35:48
  * @FilePath: \CloudMusic-for-Vue3\src\views\Discover.vue
 -->
 <template>
@@ -12,7 +12,7 @@
           class="banner-content"
           :slides-per-view="1"
           :space-between="50"
-          :pagination="{ type: 'bullets' }"
+          :pagination="true"
           :autoplay="true"
           @swiper="onSwiper"
           :width="730"
@@ -39,7 +39,7 @@
         }"
       ></div>
     </div>
-    <div class="hot-recommend">
+    <div class="hot-recommend wrap_l">
       <div class="title fpbc pr">
         <div class="content fcc">
           <span>热门推荐</span>
@@ -79,6 +79,38 @@
         </div>
       </div>
     </div>
+    <div class="album-recommend wrap_l">
+      <div class="title fpbc pr">
+        <div class="content fcc"><span>新碟上架</span></div>
+        <div class="more fcc"><span>更多</span> <i></i></div>
+      </div>
+      <div class="album-list">
+        <swiper
+          class="album-banner"
+          :slides-per-view="5"
+          :space-between="26"
+          :autoplay="true"
+          @swiper="onSwiper"
+          :width="690"
+          :height="186"
+          @slideChange="onSlideChange"
+        >
+          <swiper-slide v-for="item in albums" :key="item.id">
+            <div class="album-item">
+              <div class="cover pr">
+                <img :src="item.picUrl" alt="" />
+                <i class="bg_cover_icon play_icon"></i>
+              </div>
+
+              <div class="name">{{ item.name }}</div>
+              <div class="artists">
+                {{ getArtistName(item) }}
+              </div>
+            </div>
+          </swiper-slide>
+        </swiper>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -86,23 +118,26 @@
 import Head from "../components/Head.vue";
 import Foot from "../components/Foot.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
-// import SwiperClass from "swiper/types/swiper-class";
+import SwiperClass from "swiper/types/swiper-class";
+import {
+  BannerType,
+  TagType,
+  RecommendType,
+  AlbumType,
+  ArtistType,
+} from "../types/types";
 import { computed, ref, Ref, reactive } from "vue";
 import {
   reqBanner,
   reqDiscoverRecommendCategory,
   reqDiscoverRecommendList,
+  reqDiscoverAlbumList,
 } from "../api/index";
 import { onMounted } from "vue-demi";
 import { watch } from "fs";
 import { on } from "events";
 
 //banner相关
-type BannerType = {
-  encodeId: string;
-  imageUrl: string;
-  typeTitle: string;
-};
 const banners = ref<BannerType[]>([]);
 let chooseBanner = ref<BannerType>({
   encodeId: "",
@@ -112,7 +147,6 @@ let chooseBanner = ref<BannerType>({
 onMounted(async () => {
   const res: { banners: BannerType[] } = await reqBanner();
   banners.value = res.banners;
-  console.log(banners.value);
   chooseBanner.value = banners.value[0];
 });
 const onSwiper = (swiper: SwiperClass) => {
@@ -123,22 +157,37 @@ const onSlideChange = (val: SwiperClass) => {
 };
 
 //热门推荐相关
-const tags = ref([]);
-const recommendList = ref([]);
+const tags = ref<TagType[]>([]);
+//获取热门推荐分类
 onMounted(async () => {
-  //获取热门推荐分类
   let res = await reqDiscoverRecommendCategory();
   tags.value = res.tags.slice(0, 5);
-  console.log(tags.value);
 });
+const recommendList = ref<RecommendType[]>([]);
+//获取热门推荐列表
 onMounted(async () => {
-  //获取热门推荐列表
-  let res = await reqDiscoverRecommendList();
+  let res: { result: RecommendType[]; code: number } =
+    await reqDiscoverRecommendList();
   recommendList.value = res.result;
-  console.log(recommendList.value);
 });
 const playCountFormat = (num: number): string | number => {
   return num > 10000 ? (num / 1000).toFixed(0) + "万" : num;
+};
+
+//新歌上架相关
+const albums = ref<AlbumType[]>([]);
+onMounted(async () => {
+  let res = await reqDiscoverAlbumList();
+  console.log(res);
+  albums.value = res.albums.slice(0, 10);
+  console.log(albums.value);
+});
+const getArtistName = (item: AlbumType): string => {
+  if (item.artists.length === 1) {
+    return item.artists[0].name;
+  } else {
+    return item.artists.map((i: ArtistType) => i.name).join("/");
+  }
 };
 </script>
 
@@ -149,6 +198,12 @@ $fixed_width_left: 730px;
 .bg_cover_icon {
   background: url("https://music.163.com/style/web2/img/iconall.png?3b842806447563578eadc3999414e2e1")
     no-repeat;
+}
+
+@mixin play_icon($x, $y, $size_x, $size_y) {
+  width: #{$size_x}px;
+  height: #{$size_y}px;
+  background-position: #{$x}px #{$y}px;
 }
 
 .text_line3 {
@@ -164,16 +219,75 @@ $fixed_width_left: 730px;
 .pt35 {
   padding-top: 35px;
 }
+
+.wrap_l {
+  width: $fixed_width_left;
+  border-left: 1px solid #d3d3d3;
+}
+
+.title {
+  border-bottom: 2px solid #c10d0c;
+  line-height: 28px;
+  padding: 0 10px 0 34px;
+
+  &::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 34px;
+    height: 34px;
+    background: url("https://s2.music.126.net/style/web2/img/index/index.png?f2aae9f5087098b4f6cd335f144555df")
+      no-repeat -224px -158px;
+  }
+
+  span {
+    font-size: 12px;
+    color: #666;
+  }
+
+  .content {
+    & > span {
+      font-size: 20px;
+      color: #333;
+      margin: 0 10px 3px 0;
+    }
+    .tags {
+      span {
+        padding: 0 10px;
+        &:not(:last-child) {
+          border-right: 1px solid #ccc;
+        }
+      }
+    }
+  }
+  .more {
+    span {
+      margin-right: 5px;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    i {
+      width: 12px;
+      height: 12px;
+      background: url("https://s2.music.126.net/style/web2/img/index/index.png?f2aae9f5087098b4f6cd335f144555df")
+        no-repeat 0 -241px;
+    }
+  }
+}
+
 .banner-wrap {
   position: relative;
   width: 100%;
   height: 283.89px;
-  background-color: #c20c0c;
+
   .banner {
     position: relative;
     width: 730px;
     height: 100%;
-    filter: contrast(0.9);
+    filter: contrast(1);
     z-index: 5;
 
     &:hover {
@@ -237,60 +351,7 @@ $fixed_width_left: 730px;
   }
 }
 .hot-recommend {
-  width: $fixed_width_left;
   padding: 20px 20px 40px;
-  border-left: 1px solid #d3d3d3;
-
-  .title {
-    border-bottom: 2px solid #c10d0c;
-    line-height: 28px;
-    padding: 0 10px 0 34px;
-
-    &::after {
-      position: absolute;
-      content: "";
-      top: 0;
-      left: 0;
-      width: 34px;
-      height: 34px;
-      background: url("https://s2.music.126.net/style/web2/img/index/index.png?f2aae9f5087098b4f6cd335f144555df")
-        no-repeat -224px -158px;
-    }
-
-    span {
-      font-size: 12px;
-      color: #666;
-    }
-
-    .content {
-      & > span {
-        font-size: 20px;
-        color: #333;
-        margin-right: 10px;
-      }
-      .tags {
-        span {
-          padding: 0 10px;
-          &:not(:last-child) {
-            border-right: 1px solid #ccc;
-          }
-        }
-      }
-    }
-
-    .more {
-      span {
-        margin-right: 5px;
-      }
-
-      i {
-        width: 12px;
-        height: 12px;
-        background: url("https://s2.music.126.net/style/web2/img/index/index.png?f2aae9f5087098b4f6cd335f144555df")
-          no-repeat 0 -241px;
-      }
-    }
-  }
 
   .recommend-list {
     padding: 20px 0;
@@ -339,9 +400,7 @@ $fixed_width_left: 730px;
           }
 
           .play_icon {
-            width: 16px;
-            height: 16px;
-            background-position: 0 0;
+            @include play_icon(0, 0, 16, 16);
           }
         }
       }
@@ -351,6 +410,90 @@ $fixed_width_left: 730px;
         word-wrap: break-word;
         line-height: 20px;
         max-height: 60px;
+      }
+    }
+  }
+}
+.album-recommend {
+  padding: 0 20px 20px;
+  border-left: 1px solid #d3d3d3;
+
+  .album-list {
+    margin-top: 20px;
+    padding: 20px 0;
+    background-color: #f5f5f5;
+    border: 1px solid #d3d3d3;
+
+    .album-banner {
+      height: 146px;
+      padding: 0 20px;
+
+      .album-item {
+        width: 118px;
+        .cover {
+          width: 100px;
+          height: 100px;
+          z-index: 10;
+          .play_icon {
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+            cursor: pointer;
+            @include play_icon(0, -140, 28, 28);
+            opacity: 0;
+            transition: 0.3s;
+          }
+
+          &:hover {
+            .play_icon {
+              opacity: 1;
+              transition: 0.3s;
+            }
+          }
+        }
+
+        @mixin content_type {
+          width: 100px;
+          font-size: 12px;
+          line-height: 18px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
+        .name {
+          @include content_type;
+        }
+        .artists {
+          @include content_type;
+          color: #666;
+        }
+      }
+    }
+
+    .swiper-slide {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      padding: 1px;
+      // background-color: skyblue;
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 118px;
+        height: 100px;
+        background: url("https://music.163.com/style/web2/img/coverall.png?f0b44559c59a4f6686187553c8ce6cee")
+          no-repeat 0 -570px;
+      }
+
+      img {
+        width: 100px;
+        height: 100px;
       }
     }
   }

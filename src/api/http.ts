@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-17 15:52:51
- * @LastEditTime: 2021-09-20 21:12:39
+ * @LastEditTime: 2021-09-22 09:31:22
  * @FilePath: \CloudMusic-for-Vue3\src\api\http.ts
  */
 
@@ -60,13 +60,13 @@ axios.interceptors.response.use(
   @ headers :object | null,默认 null
 */
 
-export default function (
+export default function <T>(
   url: string,
   data?: object | null,
   method: InstanceMethods = "get"
   // headers?: object | null
 ) {
-  return new Promise((resolve) => {
+  return new Promise<T>((resolve) => {
     if (!acceptMethods.includes(method)) {
       return ElMessage.error("不支持" + method + "请求方法");
     }
@@ -78,9 +78,7 @@ export default function (
     }
 
     promise
-      .then((res: { data: { banners: []; code: number } }): void =>
-        resolve(res.data)
-      )
+      .then((res: { data: T }): void => resolve(res.data))
       .catch((err) => ElMessage.error(err));
   });
 }
