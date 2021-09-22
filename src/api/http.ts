@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-17 15:52:51
- * @LastEditTime: 2021-09-22 09:31:22
+ * @LastEditTime: 2021-09-22 15:46:41
  * @FilePath: \CloudMusic-for-Vue3\src\api\http.ts
  */
 
@@ -72,7 +72,7 @@ export default function <T>(
     }
     let promise;
     if (method === "get") {
-      promise = axios.get(url, { data });
+      promise = axios.get(url, { params: { ...data } });
     } else {
       promise = axios[method](url, data);
     }

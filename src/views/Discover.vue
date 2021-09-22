@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-17 16:07:22
- * @LastEditTime: 2021-09-22 14:35:48
+ * @LastEditTime: 2021-09-22 18:02:21
  * @FilePath: \CloudMusic-for-Vue3\src\views\Discover.vue
 -->
 <template>
@@ -111,6 +111,50 @@
         </swiper>
       </div>
     </div>
+    <div class="music-list wrap_l">
+      <div class="title fpbc pr">
+        <div class="content fcc"><span>榜单</span></div>
+        <div class="more fcc"><span>更多</span> <i></i></div>
+      </div>
+      <div class="list-wrap fsc">
+        <div class="list-item" v-for="list in musicList" :key="list.id">
+          <div class="head fss">
+            <img :src="list.coverImgUrl" alt="" />
+            <div class="info">
+              <div class="name">
+                <span>{{ list.name }}</span>
+              </div>
+              <div class="icons fss">
+                <i class="list_icon play_icon"></i
+                ><i class="list_icon collect_icon"></i>
+              </div>
+            </div>
+          </div>
+          <div class="content">
+            <div
+              class="item fsc"
+              v-for="(item, index) in list.list"
+              :key="item.id"
+            >
+              <span
+                class="fcc"
+                :style="{ color: Number(index) <= 2 ? '#c10d0c' : '#000' }"
+                >{{ Number(index) + 1 }}</span
+              >
+              <span class="fsc">{{ item.name }}</span>
+              <span class="fsc"
+                ><i class="list_icon play_icon"></i
+                ><i class="icons_img addlist_icon"></i
+                ><i class="list_icon collect_icon"></i
+              ></span>
+            </div>
+          </div>
+          <div class="foot">
+            <span>查看更多>></span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -125,6 +169,8 @@ import {
   RecommendType,
   AlbumType,
   ArtistType,
+  DiscoverListSongType,
+  DiscoverListType,
 } from "../types/types";
 import { computed, ref, Ref, reactive } from "vue";
 import {
@@ -132,6 +178,8 @@ import {
   reqDiscoverRecommendCategory,
   reqDiscoverRecommendList,
   reqDiscoverAlbumList,
+  reqDiscoverList,
+  reqDiscoverListDetail,
 } from "../api/index";
 import { onMounted } from "vue-demi";
 import { watch } from "fs";
@@ -178,9 +226,7 @@ const playCountFormat = (num: number): string | number => {
 const albums = ref<AlbumType[]>([]);
 onMounted(async () => {
   let res = await reqDiscoverAlbumList();
-  console.log(res);
-  albums.value = res.albums.slice(0, 10);
-  console.log(albums.value);
+  albums.value = res.albums;
 });
 const getArtistName = (item: AlbumType): string => {
   if (item.artists.length === 1) {
@@ -189,6 +235,20 @@ const getArtistName = (item: AlbumType): string => {
     return item.artists.map((i: ArtistType) => i.name).join("/");
   }
 };
+
+//榜单相关
+const musicList = ref<DiscoverListType[]>([]);
+onMounted(async () => {
+  let res_list = await reqDiscoverList();
+  console.log(res_list);
+  musicList.value = res_list.list.slice(0, 3);
+  musicList.value.forEach((item: DiscoverListType, index) => {
+    reqDiscoverListDetail(item.id).then((res) => {
+      console.log(res);
+      musicList.value[index].list = res.playlist.tracks.slice(0, 10);
+    });
+  });
+});
 </script>
 
 <style lang="scss" scoped>
@@ -199,8 +259,16 @@ $fixed_width_left: 730px;
   background: url("https://music.163.com/style/web2/img/iconall.png?3b842806447563578eadc3999414e2e1")
     no-repeat;
 }
+.list_icon {
+  background: url("https://music.163.com/style/web2/img/index/index.png?9c18c9e05976f1fa1a2d3872f8f2cecc")
+    no-repeat;
+}
+.icons_img {
+  background: url("https://music.163.com/style/web2/img/icon.png?3ebcc5e99f593ffe4e3546e30253a2ce")
+    no-repeat;
+}
 
-@mixin play_icon($x, $y, $size_x, $size_y) {
+@mixin get_icon($x, $y, $size_x, $size_y) {
   width: #{$size_x}px;
   height: #{$size_y}px;
   background-position: #{$x}px #{$y}px;
@@ -400,7 +468,7 @@ $fixed_width_left: 730px;
           }
 
           .play_icon {
-            @include play_icon(0, 0, 16, 16);
+            @include get_icon(0, 0, 16, 16);
           }
         }
       }
@@ -415,7 +483,7 @@ $fixed_width_left: 730px;
   }
 }
 .album-recommend {
-  padding: 0 20px 20px;
+  padding: 0 20px 40px;
   border-left: 1px solid #d3d3d3;
 
   .album-list {
@@ -439,7 +507,7 @@ $fixed_width_left: 730px;
             right: 5px;
             bottom: 5px;
             cursor: pointer;
-            @include play_icon(0, -140, 28, 28);
+            @include get_icon(0, -140, 28, 28);
             opacity: 0;
             transition: 0.3s;
           }
@@ -494,6 +562,167 @@ $fixed_width_left: 730px;
       img {
         width: 100px;
         height: 100px;
+      }
+    }
+  }
+}
+
+.music-list {
+  padding: 0 20px;
+
+  .list-wrap {
+    height: 472px;
+    margin-top: 20px;
+    background-color: #f4f4f4;
+    border: 1px solid #d2d2d2;
+
+    .list-item {
+      width: calc(100% / 3);
+      height: 472px;
+      border-right: 1px solid #d2d2d2;
+      color: #333;
+      &:last-child {
+        border: none;
+      }
+
+      .head {
+        padding: 20px;
+
+        img {
+          width: 80px;
+          height: 80px;
+          border-radius: 5px;
+          margin-right: 10px;
+        }
+
+        .info {
+          flex: 1;
+
+          .name {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+
+          .icons {
+            width: 100%;
+            height: 50px;
+            i.play_icon {
+              @include get_icon(-265, -202, 26, 26);
+              margin-right: 10px;
+              &:hover {
+                opacity: 0.7;
+              }
+            }
+            i.collect_icon {
+              @include get_icon(-297.5, -202, 26, 26);
+              &:hover {
+                opacity: 0.7;
+              }
+            }
+          }
+        }
+      }
+
+      .content {
+        .item {
+          height: 32px;
+          padding-left: 10px;
+
+          &:nth-child(2n + 1) {
+            background-color: #e8e8e8;
+          }
+
+          &:hover {
+            & span:nth-child(2) {
+              text-decoration: underline;
+            }
+          }
+          span {
+            &:first-child {
+              width: 35px;
+              height: 32px;
+              font-size: 16px;
+            }
+
+            &:nth-child(2) {
+              display: inline-block;
+              width: 175px;
+              font-size: 12px;
+              height: 32px;
+              line-height: 32px;
+              color: #000;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            &:last-child {
+              display: block;
+              width: 0;
+              height: 32px;
+
+              i.play_icon {
+                margin-top: 3px;
+                display: inline-block;
+                margin-right: 2px;
+              }
+              i.collect_icon {
+                margin-top: 3px;
+                display: inline-block;
+                margin-right: 2px;
+              }
+              i.addlist_icon {
+                margin-top: 3px;
+                display: inline-block;
+              }
+            }
+          }
+
+          &:hover {
+            & span:nth-child(2) {
+              width: 93px;
+            }
+            & span:last-child {
+              width: 82px;
+              i.play_icon {
+                @include get_icon(-265, -202, 26, 26);
+                &:hover {
+                  opacity: 0.7;
+                }
+              }
+              i.collect_icon {
+                @include get_icon(-297.5, -202, 26, 26);
+                &:hover {
+                  opacity: 0.7;
+                }
+              }
+              i.addlist_icon {
+                @include get_icon(5, -692, 26, 26);
+                border-radius: 50%;
+                &:hover {
+                  opacity: 0.7;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .foot {
+        padding: 0 10px;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        background-color: #e8e8e8;
+        height: 32px;
+        color: #000;
+        span {
+          font-size: 12px;
+        }
       }
     }
   }
