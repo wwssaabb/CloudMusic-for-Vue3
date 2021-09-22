@@ -1,11 +1,11 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-17 16:07:22
- * @LastEditTime: 2021-09-22 18:02:21
+ * @LastEditTime: 2021-09-23 01:58:06
  * @FilePath: \CloudMusic-for-Vue3\src\views\Discover.vue
 -->
 <template>
-  <div class="full">
+  <div class="full cur_p">
     <div class="banner-wrap fss" v-loading="banners.length === 0">
       <div class="banner">
         <swiper
@@ -119,7 +119,14 @@
       <div class="list-wrap fsc">
         <div class="list-item" v-for="list in musicList" :key="list.id">
           <div class="head fss">
-            <img :src="list.coverImgUrl" alt="" />
+            <!-- <img :src="list.coverImgUrl" alt="" /> -->
+            <div class="cover pr" :style="{
+              background:
+                'radial-gradient(circle at -200% -200%,transparent,rgba(255, 255, 255, 0.3) 85%,rgba(0, 0, 0, 0.05) 85.5%,rgba(0, 0, 0, 0.05) 100%),url(' +
+                list.coverImgUrl +') ',
+                backgroundSize: '80px 80px'
+            }"></div>
+            
             <div class="info">
               <div class="name">
                 <span>{{ list.name }}</span>
@@ -255,15 +262,22 @@ onMounted(async () => {
 $fixed_width: 1100px;
 $fixed_width_left: 730px;
 
+.cur_p{
+  cursor: pointer;
+}
+
 .bg_cover_icon {
+  cursor: pointer;
   background: url("https://music.163.com/style/web2/img/iconall.png?3b842806447563578eadc3999414e2e1")
     no-repeat;
 }
 .list_icon {
+  cursor: pointer;
   background: url("https://music.163.com/style/web2/img/index/index.png?9c18c9e05976f1fa1a2d3872f8f2cecc")
     no-repeat;
 }
 .icons_img {
+  cursor: pointer;
   background: url("https://music.163.com/style/web2/img/icon.png?3ebcc5e99f593ffe4e3546e30253a2ce")
     no-repeat;
 }
@@ -292,6 +306,7 @@ $fixed_width_left: 730px;
   width: $fixed_width_left;
   border-left: 1px solid #d3d3d3;
 }
+
 
 .title {
   border-bottom: 2px solid #c10d0c;
@@ -469,6 +484,9 @@ $fixed_width_left: 730px;
 
           .play_icon {
             @include get_icon(0, 0, 16, 16);
+            &:hover{
+              filter: brightness(1.5);
+            }
           }
         }
       }
@@ -588,11 +606,12 @@ $fixed_width_left: 730px;
       .head {
         padding: 20px;
 
-        img {
+        .cover {
           width: 80px;
           height: 80px;
           border-radius: 5px;
           margin-right: 10px;
+          
         }
 
         .info {
@@ -722,6 +741,9 @@ $fixed_width_left: 730px;
         color: #000;
         span {
           font-size: 12px;
+        }
+        &:hover{
+          text-decoration: underline;
         }
       }
     }
