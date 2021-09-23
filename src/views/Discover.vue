@@ -1,11 +1,11 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-17 16:07:22
- * @LastEditTime: 2021-09-23 01:58:06
+ * @LastEditTime: 2021-09-23 09:37:40
  * @FilePath: \CloudMusic-for-Vue3\src\views\Discover.vue
 -->
 <template>
-  <div class="full cur_p">
+  <div class="full">
     <div class="banner-wrap fss" v-loading="banners.length === 0">
       <div class="banner">
         <swiper
@@ -39,126 +39,153 @@
         }"
       ></div>
     </div>
-    <div class="hot-recommend wrap_l">
-      <div class="title fpbc pr">
-        <div class="content fcc">
-          <span>热门推荐</span>
-          <div class="tags" v-loading="tags.length === 0">
-            <span class="tag" v-for="item in tags" :key="item.id">{{
-              item.name
-            }}</span>
+    <div class="wrap fss">
+      <div class="wrap_l">
+        <div class="hot-recommend wrap_l_c">
+          <div class="title fpbc pr">
+            <div class="content fcc">
+              <span>热门推荐</span>
+              <div class="tags" v-loading="tags.length === 0">
+                <span class="tag td_u" v-for="item in tags" :key="item.id">{{
+                  item.name
+                }}</span>
+              </div>
+            </div>
+            <div class="more fcc">
+              <span>更多</span>
+              <i></i>
+            </div>
           </div>
-        </div>
-        <div class="more fcc">
-          <span>更多</span>
-          <i></i>
-        </div>
-      </div>
-      <div class="recommend-list fss fw" v-loading="recommendList.length === 0">
-        <div class="item" v-for="item in recommendList" :key="item.id">
           <div
-            class="cover pr"
-            :style="{
-              background:
-                'radial-gradient(circle at -200% -200%,transparent,rgba(255, 255, 255, 0.3) 85%,rgba(0, 0, 0, 0.05) 85.5%,rgba(0, 0, 0, 0.05) 100%),url(' +
-                item.picUrl +
-                '?param=140y140)',
-            }"
+            class="recommend-list fss fw"
+            v-loading="recommendList.length === 0"
           >
-            <div class="bot pa fpbc">
-              <span class="fsc"
-                ><i class="bg_cover_icon"></i
-                >{{ playCountFormat(item.playCount) }}</span
+            <div class="item" v-for="item in recommendList" :key="item.id">
+              <div
+                class="cover pr box_bor_grad"
+                :style="{
+                  background:
+                    'radial-gradient(circle at -200% -200%,transparent,rgba(255, 255, 255, 0.3) 85%,rgba(0, 0, 0, 0.05) 85.5%,rgba(0, 0, 0, 0.05) 100%),url(' +
+                    item.picUrl +
+                    '?param=140y140)',
+                }"
               >
-              <i class="bg_cover_icon play_icon"></i>
+                <div class="bot pa fpbc">
+                  <span class="fsc"
+                    ><i class="bg_cover_icon"></i
+                    >{{ playCountFormat(item.playCount) }}</span
+                  >
+                  <i class="bg_cover_icon play_icon"></i>
+                </div>
+              </div>
+              <div class="desc text_line3 td_u">
+                {{ item.name }}
+              </div>
             </div>
           </div>
-          <div class="desc text_line3">
-            {{ item.name }}
+        </div>
+        <div class="album-recommend wrap_l_c">
+          <div class="title fpbc pr">
+            <div class="content fcc"><span>新碟上架</span></div>
+            <div class="more fcc td_u"><span>更多</span> <i></i></div>
+          </div>
+          <div class="album-list">
+            <swiper
+              class="album-banner"
+              :slides-per-view="5"
+              :space-between="26"
+              :autoplay="true"
+              @swiper="onSwiper"
+              :width="690"
+              :height="186"
+              @slideChange="onSlideChange"
+            >
+              <swiper-slide v-for="item in albums" :key="item.id">
+                <div class="album-item">
+                  <div class="cover pr">
+                    <div
+                      class="cover_img box_ref"
+                      :style="{
+                        background:
+                          'radial-gradient(circle at -200% -200%,transparent,rgba(255, 255, 255, 0.3) 85%,rgba(0, 0, 0, 0.05) 85.5%,rgba(0, 0, 0, 0.05) 100%),url(' +
+                          item.picUrl +
+                          ')',
+                        backgroundSize: '100px 100px',
+                      }"
+                    ></div>
+                    <i class="bg_cover_icon play_icon"></i>
+                  </div>
+                  <div class="name">{{ item.name }}</div>
+                  <div class="artists">
+                    {{ getArtistName(item) }}
+                  </div>
+                </div>
+              </swiper-slide>
+            </swiper>
+          </div>
+        </div>
+        <div class="music-list wrap_l_c">
+          <div class="title fpbc pr">
+            <div class="content fcc"><span>榜单</span></div>
+            <div class="more fcc"><span>更多</span> <i></i></div>
+          </div>
+          <div class="list-wrap fsc">
+            <div class="list-item" v-for="list in musicList" :key="list.id">
+              <div class="head fss">
+                <!-- <img :src="list.coverImgUrl" alt="" /> -->
+                <div
+                  class="cover pr box_ref"
+                  :style="{
+                    background:
+                      'radial-gradient(circle at -200% -200%,transparent,rgba(255, 255, 255, 0.3) 85%,rgba(0, 0, 0, 0.05) 85.5%,rgba(0, 0, 0, 0.05) 100%),url(' +
+                      list.coverImgUrl +
+                      ') ',
+                    backgroundSize: '80px 80px',
+                  }"
+                ></div>
+
+                <div class="info">
+                  <div class="name td_u">
+                    <span>{{ list.name }}</span>
+                  </div>
+                  <div class="icons fss">
+                    <i class="list_icon play_icon"></i
+                    ><i class="list_icon collect_icon"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="content">
+                <div
+                  class="item fsc"
+                  v-for="(item, index) in list.list"
+                  :key="item.id"
+                >
+                  <span
+                    class="fcc"
+                    :style="{ color: Number(index) <= 2 ? '#c10d0c' : '#000' }"
+                    >{{ Number(index) + 1 }}</span
+                  >
+                  <span class="fsc td_u">{{ item.name }}</span>
+                  <span class="fsc"
+                    ><i class="list_icon play_icon"></i
+                    ><i class="icons_img addlist_icon"></i
+                    ><i class="list_icon collect_icon"></i
+                  ></span>
+                </div>
+              </div>
+              <div class="foot">
+                <span>查看更多>></span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="album-recommend wrap_l">
-      <div class="title fpbc pr">
-        <div class="content fcc"><span>新碟上架</span></div>
-        <div class="more fcc"><span>更多</span> <i></i></div>
-      </div>
-      <div class="album-list">
-        <swiper
-          class="album-banner"
-          :slides-per-view="5"
-          :space-between="26"
-          :autoplay="true"
-          @swiper="onSwiper"
-          :width="690"
-          :height="186"
-          @slideChange="onSlideChange"
-        >
-          <swiper-slide v-for="item in albums" :key="item.id">
-            <div class="album-item">
-              <div class="cover pr">
-                <img :src="item.picUrl" alt="" />
-                <i class="bg_cover_icon play_icon"></i>
-              </div>
-
-              <div class="name">{{ item.name }}</div>
-              <div class="artists">
-                {{ getArtistName(item) }}
-              </div>
-            </div>
-          </swiper-slide>
-        </swiper>
-      </div>
-    </div>
-    <div class="music-list wrap_l">
-      <div class="title fpbc pr">
-        <div class="content fcc"><span>榜单</span></div>
-        <div class="more fcc"><span>更多</span> <i></i></div>
-      </div>
-      <div class="list-wrap fsc">
-        <div class="list-item" v-for="list in musicList" :key="list.id">
-          <div class="head fss">
-            <!-- <img :src="list.coverImgUrl" alt="" /> -->
-            <div class="cover pr" :style="{
-              background:
-                'radial-gradient(circle at -200% -200%,transparent,rgba(255, 255, 255, 0.3) 85%,rgba(0, 0, 0, 0.05) 85.5%,rgba(0, 0, 0, 0.05) 100%),url(' +
-                list.coverImgUrl +') ',
-                backgroundSize: '80px 80px'
-            }"></div>
-            
-            <div class="info">
-              <div class="name">
-                <span>{{ list.name }}</span>
-              </div>
-              <div class="icons fss">
-                <i class="list_icon play_icon"></i
-                ><i class="list_icon collect_icon"></i>
-              </div>
-            </div>
-          </div>
-          <div class="content">
-            <div
-              class="item fsc"
-              v-for="(item, index) in list.list"
-              :key="item.id"
-            >
-              <span
-                class="fcc"
-                :style="{ color: Number(index) <= 2 ? '#c10d0c' : '#000' }"
-                >{{ Number(index) + 1 }}</span
-              >
-              <span class="fsc">{{ item.name }}</span>
-              <span class="fsc"
-                ><i class="list_icon play_icon"></i
-                ><i class="icons_img addlist_icon"></i
-                ><i class="list_icon collect_icon"></i
-              ></span>
-            </div>
-          </div>
-          <div class="foot">
-            <span>查看更多>></span>
-          </div>
+      <div class="wrap_r">
+        <div class="login_block">
+          <p class="note">
+            登录网易云音乐，可以享受无限收藏的乐趣，并且无限同步到手机
+          </p>
+          <div class="login_btn">用户登录</div>
         </div>
       </div>
     </div>
@@ -259,13 +286,9 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-$fixed_width: 1100px;
+$fixed_width: 980px;
 $fixed_width_left: 730px;
-
-.cur_p{
-  cursor: pointer;
-}
-
+$fixed_width_right: 250px;
 .bg_cover_icon {
   cursor: pointer;
   background: url("https://music.163.com/style/web2/img/iconall.png?3b842806447563578eadc3999414e2e1")
@@ -302,11 +325,26 @@ $fixed_width_left: 730px;
   padding-top: 35px;
 }
 
+.wrap {
+  width: $fixed_width;
+  border-right: 1px solid #d3d3d3;
+}
 .wrap_l {
+  display: inline-block;
   width: $fixed_width_left;
   border-left: 1px solid #d3d3d3;
+  border-right: 1px solid #d3d3d3;
+}
+.wrap_r {
+  display: inline-block;
+  width: $fixed_width_right;
+  // border-left: 1px solid #d3d3d3;
 }
 
+.wrap_l_c,
+.wrap_r_c {
+  width: 100%;
+}
 
 .title {
   border-bottom: 2px solid #c10d0c;
@@ -391,6 +429,7 @@ $fixed_width_left: 730px;
   .download {
     position: relative;
     width: 254px;
+    right: 2px;
     height: 100%;
     background-color: #fff;
     background: url("https://music.163.com/style/web2/img/index/download.png?8d6503c9a35580cb0878815b8e054f5");
@@ -484,7 +523,7 @@ $fixed_width_left: 730px;
 
           .play_icon {
             @include get_icon(0, 0, 16, 16);
-            &:hover{
+            &:hover {
               filter: brightness(1.5);
             }
           }
@@ -502,7 +541,6 @@ $fixed_width_left: 730px;
 }
 .album-recommend {
   padding: 0 20px 40px;
-  border-left: 1px solid #d3d3d3;
 
   .album-list {
     margin-top: 20px;
@@ -520,6 +558,12 @@ $fixed_width_left: 730px;
           width: 100px;
           height: 100px;
           z-index: 10;
+          margin-bottom: 5px;
+
+          .cover_img {
+            width: 100px;
+            height: 100px;
+          }
           .play_icon {
             position: absolute;
             right: 5px;
@@ -611,7 +655,6 @@ $fixed_width_left: 730px;
           height: 80px;
           border-radius: 5px;
           margin-right: 10px;
-          
         }
 
         .info {
@@ -621,9 +664,6 @@ $fixed_width_left: 730px;
             font-size: 14px;
             font-weight: bold;
             margin-bottom: 5px;
-            &:hover {
-              text-decoration: underline;
-            }
           }
 
           .icons {
@@ -655,11 +695,6 @@ $fixed_width_left: 730px;
             background-color: #e8e8e8;
           }
 
-          &:hover {
-            & span:nth-child(2) {
-              text-decoration: underline;
-            }
-          }
           span {
             &:first-child {
               width: 35px;
@@ -742,10 +777,39 @@ $fixed_width_left: 730px;
         span {
           font-size: 12px;
         }
-        &:hover{
+        &:hover {
           text-decoration: underline;
         }
       }
+    }
+  }
+}
+
+.login_block {
+  height: 126px;
+  @extend .list_icon;
+  @include get_icon(-1, 0, 250, 126);
+
+  .note {
+    padding: 16px 22.5px;
+    font-size: 12px;
+    line-height: 22px;
+    color: #666;
+  }
+
+  .login_btn {
+    margin: 0 auto;
+    width: 100px;
+    height: 31px;
+    @extend .list_icon;
+    @include get_icon(0, -195, 100, 31);
+    line-height: 31px;
+    font-size: 12px;
+    color: #fff;
+    text-align: center;
+    text-shadow: 0 1px 0 #8a060b;
+    &:hover {
+      @include get_icon(-110, -195, 100, 31);
     }
   }
 }

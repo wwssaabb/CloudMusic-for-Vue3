@@ -112,6 +112,24 @@
   }
 }
 
+//设置倒影
+.box_ref {
+  -webkit-box-reflect: below 1px -webkit-linear-gradient(transparent, transparent 90%, rgba(255, 255, 255, 0.3));
+}
+
+//设置指标的显示
+.cur_p {
+  cursor: pointer;
+}
+
+//设置文字hover时样式为underline
+.td_u {
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+//hover边框渐变动画
 
 
 $--fixed_width:1100px; //内容的宽度
