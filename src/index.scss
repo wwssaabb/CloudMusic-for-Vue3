@@ -93,6 +93,12 @@
   flex-wrap: wrap;
 }
 
+/* flex column布局 */
+.fd_col {
+  display: flex;
+  flex-direction: column;
+}
+
 /* position 常用定位 */
 .p {
   &r {
