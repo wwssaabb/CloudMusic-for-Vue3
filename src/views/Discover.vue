@@ -28,11 +28,7 @@
       <div class="wrap_r">
         <loginBlock></loginBlock>
         <enterSinger></enterSinger>
-        <div class="dj_hot">
-          <div class="list_title fpbc">
-            <span>热门主播</span>
-          </div>
-        </div>
+        <djHot></djHot>
       </div>
     </div>
   </div>
@@ -47,6 +43,7 @@ import banner from "../components/Discover/banner.vue";
 import hotRecommend from "../components/Discover/hot_recommend.vue";
 import albumRecommend from "../components/Discover/album_recommend.vue";
 import music_list from "../components/Discover/music_list.vue";
+import djHot from "../components/Discover/dj_hot.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import SwiperClass from "swiper/types/swiper-class";
 import {
@@ -125,6 +122,7 @@ onMounted(async () => {
   let res_list = await reqDiscoverList();
   musicList.value = res_list.list.slice(0, 3);
   musicList.value.forEach((item: DiscoverListType, index) => {
+    musicList.value[index].list = [];
     reqDiscoverListDetail(item.id).then((res) => {
       setTimeout(() => {
         musicList.value[index].list = res.playlist.tracks.slice(0, 10);
@@ -259,17 +257,6 @@ $fixed_width_right: 250px;
     }
     &:last-child {
       color: #666;
-    }
-  }
-}
-
-.dj_hot {
-  padding: 0 20px;
-
-  .list_title {
-    span {
-      color: #333;
-      font-size: 12px;
     }
   }
 }

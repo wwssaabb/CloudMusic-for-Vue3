@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-23 16:12:04
- * @LastEditTime: 2021-09-23 18:03:56
+ * @LastEditTime: 2021-09-24 09:56:03
  * @FilePath: \CloudMusic-for-Vue3\src\components\Discover\music_list.vue
 -->
 <template>
@@ -12,95 +12,52 @@
     </div>
     <div class="list-wrap fsc">
       <div class="list-item" v-for="(list, index) in musicList" :key="list.id">
-        <ElSkeleton
-          :loading="musicList[index].list === undefined"
-          animated
-          style="display: inline-block; width: 228.66px; height: 472px"
-        >
-          <template #tempalte>
+        <div style="display: inline-block; width: 227.66px; height: 472px">
+          <div class="head fss">
             <div
-              style="
-                display: inline-block;
-                width: 227.66px;
-                height: 120px;
-                padding: 20px;
-              "
-            >
-              <ElSkeletonItem
-                style="
-                  display: inline-block;
-                  width: 80px;
-                  height: 80px;
-                  margin-right: 10px;
-                "
-                variant="image"
-              ></ElSkeletonItem>
-              <div style="width: 97.66px; height: 45px">
-                <ElSkeletonItem
-                  style="width: 100%; height: 20px; margin-bottom: 5px"
-                  variant="text"
-                ></ElSkeletonItem>
-                <ElSkeletonItem
-                  style="width: 100%; height: 20px"
-                  variant="text"
-                ></ElSkeletonItem>
-              </div>
-            </div>
-            <div style="width: 227.66px; height: 352px; padding: 0 10px">
-              <ElSkeletonItem
-                v-for="item in 11"
-                style="display: inline-block; width: 207.66px; height: 32px"
-                variant="text"
-              ></ElSkeletonItem>
-            </div>
-          </template>
-          <template #default>
-            <div class="head fss">
-              <div
-                class="cover pr box_ref"
-                :style="{
-                  background:
-                    'radial-gradient(circle at -200% -200%,transparent,rgba(255, 255, 255, 0.3) 85%,rgba(0, 0, 0, 0.05) 85.5%,rgba(0, 0, 0, 0.05) 100%),url(' +
-                    list.coverImgUrl +
-                    ') ',
-                  backgroundSize: '80px 80px',
-                }"
-              ></div>
+              class="cover pr box_ref"
+              :style="{
+                background:
+                  'radial-gradient(circle at -200% -200%,transparent,rgba(255, 255, 255, 0.3) 85%,rgba(0, 0, 0, 0.05) 85.5%,rgba(0, 0, 0, 0.05) 100%),url(' +
+                  list.coverImgUrl +
+                  ') ',
+                backgroundSize: '80px 80px',
+              }"
+            ></div>
 
-              <div class="info">
-                <div class="name td_u">
-                  <span>{{ list.name }}</span>
-                </div>
-                <div class="icons fss">
-                  <i class="list_icon play_icon"></i
-                  ><i class="list_icon collect_icon"></i>
-                </div>
+            <div class="info">
+              <div class="name td_u">
+                <span>{{ list.name }}</span>
+              </div>
+              <div class="icons fss">
+                <i class="list_icon play_icon"></i
+                ><i class="list_icon collect_icon"></i>
               </div>
             </div>
-            <div class="content">
-              <div
-                class="item fsc"
-                v-for="(item, index) in list.list"
-                :key="item.id"
+          </div>
+          <div class="content" v-loading="list.list.length === 0">
+            <div
+              class="item fsc"
+              v-for="(item, index) in list.list"
+              :key="item.id"
+            >
+              <span
+                class="fcc"
+                :style="{ color: Number(index) <= 2 ? '#c10d0c' : '#000' }"
+                >{{ Number(index) + 1 }}</span
               >
-                <span
-                  class="fcc"
-                  :style="{ color: Number(index) <= 2 ? '#c10d0c' : '#000' }"
-                  >{{ Number(index) + 1 }}</span
-                >
-                <span class="fsc td_u">{{ item.name }}</span>
-                <span class="fsc"
-                  ><i class="list_icon play_icon"></i
-                  ><i class="icons_img addlist_icon"></i
-                  ><i class="list_icon collect_icon"></i
-                ></span>
-              </div>
+              <span class="fsc td_u">{{ item.name }}</span>
+              <span class="fsc"
+                ><i class="list_icon play_icon"></i
+                ><i class="icons_img addlist_icon"></i
+                ><i class="list_icon collect_icon"></i
+              ></span>
             </div>
-            <div class="foot">
-              <span>查看更多>></span>
-            </div>
-          </template>
-        </ElSkeleton>
+          </div>
+          <div class="foot">
+            <span>查看更多>></span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -246,6 +203,8 @@ const props = defineProps({
       }
 
       .content {
+        height: 320px;
+
         .item {
           height: 32px;
           padding-left: 10px;

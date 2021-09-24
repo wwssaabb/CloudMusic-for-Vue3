@@ -135,7 +135,12 @@
   }
 }
 
-//hover边框渐变动画
+//单行文字溢出处理(需要指定宽度)
+.t_ovl1 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 
 $--fixed_width:980px; //内容的宽度

@@ -57,3 +57,12 @@ export type DiscoverListType = {
   coverImgUrl: string;
   list: DiscoverListSongType[];
 };
+
+//热门主播
+export type DiscoverDjType = {
+  //热门主播type
+  id: number;
+  name: string;
+  tag: string;
+  picture: string;
+};
