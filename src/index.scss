@@ -135,7 +135,7 @@
   }
 }
 
-//单行文字溢出处理(需要指定宽度)
+//单行文字溢出处理(需要指定宽度,不能使用百分比)
 .t_ovl1 {
   white-space: nowrap;
   overflow: hidden;
@@ -174,17 +174,17 @@ $--foot_color:#f2f2f2; //脚步的背景色
     background-color: $--content_color;
     @extend .fcs;
 
-    .full {
+    /* .full {
       width: $--fixed_width;
       height: 100%;
-    }
+    } */
   }
 
   .page-foot {
     width: 100%;
     height: 173px;
     background-color: $--foot_color;
-    @extend .fcc;
+    @extend .fcs;
   }
 
 }

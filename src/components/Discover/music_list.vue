@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-23 16:12:04
- * @LastEditTime: 2021-09-24 09:56:03
+ * @LastEditTime: 2021-09-24 14:23:18
  * @FilePath: \CloudMusic-for-Vue3\src\components\Discover\music_list.vue
 -->
 <template>
@@ -65,7 +65,7 @@
 
 <script setup lang="ts">
 import { ElSkeleton, ElSkeletonItem } from "element-plus";
-import { DiscoverListSongType, DiscoverListType } from "../types/types";
+import type { DiscoverListSongType, DiscoverListType } from "../../types/types";
 import { PropType } from "vue";
 
 const props = defineProps({
@@ -146,7 +146,7 @@ const props = defineProps({
   }
 }
 .music-list {
-  padding: 0 20px;
+  padding: 0 20px 40px 20px;
 
   .list-wrap {
     height: 472px;

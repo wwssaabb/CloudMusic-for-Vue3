@@ -1,11 +1,9 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-22 09:32:37
- * @LastEditTime: 2021-09-22 15:02:08
- * @FilePath: \CloudMusic-for-Vue3\src\types\types.ts
+ * @LastEditTime: 2021-09-24 11:57:16
+ * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
-
-import { exec } from "child_process";
 
 /* 
   ==============discover 页面的types==============
@@ -56,6 +54,7 @@ export type DiscoverListType = {
   name: string;
   coverImgUrl: string;
   list: DiscoverListSongType[];
+  updateFrequency: string; //更新频率
 };
 
 //热门主播

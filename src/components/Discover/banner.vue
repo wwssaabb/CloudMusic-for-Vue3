@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-23 11:49:43
- * @LastEditTime: 2021-09-23 16:31:40
+ * @LastEditTime: 2021-09-24 11:27:37
  * @FilePath: \CloudMusic-for-Vue3\src\components\Discover\banner.vue
 -->
 <template>
@@ -9,12 +9,12 @@
     <ElSkeleton
       :loading="props.banners.length === 0"
       animated
-      style="width: 930px"
+      style="width: 980px"
     >
       <template #template>
         <ElSkeletonItem
           variant="image"
-          style="width: 930px; height: 283.88px"
+          style="width: 980px; height: 283.88px"
         ></ElSkeletonItem>
       </template>
       <template #default>

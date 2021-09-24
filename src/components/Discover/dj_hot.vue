@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-24 09:57:34
- * @LastEditTime: 2021-09-24 10:19:01
+ * @LastEditTime: 2021-09-24 11:14:48
  * @FilePath: \CloudMusic-for-Vue3\src\components\Discover\dj_hot.vue
 -->
 <template>
@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { DiscoverDjType } from "../../types/types";
+import type { DiscoverDjType } from "../../types/types";
 const list: DiscoverDjType[] = [
   {
     id: 278438485,

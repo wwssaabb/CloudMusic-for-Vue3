@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-17 15:22:04
- * @LastEditTime: 2021-09-17 15:22:04
+ * @LastEditTime: 2021-09-24 10:52:34
  * @FilePath: \CloudMusic-for-Vue3\typings\modules.d.ts
  */
 declare module "xxx" {
@@ -14,3 +14,9 @@ declare module "xxx" {
  */
   export = content;
 }
+
+/* declare module "*.ts" {
+  const content: any;
+  export = content;
+}
+ */

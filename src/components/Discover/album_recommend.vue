@@ -98,7 +98,7 @@
 <script setup lang="ts">
 import { ElSkeleton, ElSkeletonItem } from "element-plus";
 import { Swiper, SwiperSlide } from "swiper/vue";
-import { AlbumType } from "../types/types";
+import type { AlbumType } from "../../types/types";
 import { PropType } from "vue";
 
 const props = defineProps({

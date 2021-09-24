@@ -1,11 +1,11 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-17 16:07:22
- * @LastEditTime: 2021-09-23 17:32:20
+ * @LastEditTime: 2021-09-24 11:28:16
  * @FilePath: \CloudMusic-for-Vue3\src\views\Discover.vue
 -->
 <template>
-  <div class="full">
+  <div>
     <banner
       :banners="banners"
       :chooseBanner="chooseBanner"
@@ -44,18 +44,8 @@ import hotRecommend from "../components/Discover/hot_recommend.vue";
 import albumRecommend from "../components/Discover/album_recommend.vue";
 import music_list from "../components/Discover/music_list.vue";
 import djHot from "../components/Discover/dj_hot.vue";
-import { Swiper, SwiperSlide } from "swiper/vue";
 import SwiperClass from "swiper/types/swiper-class";
-import {
-  BannerType,
-  TagType,
-  RecommendType,
-  AlbumType,
-  ArtistType,
-  DiscoverListSongType,
-  DiscoverListType,
-} from "../types/types";
-import { computed, ref, Ref, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import {
   reqBanner,
   reqDiscoverRecommendCategory,
@@ -64,6 +54,15 @@ import {
   reqDiscoverList,
   reqDiscoverListDetail,
 } from "../api/index";
+import type {
+  BannerType,
+  TagType,
+  RecommendType,
+  AlbumType,
+  ArtistType,
+  DiscoverListSongType,
+  DiscoverListType,
+} from "../types/types";
 
 //banner相关
 const banners = ref<BannerType[] | []>([]);

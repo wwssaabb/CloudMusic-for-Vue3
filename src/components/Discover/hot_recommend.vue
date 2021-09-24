@@ -96,7 +96,7 @@
 
 <script setup lang="ts">
 import { ElSkeleton, ElSkeletonItem } from "element-plus";
-import { TagType, RecommendType } from "../types/types";
+import { TagType, RecommendType } from "../../types/types";
 import { PropType } from "vue";
 
 const props = defineProps({
