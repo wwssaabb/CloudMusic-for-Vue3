@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-17 16:32:23
- * @LastEditTime: 2021-09-24 15:47:51
+ * @LastEditTime: 2021-09-24 17:59:38
  * @FilePath: \CloudMusic-for-Vue3\src\components\Foot.vue
 -->
 <template>

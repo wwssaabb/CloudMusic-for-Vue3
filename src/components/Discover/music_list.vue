@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-23 16:12:04
- * @LastEditTime: 2021-09-24 14:23:18
+ * @LastEditTime: 2021-09-24 18:01:16
  * @FilePath: \CloudMusic-for-Vue3\src\components\Discover\music_list.vue
 -->
 <template>
