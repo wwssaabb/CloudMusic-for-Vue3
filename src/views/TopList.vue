@@ -8,7 +8,11 @@
   <div class="top-list-page fss">
     <div class="top-list-wrap fss">
       <div class="left">
-        <div class="list" v-for="lists in [data.feature, data.media]">
+        <div
+          class="list"
+          v-for="lists in [data.feature, data.media]"
+          :key="lists.id"
+        >
           <div class="title">
             <span>{{ lists.title }}</span>
           </div>
@@ -37,19 +41,25 @@
         v-loading="data.showData.id === 0"
         :style="data.showData.id === 0 ? 'height:calc(100vh - 105px)' : ''"
       >
-        <div class="list-head">
+        <div class="list-head fss">
           <div class="cover pr">
             <img :src="data.showData.coverImgUrl + '?param=150y150'" alt="" />
             <i class="msk pa"></i>
           </div>
           <div class="msg">
             <div class="name">{{ data.showData.name }}</div>
-            <div class="update-time">
-              <i></i>
+            <div class="update-time fsc">
+              <i class="icons_img"></i>
               <span>最近更新：{{ data.showData.updateTime }}</span>
               <span>{{ "(" + getUpdateMsg() + ")" }}</span>
             </div>
-            <div class="btns"></div>
+            <div class="btns">
+              <span><a class="icons1_img play_icon" href="javascript:;" title="播放"></a><a class="icons1_img add_icon" href="javascript:;" title="添加到播放列表"></a></span>
+              <span><a class="icons1_img collect_icon" href="javascript:;">{{'('+data.showData.subscribedCount+')'}}</a></span>
+              <span><a class="icons1_img share_icon" href="javascript:;">{{'('+data.showData.shareCount+')'}}</a></span>
+              <span><a class="icons1_img download_icon" href="javascript:;">下载</a></span>
+              <span><a class="icons1_img comment_icon" href="javascript:;">{{'('+data.showData.commentCount+')'}}</a></span>
+            </div>
           </div>
         </div>
       </div>
@@ -121,6 +131,15 @@ const getUpdateMsg = () => {
   width: #{$size_x}px;
   height: #{$size_y}px;
   background-position: #{$x}px #{$y}px;
+}
+
+.icons_img {
+  background: url("https://music.163.com/style/web2/img/icon.png?7a7e3fe737f9f8c50aefdfeffabe5d20")
+    no-repeat;
+}
+.icons1_img {
+  background: url("https://music.163.com/style/web2/img/button2.png?121f168fd59c64de034a737fa613a137")
+    no-repeat;
 }
 .top-list-page {
   background: #f5f5f5;
@@ -213,6 +232,30 @@ const getUpdateMsg = () => {
       }
 
       .msg {
+        .name {
+          font: 20px "Microsoft Yahei";
+          color: #000;
+          line-height: 24px;
+          margin: 16px 0 4px;
+        }
+        .update-time {
+          margin-bottom: 20px;
+
+          i {
+            display: inline-block;
+            @include get_icon(-18, -682, 13, 13);
+            margin-right: 5px;
+          }
+          span {
+            line-height: 35px;
+            font-size: 12px;
+            color: #666;
+            margin-right: 10px;
+            &:last-child{
+              color: #999;
+            }
+          }
+        }
       }
     }
   }
