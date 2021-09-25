@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-17 10:20:33
- * @LastEditTime: 2021-09-18 16:39:42
+ * @LastEditTime: 2021-09-25 12:02:33
  * @FilePath: \CloudMusic-for-Vue3\src\main.ts
  */
 import { createApp } from "vue";

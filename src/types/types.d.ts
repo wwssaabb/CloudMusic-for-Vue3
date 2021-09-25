@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-22 09:32:37
- * @LastEditTime: 2021-09-24 15:55:36
+ * @LastEditTime: 2021-09-25 11:44:17
  * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
 
@@ -43,10 +43,27 @@ export type AlbumType = {
 };
 
 //榜单
+type ALType = {
+  //歌曲type
+  id: number;
+  name: string;
+  picUrl: string;
+};
+type ARType = {
+  //创作人type
+  id: number;
+  name: string;
+};
+
 export type DiscoverListSongType = {
   //榜单歌曲type
   id: number;
   name: string;
+  al: ALType;
+  alia?: string[];
+  ar: ARType[];
+  dt: number;
+  mv: number;
 };
 export type DiscoverListType = {
   //榜单type

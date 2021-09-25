@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-18 14:19:05
- * @LastEditTime: 2021-09-24 17:42:14
+ * @LastEditTime: 2021-09-25 18:00:45
  * @FilePath: \CloudMusic-for-Vue3\src\views\TopList.vue
 -->
 <template>
@@ -50,15 +50,117 @@
             <div class="name">{{ data.showData.name }}</div>
             <div class="update-time fsc">
               <i class="icons_img"></i>
-              <span>最近更新：{{ data.showData.updateTime }}</span>
+              <span
+                >最近更新：{{
+                  format(data.showData.updateTime, "MMM Do DD")
+                }}</span
+              >
               <span>{{ "(" + getUpdateMsg() + ")" }}</span>
             </div>
-            <div class="btns">
-              <span><a class="icons1_img play_icon" href="javascript:;" title="播放"></a><a class="icons1_img add_icon" href="javascript:;" title="添加到播放列表"></a></span>
-              <span><a class="icons1_img collect_icon" href="javascript:;">{{'('+data.showData.subscribedCount+')'}}</a></span>
-              <span><a class="icons1_img share_icon" href="javascript:;">{{'('+data.showData.shareCount+')'}}</a></span>
-              <span><a class="icons1_img download_icon" href="javascript:;">下载</a></span>
-              <span><a class="icons1_img comment_icon" href="javascript:;">{{'('+data.showData.commentCount+')'}}</a></span>
+            <div class="btns fsc">
+              <span
+                ><a
+                  class="icons1_img play_btn pr"
+                  href="javascript:;"
+                  title="播放"
+                  ><i class="icons1_img"
+                    ><i class="icons1_img" /><span class="text pa"
+                      >播放</span
+                    ></i
+                  ></a
+                ><a
+                  class="icons1_img add_icon"
+                  href="javascript:;"
+                  title="添加到播放列表"
+                ></a
+              ></span>
+              <span
+                ><a class="icons1_img collect_icon pr" href="javascript:;"
+                  >{{ "(" + data.showData.subscribedCount + ")"
+                  }}<i class="icons1_img pa" /> </a
+              ></span>
+              <span
+                ><a class="icons1_img share_icon pr" href="javascript:;"
+                  >{{ "(" + data.showData.shareCount + ")"
+                  }}<i class="icons1_img pa" /></a
+              ></span>
+              <span
+                ><a class="icons1_img download_icon pr" href="javascript:;"
+                  >下载<i class="icons1_img pa" /></a
+              ></span>
+              <span
+                ><a class="icons1_img comment_icon pr" href="javascript:;"
+                  >{{ "(" + data.showData.commentCount + ")"
+                  }}<i class="icons1_img pa" /></a
+              ></span>
+            </div>
+          </div>
+        </div>
+        <div class="list-wrap">
+          <div class="title fpbc">
+            <div>
+              <span class="title-name">歌曲列表</span>
+              <span>{{ data.showData.trackCount }}首歌</span>
+            </div>
+            <div>
+              播放：<span style="color: #c20c0c">{{
+                data.showData.playCount
+              }}</span>
+              次
+            </div>
+          </div>
+          <div class="list">
+            <div class="list-title fsc">
+              <div class="index"></div>
+              <div class="name">标题</div>
+              <div class="time">时长</div>
+              <div class="singer">歌手</div>
+            </div>
+            <div class="content">
+              <div
+                class="item fsc"
+                v-for="(item, index) in data.showData.tracks"
+                :key="item.id"
+              >
+                <div class="index">{{ index + 1 }}</div>
+                <div class="name fsc">
+                  <img
+                    v-if="index <= 2"
+                    :src="item.al.picUrl + '?param=50y50&quality=100'"
+                    alt=""
+                  />
+                  <i class="play_icon"></i>
+                  <span class="td_u">{{ item.name }}</span>
+                </div>
+                <div class="time fcc">
+                  <span>{{ format(item.dt, "LT", false) }}</span>
+                  <div class="icons">
+                    <a
+                      href="javascript:;"
+                      title="添加到播放列表"
+                      class="playlist_icon"
+                    ></a>
+                    <a
+                      href="javascript:;"
+                      title="收藏"
+                      class="addlist_icon"
+                    ></a>
+                    <a
+                      href="javascript:;"
+                      title="分享"
+                      class="collectlist_icon"
+                    ></a>
+                    <a
+                      href="javascript:;"
+                      title="下载"
+                      class="downloadlist_icon"
+                    ></a>
+                  </div>
+                </div>
+                <div class="singer t_ovl1">
+                  {{ item.ar.map((i) => i.name).join("/") }}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -71,6 +173,21 @@
 import { DiscoverListType, PlaylistType } from "../types/types";
 import { reqDiscoverList, reqDiscoverListDetail } from "../api";
 import { ref, onMounted } from "vue";
+import moment from "moment";
+moment.locale("zh-CN");
+const format = (n: number, format: string, isNormal: boolean = true) => {
+  //时间格式化
+  let res: string;
+  if (isNormal) {
+    res = moment(n).format(format);
+  } else {
+    let duration = moment.duration(n);
+    let m = duration.minutes();
+    let s = duration.seconds();
+    res = (m >= 10 ? m : "0" + m) + ":" + (s >= 10 ? s : "0" + s);
+  }
+  return res;
+};
 
 type TopListDataType = {
   feature: {
@@ -140,6 +257,42 @@ const getUpdateMsg = () => {
 .icons1_img {
   background: url("https://music.163.com/style/web2/img/button2.png?121f168fd59c64de034a737fa613a137")
     no-repeat;
+}
+.icons2_img {
+  background: url("https://music.163.com/style/web2/img/table.png?a58e4187ce8625d374d6085b2c4e7f0f")
+    no-repeat;
+}
+.playlist_icon {
+  display: inline-block;
+  @extend .icons_img;
+  @include get_icon(0, -700, 17, 17);
+  &:hover {
+    @include get_icon(0, -128, 17, 17);
+  }
+}
+.addlist_icon {
+  display: inline-block;
+  @extend .icons_img;
+  @include get_icon(0, -174, 13, 13);
+  &:hover {
+    @include get_icon(0, -128, 17, 17);
+  }
+}
+.collectlist_icon {
+  display: inline-block;
+  @extend .icons_img;
+  @include get_icon(0, -195, 18, 16);
+  &:hover {
+    @include get_icon(0, -128, 18, 16);
+  }
+}
+.downloadlist_icon {
+  display: inline-block;
+  @extend .icons_img;
+  @include get_icon(-81, -174, 18, 16);
+  &:hover {
+    @include get_icon(0, -128, 18, 16);
+  }
 }
 .top-list-page {
   background: #f5f5f5;
@@ -251,10 +404,231 @@ const getUpdateMsg = () => {
             font-size: 12px;
             color: #666;
             margin-right: 10px;
-            &:last-child{
+            &:last-child {
               color: #999;
             }
           }
+        }
+
+        .btns {
+          align-items: stretch;
+          span {
+            display: inline-block;
+            margin-right: 5px;
+            a {
+              display: inline-block;
+              text-decoration: none;
+              &.play_btn {
+                @include get_icon(-184, -428, 66, 31);
+                overflow: hidden;
+                > i {
+                  display: inline-block;
+                  @include get_icon(0, -387, 66, 31);
+                  color: #fff;
+                  > i {
+                    display: inline-block;
+                    margin: 7px 2px 0 4px;
+                    @include get_icon(0, -1622, 20, 18);
+                    overflow: hidden;
+                  }
+                }
+                &:hover {
+                  > i {
+                    @include get_icon(0, -469, 66, 31);
+                    & > i {
+                      @include get_icon(-28, -1622, 20, 18);
+                    }
+                  }
+                }
+                .text {
+                  top: 7px;
+                  left: 28px;
+                }
+              }
+              &.add_icon {
+                @include get_icon(0, -1588, 31, 31);
+                &:hover {
+                  @include get_icon(-40, -1588, 31, 31);
+                }
+              }
+
+              &.collect_icon {
+                color: #333;
+                font-size: 12px;
+                @include get_icon(0, -977, 84, 31);
+                padding: 8px 5px 0 28px;
+                margin-right: 5px;
+
+                i {
+                  right: -5px;
+                  top: 0;
+                  display: inline-block;
+                  @include get_icon(-245, -1020, 5, 31);
+                  z-index: 5;
+                }
+
+                &:hover {
+                  @include get_icon(0, -1063, 84, 31);
+                  i {
+                    @include get_icon(-245, -1106, 5, 31);
+                  }
+                }
+              }
+
+              &.share_icon {
+                color: #333;
+                font-size: 12px;
+                @include get_icon(0, -1225, 73, 31);
+                padding: 8px 0 0 28px;
+                margin-right: 5px;
+
+                i {
+                  right: -5px;
+                  top: 0;
+                  display: inline-block;
+                  @include get_icon(-245, -1020, 5, 31);
+                  z-index: 5;
+                }
+
+                &:hover {
+                  @include get_icon(0, -1268, 73, 31);
+                  i {
+                    @include get_icon(-245, -1106, 5, 31);
+                  }
+                }
+              }
+
+              &.download_icon {
+                color: #333;
+                font-size: 12px;
+                @include get_icon(0, -2761, 56, 31);
+                padding: 8px 0 0 28px;
+                margin-right: 5px;
+
+                i {
+                  right: -5px;
+                  top: 0;
+                  display: inline-block;
+                  @include get_icon(-245, -1020, 5, 31);
+                  z-index: 5;
+                }
+
+                &:hover {
+                  @include get_icon(0, -2805, 56, 31);
+                  i {
+                    @include get_icon(-245, -1106, 5, 31);
+                  }
+                }
+              }
+
+              &.comment_icon {
+                color: #333;
+                font-size: 12px;
+                @include get_icon(0, -1465, 80, 31);
+                padding: 8px 0 0 28px;
+                margin-right: 5px;
+
+                i {
+                  right: -5px;
+                  top: 0;
+                  display: inline-block;
+                  @include get_icon(-245, -1020, 5, 31);
+                  z-index: 5;
+                }
+
+                &:hover {
+                  @include get_icon(0, -1508, 80, 31);
+                  i {
+                    @include get_icon(-245, -1106, 5, 31);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .list-wrap {
+      padding: 0 40px;
+      .title {
+        height: 35px;
+        border-bottom: 2px solid #c20c0c;
+
+        div,
+        span {
+          color: #666;
+          font-size: 12px;
+          &.title-name {
+            font: 20px Microsoft Yahei;
+            color: #333;
+            margin-right: 20px;
+          }
+        }
+      }
+
+      $border_color: #eee;
+      .list {
+        border: 1px solid $border_color;
+
+        .item {
+          width: 100%;
+          padding: 10px 0;
+          &:nth-child(2n + 1) {
+            background-color: #f7f7f7;
+          }
+          div {
+            font-size: 12px;
+            span {
+              font-size: 12px;
+            }
+            img {
+              width: 50px;
+              height: 50px;
+              border-radius: 5px;
+              margin-right: 14px;
+            }
+          }
+        }
+        .index {
+          width: 78px;
+          padding-left: 20px;
+          color: #999;
+        }
+        .name {
+          width: 327px;
+          padding-left: 10px;
+          span {
+            margin-left: 8px;
+          }
+        }
+        .time {
+          width: 91px;
+          padding-left: 10px;
+
+          .show_icons {
+            position: absolute;
+          }
+        }
+        .singer {
+          width: 170px;
+          padding-left: 10px;
+        }
+        .list-title {
+          color: #666;
+          div {
+            font-size: 12px;
+            height: 39px;
+            line-height: 39px;
+            border-right: 1px solid $border_color;
+            border-bottom: 1px solid $border_color;
+            background-image: linear-gradient(to bottom, #fff, #f8f8f8);
+            &:last-child {
+              border-right: none;
+            }
+          }
+
+          height: 39px;
         }
       }
     }
