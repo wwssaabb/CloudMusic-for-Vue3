@@ -123,7 +123,7 @@
                 :key="item.id"
               >
                 <div class="index">{{ index + 1 }}</div>
-                <div class="name fsc">
+                <div class="name fsc cur_p">
                   <img
                     v-if="index <= 2"
                     :src="item.al.picUrl + '?param=50y50&quality=100'"
@@ -275,7 +275,7 @@ const getUpdateMsg = () => {
   @extend .icons_img;
   @include get_icon(2.5, -700, 18, 16);
   &:hover {
-    @include get_icon(0, -128, 18, 16);
+    @include get_icon(-19.5, -700, 18, 16);
   }
 }
 .addlist_icon {
@@ -283,15 +283,15 @@ const getUpdateMsg = () => {
   @extend .icons2_img;
   @include get_icon(0, -174, 18, 16);
   &:hover {
-    @include get_icon(0, -128, 18, 16);
+    @include get_icon(-20, -174, 18, 16);
   }
 }
 .collectlist_icon {
   display: inline-block;
   @extend .icons2_img;
-  @include get_icon(0, -195, 18, 16);
+  @include get_icon(0, -194, 18, 16);
   &:hover {
-    @include get_icon(0, -128, 18, 16);
+    @include get_icon(-20, -194, 18, 16);
   }
 }
 .downloadlist_icon {
@@ -299,7 +299,7 @@ const getUpdateMsg = () => {
   @extend .icons2_img;
   @include get_icon(-81, -174, 18, 16);
   &:hover {
-    @include get_icon(0, -128, 18, 16);
+    @include get_icon(-104, -174, 18, 16);
   }
 }
 .top-list-page {
@@ -581,7 +581,8 @@ const getUpdateMsg = () => {
 
         .item {
           width: 100%;
-          padding: 10px 0;
+          padding: 6px 0;
+          line-height: 18px;
           &:nth-child(2n + 1) {
             background-color: #f7f7f7;
           }
@@ -589,6 +590,7 @@ const getUpdateMsg = () => {
             font-size: 12px;
             span {
               font-size: 12px;
+              color: #333;
             }
             img {
               width: 50px;
