@@ -132,9 +132,9 @@
                   <i class="play_icon"></i>
                   <span class="td_u">{{ item.name }}</span>
                 </div>
-                <div class="time fcc">
+                <div class="time fsc pr">
                   <span>{{ format(item.dt, "LT", false) }}</span>
-                  <div class="icons">
+                  <div class="icons fsc">
                     <a
                       href="javascript:;"
                       title="添加到播放列表"
@@ -174,7 +174,7 @@ import { DiscoverListType, PlaylistType } from "../types/types";
 import { reqDiscoverList, reqDiscoverListDetail } from "../api";
 import { ref, onMounted } from "vue";
 import moment from "moment";
-moment.locale("zh-CN");
+
 const format = (n: number, format: string, isNormal: boolean = true) => {
   //时间格式化
   let res: string;
@@ -262,25 +262,33 @@ const getUpdateMsg = () => {
   background: url("https://music.163.com/style/web2/img/table.png?a58e4187ce8625d374d6085b2c4e7f0f")
     no-repeat;
 }
+.play_icon {
+  display: inline-block;
+  @extend .icons2_img;
+  @include get_icon(0, -103, 17, 17);
+  &:hover {
+    @include get_icon(0, -128, 17, 17);
+  }
+}
 .playlist_icon {
   display: inline-block;
   @extend .icons_img;
-  @include get_icon(0, -700, 17, 17);
+  @include get_icon(2.5, -700, 18, 16);
   &:hover {
-    @include get_icon(0, -128, 17, 17);
+    @include get_icon(0, -128, 18, 16);
   }
 }
 .addlist_icon {
   display: inline-block;
-  @extend .icons_img;
-  @include get_icon(0, -174, 13, 13);
+  @extend .icons2_img;
+  @include get_icon(0, -174, 18, 16);
   &:hover {
-    @include get_icon(0, -128, 17, 17);
+    @include get_icon(0, -128, 18, 16);
   }
 }
 .collectlist_icon {
   display: inline-block;
-  @extend .icons_img;
+  @extend .icons2_img;
   @include get_icon(0, -195, 18, 16);
   &:hover {
     @include get_icon(0, -128, 18, 16);
@@ -288,7 +296,7 @@ const getUpdateMsg = () => {
 }
 .downloadlist_icon {
   display: inline-block;
-  @extend .icons_img;
+  @extend .icons2_img;
   @include get_icon(-81, -174, 18, 16);
   &:hover {
     @include get_icon(0, -128, 18, 16);
@@ -589,6 +597,30 @@ const getUpdateMsg = () => {
               margin-right: 14px;
             }
           }
+          &:hover{
+            
+            .time {
+
+              span{
+                display: none;
+              }
+              .icons{
+                height: 20px;
+                position: absolute;
+                top: -8px;
+                left: 0;
+                opacity: 1;
+                display: inline-block;
+                width: 100%;
+                height: 100%;
+
+                a{
+                  margin-right: 2px;
+                }
+              }
+
+            }
+          }
         }
         .index {
           width: 78px;
@@ -605,9 +637,10 @@ const getUpdateMsg = () => {
         .time {
           width: 91px;
           padding-left: 10px;
-
-          .show_icons {
-            position: absolute;
+          
+          .icons{
+            display: none;
+            opacity: 0;
           }
         }
         .singer {
