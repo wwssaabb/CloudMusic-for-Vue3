@@ -154,7 +154,7 @@
                   <i class="mv_icon f_nosg" v-if="item.mv !== 0"></i>
                 </div>
                 <div class="time fsc pr">
-                  <span>{{ format(item.dt, "LT", false) }}</span>
+                  <span>{{ format(item.dt, "LT", 'duration') }}</span>
                   <div class="icons fsc">
                     <a
                       href="javascript:;"
@@ -246,10 +246,10 @@
                   <div class="comment-foot fpbc">
                     <span>{{ item.time }}</span>
                     <span class="fcc"
-                      ><i class="icon_commend"></i
+                      ><i class="icon_commend cur_p"></i
                       ><span v-if="item.likedCount !== 0" class="liked_count"
                         >({{ item.likedCount }})</span
-                      ><span>回复</span></span
+                      ><span class="btn_apply cur_p">回复</span></span
                     >
                   </div>
                 </div>
@@ -274,18 +274,32 @@ import { reqTopList, reqTopListDetail, reqTopListComment } from "../api";
 import { ref, onMounted } from "vue";
 import moment from "moment";
 
-const format = (n: number, format: string, isNormal: boolean = true) => {
-  //时间格式化
-  let res: string;
-  if (isNormal) {
-    res = moment(n).format(format);
-  } else {
-    let duration = moment.duration(n);
-    let m = duration.minutes();
-    let s = duration.seconds();
-    res = (m >= 10 ? m : "0" + m) + ":" + (s >= 10 ? s : "0" + s);
+type formatType='normal'|'compare'|'duration'
+const format = (n: number, format: string, type: formatType = 'normal') => {
+  const handle={
+    normal:()=>moment(n).format(format),
+    compare:()=>{
+      let before=(new Date(n))
+      let now=new Date()
+      let diff=now.getTime()-before.getTime()
+      if(before.getDate()-now.getDate()===1) return ''
+      if(diff<3600000){ //一个小时内
+        return moment(n).startOf('hour').fromNow()
+      }else if(diff>=3600000&&diff<=86400000){//
+        return moment().subtract(1, 'days').calendar();
+      }
+      moment(n).startOf('hour').fromNow()
+    },
+    duration:()=>{
+      let duration = moment.duration(n);
+      let m = duration.minutes();
+      let s = duration.seconds();
+      return (m >= 10 ? m : "0" + m) + ":" + (s >= 10 ? s : "0" + s);
+    },
   }
-  return res;
+
+  //时间格式化
+  return handle[type]();
 };
 
 type TopListDataType = {
@@ -530,7 +544,10 @@ const commentContent = ref<string>("");
     @include get_btn(3, -84, -64, 46, 25, -84, -94);
   }
   &commend {
-    @include get_btn(4, -150, 0, 15, 14);
+    @include get_btn(4, -150, 0, 15, 14,-150,-20);
+    &.active{
+      @include get_icon(-170, 0, 15, 14);
+    }
   }
 }
 
@@ -1041,9 +1058,13 @@ const commentContent = ref<string>("");
               }
               .liked_count {
                 line-height: 14px;
-                padding-right: 8px;
-                border-right: 1px solid #ccc;
                 margin-right: 8px;
+              }
+
+              .btn_apply{
+                line-height: 14px;
+                padding-left: 8px;
+                border-left: 1px solid #ccc;
               }
             }
           }
