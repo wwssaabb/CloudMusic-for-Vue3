@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-18 14:19:05
- * @LastEditTime: 2021-09-27 14:46:12
+ * @LastEditTime: 2021-09-27 16:24:25
  * @FilePath: \CloudMusic-for-Vue3\src\views\TopList.vue
 -->
 <template>
@@ -185,6 +185,36 @@
             </div>
           </div>
         </div>
+        <div class="comment-list-wrap">
+          <div class="comment-list-head">
+            <div class="comment-list-title">
+              <span>评论</span>
+              <span>共{{ data.showData.commentCount }}条评论</span>
+            </div>
+            <div class="comment-input-wrap fss">
+              <img
+                src="http://s4.music.126.net/style/web2/img/default/default_avatar.jpg?param=50y50"
+                alt=""
+              />
+              <div class="comment-input pr">
+                <textarea
+                  placeholder="评论"
+                  v-model="commentContent"
+                ></textarea>
+              </div>
+            </div>
+            <div class="comment-input-bottom fpbc">
+              <div class="fast-icons">
+                <i class="icon_smlie_face cur_p"></i>
+                <i class="icon_at cur_p"></i>
+              </div>
+              <div class="btn-wrap">
+                <span>{{ 140 - commentContent.length }}</span>
+                <span class="icon_btn_comment cur_p">评论</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -304,6 +334,9 @@ const getRankNumber = (index: number): number | undefined => {
   let lr = data.value.showData.trackIds[index].lr;
   return lr === undefined || lr === 0 ? lr : Math.abs(lr + 1 - index);
 };
+
+//评论相关
+const commentContent = ref<string>("");
 </script>
 
 <style lang="scss" scoped>
@@ -311,6 +344,16 @@ const getRankNumber = (index: number): number | undefined => {
   width: #{$size_x}px;
   height: #{$size_y}px;
   background-position: #{$x}px #{$y}px;
+}
+@mixin get_btn($extendClass, $x_f, $y_f, $size_x_f, $size_y_f, $x_n, $y_n) {
+  display: inline-block;
+  @extend .#{$extendClass};
+  @include get_icon($x_f, $y_f, $size_x_f, $size_y_f);
+  @if ($size_y_f, $x_n, $y_n) {
+    &:hover {
+      @include get_icon($x_n, $y_n, $size_x_f, $size_y_f);
+    }
+  }
 }
 
 .icons_img {
@@ -323,6 +366,10 @@ const getRankNumber = (index: number): number | undefined => {
 }
 .icons2_img {
   background: url("https://music.163.com/style/web2/img/table.png?a58e4187ce8625d374d6085b2c4e7f0f")
+    no-repeat;
+}
+.icons3_img {
+  background: url("https://music.163.com/style/web2/img/button.png?6c44aac4f8e2faab560469bf9b7ed1b9")
     no-repeat;
 }
 .play_icon {
@@ -405,6 +452,22 @@ const getRankNumber = (index: number): number | undefined => {
     font-size: 10px;
     color: #bb2128;
     padding-left: 8px;
+  }
+}
+
+.icon_ {
+  &smlie_face {
+    display: inline-block;
+    @extend .icons_img;
+    @include get_icon(-40, -490, 18, 18);
+  }
+  &at {
+    display: inline-block;
+    @extend .icons_img;
+    @include get_icon(-60, -490, 18, 18);
+  }
+  &btn_comment {
+    @include get_btn("icons3_img", -84, -64, 46, 25, -84, -94);
   }
 }
 
@@ -730,7 +793,9 @@ const getRankNumber = (index: number): number | undefined => {
         .index {
           width: 78px;
           padding: 0 10px 0 20px;
-          color: #999;
+          span:first-child {
+            color: #999;
+          }
           .rank_icon {
             width: 20px;
             justify-content: stretch;
@@ -778,6 +843,86 @@ const getRankNumber = (index: number): number | undefined => {
           }
 
           height: 39px;
+        }
+      }
+    }
+
+    .comment-list-wrap {
+      padding: 0 40px;
+
+      .comment-list-head {
+        margin-bottom: 20px;
+        .comment-list-title {
+          border-bottom: 2px solid #c20c0c;
+          span {
+            font-size: 12px;
+            color: #666;
+            &:first-child {
+              font-size: 20px;
+              color: #333;
+              margin-right: 20px;
+            }
+          }
+        }
+
+        .comment-input-wrap {
+          margin-top: 20px;
+
+          img {
+            width: 50px;
+            height: 50px;
+          }
+          .comment-input {
+            flex: 1;
+            border: 1px solid #cdcdcd;
+            padding: 5px;
+            margin-left: 15px;
+
+            textarea {
+              width: 583px;
+              height: 50px;
+              border: none;
+              outline: none;
+              resize: none;
+            }
+
+            &::after {
+              content: "";
+              position: absolute;
+              top: 15px;
+              left: -5px;
+              width: 10px;
+              height: 10px;
+              border-bottom: 1px solid #cdcdcd;
+              border-left: 1px solid #cdcdcd;
+              transform: rotate(45deg);
+              background-color: #fff;
+            }
+          }
+        }
+
+        .comment-input-bottom {
+          margin-top: 10px;
+          padding-left: 65px;
+          span {
+            color: #999;
+          }
+
+          .fast-icons {
+            i {
+              margin-right: 10px;
+            }
+          }
+
+          .btn-wrap {
+            span.icon_btn_comment {
+              color: #fff;
+              font-size: 12px;
+              text-align: center;
+              line-height: 25px;
+              margin-left: 10px;
+            }
+          }
         }
       }
     }
