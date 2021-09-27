@@ -77,6 +77,8 @@ export type trackIdType = {
   id: number;
   lr?: number;
 };
+//  0: 歌曲 1: mv 2: 歌单 3: 专辑 4: 电台 5: 视频
+export type getCommentType = 0 | 1 | 2 | 3 | 4 | 5;
 //榜单返回的playlist的Type
 export type PlaylistType = {
   id: number;
@@ -90,6 +92,35 @@ export type PlaylistType = {
   shareCount: number; //分享数量
   commentCount: number; //评论数量
   tracks: DiscoverListSongType[]; //列表
+};
+export type CommentUserType = {
+  userId: number;
+  userType: number;
+  nickname: string;
+  avatarUrl: string;
+  authStatus: number;
+  vipType: number;
+};
+export type CommentType = {
+  user: CommentUserType;
+  commentId: number;
+  status: number;
+  content: string;
+  time: number;
+  likedCount: number;
+  beReplied: CommentType[];
+  parentCommentId: number;
+  liked: boolean;
+};
+export type reqCommentType = {
+  isMusician: boolean;
+  topComments: CommentType[];
+  moreHot: boolean;
+  hotComments: CommentType[];
+  code: number;
+  comments: CommentType[];
+  total: number;
+  more: boolean;
 };
 
 //热门主播

@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-18 14:19:05
- * @LastEditTime: 2021-09-27 16:24:25
+ * @LastEditTime: 2021-09-27 18:01:52
  * @FilePath: \CloudMusic-for-Vue3\src\views\TopList.vue
 -->
 <template>
@@ -214,6 +214,48 @@
               </div>
             </div>
           </div>
+          <div class="comment-list-hot">
+            <div class="comment-list-hot-title">精彩评论</div>
+            <div class="list">
+              <!-- <div class="item"></div> -->
+            </div>
+          </div>
+          <div class="comment-list-new">
+            <div class="comment-list-new-title">
+              最新评论({{ data.showData.commentCount }})
+            </div>
+            <div class="list" v-loading="data.comments === null">
+              <div class="item fss" v-for="item in data.comments?.comments">
+                <img :src="item.user.avatarUrl + '?param=50y50'" alt="" />
+                <div class="right">
+                  <div class="comment-content">
+                    <span class="comment-user-name td_u cur_p"
+                      >{{ item.user.nickname }}：</span
+                    >
+                    <span>{{ item.content }}</span>
+                  </div>
+                  <div
+                    class="other-comment-content"
+                    v-if="item.beReplied.length !== 0"
+                  >
+                    <span class="comment-user-name td_u cur_p"
+                      >{{ item.beReplied[0].user.nickname }}：</span
+                    >
+                    <span>{{ item.beReplied[0].content }}</span>
+                  </div>
+                  <div class="comment-foot fpbc">
+                    <span>{{ item.time }}</span>
+                    <span class="fcc"
+                      ><i class="icon_commend"></i
+                      ><span v-if="item.likedCount !== 0" class="liked_count"
+                        >({{ item.likedCount }})</span
+                      ><span>回复</span></span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -226,8 +268,9 @@ import {
   PlaylistType,
   DiscoverListSongType,
   trackIdType,
+  reqCommentType,
 } from "../types/types";
-import { reqDiscoverList, reqDiscoverListDetail } from "../api";
+import { reqTopList, reqTopListDetail, reqTopListComment } from "../api";
 import { ref, onMounted } from "vue";
 import moment from "moment";
 
@@ -257,6 +300,7 @@ type TopListDataType = {
     list: DiscoverListType[];
   };
   showData: PlaylistType;
+  comments: reqCommentType | null;
 };
 
 const data = ref<TopListDataType>({
@@ -283,15 +327,19 @@ const data = ref<TopListDataType>({
     tracks: [], //列表
     trackIds: [], //列表上一次排行
   },
+  comments: null,
 });
 
 onMounted(async () => {
-  let res = await reqDiscoverList();
+  let res = await reqTopList();
   data.value.feature.list = res.list.slice(0, 4);
   data.value.media.list = res.list.slice(4);
-  let res_showData = await reqDiscoverListDetail(data.value.feature.list[0].id);
+  let res_showData = await reqTopListDetail(data.value.feature.list[0].id);
   data.value.showData = res_showData.playlist;
   console.log(data.value);
+  let res_comments = await reqTopListComment(data.value.showData.id, 2, 20);
+  console.log(res_comments);
+  data.value.comments = res_comments;
 });
 
 const getUpdateMsg = () => {
@@ -345,9 +393,17 @@ const commentContent = ref<string>("");
   height: #{$size_y}px;
   background-position: #{$x}px #{$y}px;
 }
-@mixin get_btn($extendClass, $x_f, $y_f, $size_x_f, $size_y_f, $x_n, $y_n) {
+@mixin get_btn(
+  $extendClassIndex,
+  $x_f,
+  $y_f,
+  $size_x_f,
+  $size_y_f,
+  $x_n: false,
+  $y_n: false
+) {
   display: inline-block;
-  @extend .#{$extendClass};
+  @extend .#{"icons" + $extendClassIndex + "_img"};
   @include get_icon($x_f, $y_f, $size_x_f, $size_y_f);
   @if ($size_y_f, $x_n, $y_n) {
     &:hover {
@@ -370,6 +426,10 @@ const commentContent = ref<string>("");
 }
 .icons3_img {
   background: url("https://music.163.com/style/web2/img/button.png?6c44aac4f8e2faab560469bf9b7ed1b9")
+    no-repeat;
+}
+.icons4_img {
+  background: url("https://music.163.com/style/web2/img/icon2.png?c34052cb37c1e490b43ff505c4e2f71a")
     no-repeat;
 }
 .play_icon {
@@ -467,7 +527,10 @@ const commentContent = ref<string>("");
     @include get_icon(-60, -490, 18, 18);
   }
   &btn_comment {
-    @include get_btn("icons3_img", -84, -64, 46, 25, -84, -94);
+    @include get_btn(3, -84, -64, 46, 25, -84, -94);
+  }
+  &commend {
+    @include get_btn(4, -150, 0, 15, 14);
   }
 }
 
@@ -921,6 +984,67 @@ const commentContent = ref<string>("");
               text-align: center;
               line-height: 25px;
               margin-left: 10px;
+            }
+          }
+        }
+      }
+
+      .comment-list-hot,
+      .comment-list-new {
+        &-title {
+          height: 21px;
+          border-bottom: 1px solid #cfcfcf;
+          font: bold 12px Arial, Helvetica, sans-serif;
+          margin-top: 20px;
+        }
+      }
+
+      .list {
+        .item {
+          padding: 15px 0;
+          border-bottom: 1px dotted #ccc;
+
+          img {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            margin-right: 10px;
+          }
+
+          .right {
+            border: none;
+            span {
+              line-height: 20px;
+              font-size: 12px;
+              color: #333;
+            }
+
+            .other-comment-content {
+              padding: 8px 19px;
+              background: #f4f4f4;
+              border: 1px solid #dedede;
+              margin-top: 10px;
+              span {
+                color: #666;
+              }
+            }
+
+            span.comment-user-name {
+              color: #0c73c2;
+            }
+
+            .comment-foot {
+              margin-top: 15px;
+
+              i {
+                margin-right: 8px;
+              }
+              .liked_count {
+                line-height: 14px;
+                padding-right: 8px;
+                border-right: 1px solid #ccc;
+                margin-right: 8px;
+              }
             }
           }
         }

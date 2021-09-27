@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-17 16:07:22
- * @LastEditTime: 2021-09-27 11:15:08
+ * @LastEditTime: 2021-09-27 17:13:06
  * @FilePath: \CloudMusic-for-Vue3\src\views\Discover.vue
 -->
 <template>
@@ -51,8 +51,8 @@ import {
   reqDiscoverRecommendCategory,
   reqDiscoverRecommendList,
   reqDiscoverAlbumList,
-  reqDiscoverList,
-  reqDiscoverListDetail,
+  reqTopList,
+  reqTopListDetail,
 } from "../api/index";
 import type {
   BannerType,
@@ -118,11 +118,11 @@ const getArtistName = (item: AlbumType): string => {
 //榜单相关
 const musicList = ref<DiscoverListType[]>([]);
 onMounted(async () => {
-  let res_list = await reqDiscoverList();
+  let res_list = await reqTopList();
   musicList.value = res_list.list.slice(0, 3);
   musicList.value.forEach((item: DiscoverListType, index) => {
     musicList.value[index].list = [];
-    reqDiscoverListDetail(item.id).then((res) => {
+    reqTopListDetail(item.id).then((res) => {
       setTimeout(() => {
         musicList.value[index].list = res.playlist.tracks.slice(0, 10);
       }, 5000);
