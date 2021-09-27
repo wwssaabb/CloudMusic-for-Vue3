@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-22 09:32:37
- * @LastEditTime: 2021-09-25 11:44:17
+ * @LastEditTime: 2021-09-27 14:13:39
  * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
 
@@ -60,7 +60,7 @@ export type DiscoverListSongType = {
   id: number;
   name: string;
   al: ALType;
-  alia?: string[];
+  alia: string[];
   ar: ARType[];
   dt: number;
   mv: number;
@@ -73,11 +73,16 @@ export type DiscoverListType = {
   list: DiscoverListSongType[];
   updateFrequency: string; //更新频率
 };
+export type trackIdType = {
+  id: number;
+  lr?: number;
+};
 //榜单返回的playlist的Type
 export type PlaylistType = {
   id: number;
   name: string;
   coverImgUrl: string;
+  trackIds: trackIdType[]; //列表的排行榜位置相关
   updateTime: number; //更新时间
   trackCount: number; //列表歌曲数量
   playCount: number; //播放数量

@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-18 14:19:05
- * @LastEditTime: 2021-09-25 18:00:45
+ * @LastEditTime: 2021-09-27 14:46:12
  * @FilePath: \CloudMusic-for-Vue3\src\views\TopList.vue
 -->
 <template>
@@ -28,7 +28,7 @@
               :key="item.id"
             >
               <img :src="item.coverImgUrl + '?param=40y40'" alt="" />
-              <div class="msg fss fdc">
+              <div class="msg fd_col">
                 <span class="name">{{ item.name }}</span>
                 <span class="update_msg">{{ item.updateFrequency }}</span>
               </div>
@@ -122,15 +122,36 @@
                 v-for="(item, index) in data.showData.tracks"
                 :key="item.id"
               >
-                <div class="index">{{ index + 1 }}</div>
-                <div class="name fsc cur_p">
+                <div class="index fpbc">
+                  <span>{{ index + 1 }}</span>
+                  <span class="rank_icon fcc"
+                    ><i :class="getStatus(index)">{{
+                      getRankNumber(index) === undefined
+                        ? ""
+                        : getRankNumber(index)
+                    }}</i></span
+                  >
+                </div>
+                <div class="name cur_p fsc">
                   <img
                     v-if="index <= 2"
                     :src="item.al.picUrl + '?param=50y50&quality=100'"
                     alt=""
                   />
-                  <i class="play_icon"></i>
-                  <span class="td_u">{{ item.name }}</span>
+                  <i class="play_icon f_nos"></i>
+                  <span
+                    class="name-content td_u f_nos t_ovl1"
+                    :title="getTitle(item)"
+                    >{{ item.name }}</span
+                  >
+                  <span
+                    class="t_ovl1 f_nog"
+                    style="color: #aeaeae"
+                    v-if="item.alia?.length !== 0"
+                    :title="getTitle(item, false)"
+                    >- ({{ item.alia?.[0] }})</span
+                  >
+                  <i class="mv_icon f_nosg" v-if="item.mv !== 0"></i>
                 </div>
                 <div class="time fsc pr">
                   <span>{{ format(item.dt, "LT", false) }}</span>
@@ -158,7 +179,7 @@
                   </div>
                 </div>
                 <div class="singer t_ovl1">
-                  {{ item.ar.map((i) => i.name).join("/") }}
+                  <span>{{ item.ar.map((i) => i.name).join("/") }}</span>
                 </div>
               </div>
             </div>
@@ -170,7 +191,12 @@
 </template>
 
 <script setup lang="ts">
-import { DiscoverListType, PlaylistType } from "../types/types";
+import {
+  DiscoverListType,
+  PlaylistType,
+  DiscoverListSongType,
+  trackIdType,
+} from "../types/types";
 import { reqDiscoverList, reqDiscoverListDetail } from "../api";
 import { ref, onMounted } from "vue";
 import moment from "moment";
@@ -225,6 +251,7 @@ const data = ref<TopListDataType>({
     shareCount: 0, //分享数量
     commentCount: 0, //评论数量
     tracks: [], //列表
+    trackIds: [], //列表上一次排行
   },
 });
 
@@ -240,6 +267,42 @@ onMounted(async () => {
 const getUpdateMsg = () => {
   let list = [...data.value.feature.list, ...data.value.media.list];
   return list.find((i) => i.id === data.value.showData.id)?.updateFrequency;
+};
+const getTitle = (
+  item: DiscoverListSongType,
+  isNameTitle: boolean = true
+): string | undefined => {
+  if (isNameTitle) {
+    return item.alia.length !== 0
+      ? item.name + "-(" + item.alia?.[0] + ")"
+      : item.name;
+  } else {
+    return item.alia?.join("/");
+  }
+};
+
+const getStatus = (index: number): string => {
+  //获取排行榜位置状态icon
+  const Status = {
+    0: "status_icon_new",
+    1: "status_icon_stay",
+    2: "status_icon_up",
+    3: "status_icon_down",
+  };
+  let targer = data.value.showData.trackIds[index];
+  if (targer.lr !== undefined) {
+    return targer.lr === 0
+      ? Status[1]
+      : index > targer.lr
+      ? Status[3]
+      : Status[2];
+  } else {
+    return Status[0];
+  }
+};
+const getRankNumber = (index: number): number | undefined => {
+  let lr = data.value.showData.trackIds[index].lr;
+  return lr === undefined || lr === 0 ? lr : Math.abs(lr + 1 - index);
 };
 </script>
 
@@ -302,6 +365,49 @@ const getUpdateMsg = () => {
     @include get_icon(-104, -174, 18, 16);
   }
 }
+
+.mv_icon {
+  display: inline-block;
+  @extend .icons2_img;
+  @include get_icon(0, -151, 23, 17);
+  &:hover {
+    @include get_icon(-30, -151, 23, 17);
+  }
+}
+
+.status_icon {
+  &_new {
+    display: inline-block;
+    @extend .icons_img;
+    @include get_icon(-67, -283, 16, 17);
+    padding-left: 16px;
+  }
+  &_stay {
+    display: inline-block;
+    @extend .icons_img;
+    @include get_icon(-74, -268, 8, 17);
+    font-size: 10px;
+    color: #999;
+    padding-left: 8px;
+  }
+  &_up {
+    display: inline-block;
+    @extend .icons_img;
+    @include get_icon(-74, -299, 8, 17);
+    font-size: 10px;
+    color: #bb2128;
+    padding-left: 8px;
+  }
+  &_down {
+    display: inline-block;
+    @extend .icons_img;
+    @include get_icon(-74, -318, 8, 17);
+    font-size: 10px;
+    color: #bb2128;
+    padding-left: 8px;
+  }
+}
+
 .top-list-page {
   background: #f5f5f5;
 }
@@ -558,7 +664,7 @@ const getUpdateMsg = () => {
     }
 
     .list-wrap {
-      padding: 0 40px;
+      padding: 0 40px 40px;
       .title {
         height: 35px;
         border-bottom: 2px solid #c20c0c;
@@ -599,14 +705,12 @@ const getUpdateMsg = () => {
               margin-right: 14px;
             }
           }
-          &:hover{
-            
+          &:hover {
             .time {
-
-              span{
+              span {
                 display: none;
               }
-              .icons{
+              .icons {
                 height: 20px;
                 position: absolute;
                 top: -8px;
@@ -616,18 +720,22 @@ const getUpdateMsg = () => {
                 width: 100%;
                 height: 100%;
 
-                a{
+                a {
                   margin-right: 2px;
                 }
               }
-
             }
           }
         }
         .index {
           width: 78px;
-          padding-left: 20px;
+          padding: 0 10px 0 20px;
           color: #999;
+          .rank_icon {
+            width: 20px;
+            justify-content: stretch;
+            padding-left: 5px;
+          }
         }
         .name {
           width: 327px;
@@ -635,12 +743,18 @@ const getUpdateMsg = () => {
           span {
             margin-left: 8px;
           }
+          i:last-child {
+            margin: 0 3px;
+          }
+          .name-content {
+            max-width: 253px;
+          }
         }
         .time {
           width: 91px;
           padding-left: 10px;
-          
-          .icons{
+
+          .icons {
             display: none;
             opacity: 0;
           }
