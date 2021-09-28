@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-22 09:32:37
- * @LastEditTime: 2021-09-27 14:13:39
+ * @LastEditTime: 2021-09-28 09:44:40
  * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
 
@@ -93,13 +93,17 @@ export type PlaylistType = {
   commentCount: number; //评论数量
   tracks: DiscoverListSongType[]; //列表
 };
+//vip信息
+export type vipRightType = {
+  redVipLevel: number;
+};
 export type CommentUserType = {
   userId: number;
   userType: number;
   nickname: string;
   avatarUrl: string;
   authStatus: number;
-  vipType: number;
+  vipRights: vipRightType | null;
 };
 export type CommentType = {
   user: CommentUserType;
@@ -122,6 +126,13 @@ export type reqCommentType = {
   total: number;
   more: boolean;
 };
+export type sortType = 1 | 2 | 3; //排序方式,1:按推荐排序,2:按热度排序,3:按时间排序
+
+export type newApi_reqCommentType = {
+  comments: CommentType[];
+  totalCount: number;
+  hasMore: boolean;
+};
 
 //热门主播
 export type DiscoverDjType = {
@@ -131,3 +142,6 @@ export type DiscoverDjType = {
   tag: string;
   picture: string;
 };
+
+//格式化类型
+type formatType = "normal" | "compare" | "duration";

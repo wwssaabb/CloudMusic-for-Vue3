@@ -204,3 +204,187 @@ $--foot_color:#f2f2f2; //脚步的背景色
   }
 
 }
+
+/* 
+  一些需要复用的icon图标
+*/
+
+//获取方法
+@mixin get_icon($x, $y, $size_x, $size_y) {
+  width: #{$size_x}px;
+  height: #{$size_y}px;
+  background-position: #{$x}px #{$y}px;
+}
+
+//获取方法，区别在于可以可以指定用哪个img，有无hover（不填则无）
+@mixin get_btn($extendClassIndex,
+  $x_f,
+  $y_f,
+  $size_x_f,
+  $size_y_f,
+  $x_n: false,
+  $y_n: false) {
+  display: inline-block;
+  @extend .#{"icons" + $extendClassIndex + "_img"};
+  @include get_icon($x_f, $y_f, $size_x_f, $size_y_f);
+
+  @if ($size_y_f, $x_n, $y_n) {
+    &:hover {
+      @include get_icon($x_n, $y_n, $size_x_f, $size_y_f);
+    }
+  }
+}
+
+.icons_img {
+  background: url("https://music.163.com/style/web2/img/icon.png?7a7e3fe737f9f8c50aefdfeffabe5d20") no-repeat;
+}
+
+.icons1_img {
+  background: url("https://music.163.com/style/web2/img/button2.png?121f168fd59c64de034a737fa613a137") no-repeat;
+}
+
+.icons2_img {
+  background: url("https://music.163.com/style/web2/img/table.png?a58e4187ce8625d374d6085b2c4e7f0f") no-repeat;
+}
+
+.icons3_img {
+  background: url("https://music.163.com/style/web2/img/button.png?6c44aac4f8e2faab560469bf9b7ed1b9") no-repeat;
+}
+
+.icons4_img {
+  background: url("https://music.163.com/style/web2/img/icon2.png?c34052cb37c1e490b43ff505c4e2f71a") no-repeat;
+}
+
+//播放按钮
+.play_icon {
+  display: inline-block;
+  @extend .icons2_img;
+  @include get_icon(0, -103, 17, 17);
+
+  &:hover {
+    @include get_icon(0, -128, 17, 17);
+  }
+}
+
+//播放icon
+.playlist_icon {
+  display: inline-block;
+  @extend .icons_img;
+  @include get_icon(2.5, -700, 18, 16);
+
+  &:hover {
+    @include get_icon(-19.5, -700, 18, 16);
+  }
+}
+
+//添加到播放列表icon
+.addlist_icon {
+  display: inline-block;
+  @extend .icons2_img;
+  @include get_icon(0, -174, 18, 16);
+
+  &:hover {
+    @include get_icon(-20, -174, 18, 16);
+  }
+}
+
+//收藏icon
+.collectlist_icon {
+  display: inline-block;
+  @extend .icons2_img;
+  @include get_icon(0, -194, 18, 16);
+
+  &:hover {
+    @include get_icon(-20, -194, 18, 16);
+  }
+}
+
+//下载icon
+.downloadlist_icon {
+  display: inline-block;
+  @extend .icons2_img;
+  @include get_icon(-81, -174, 18, 16);
+
+  &:hover {
+    @include get_icon(-104, -174, 18, 16);
+  }
+}
+
+//mv icon
+.mv_icon {
+  display: inline-block;
+  @extend .icons2_img;
+  @include get_icon(0, -151, 23, 17);
+
+  &:hover {
+    @include get_icon(-30, -151, 23, 17);
+  }
+}
+
+//排行榜 rank位置变动icon，new为新入选榜单、stay表示位置不变、up、down表示位置变化
+.status_icon {
+  &_new {
+    display: inline-block;
+    @extend .icons_img;
+    @include get_icon(-67, -283, 16, 17);
+    padding-left: 16px;
+  }
+
+  &_stay {
+    display: inline-block;
+    @extend .icons_img;
+    @include get_icon(-74, -268, 8, 17);
+    font-size: 10px;
+    color: #999;
+    padding-left: 8px;
+  }
+
+  &_up {
+    display: inline-block;
+    @extend .icons_img;
+    @include get_icon(-74, -299, 8, 17);
+    font-size: 10px;
+    color: #bb2128;
+    padding-left: 8px;
+  }
+
+  &_down {
+    display: inline-block;
+    @extend .icons_img;
+    @include get_icon(-74, -318, 8, 17);
+    font-size: 10px;
+    color: #bb2128;
+    padding-left: 8px;
+  }
+}
+
+//一些icon
+.icon_ {
+  &smile_face {
+    //表情，笑脸
+    display: inline-block;
+    @extend .icons_img;
+    @include get_icon(-40, -490, 18, 18);
+  }
+
+  &at {
+    //@符号
+    display: inline-block;
+    @extend .icons_img;
+    @include get_icon(-60, -490, 18, 18);
+  }
+
+  &btn_comment {
+    //评论按钮
+    @include get_btn(3, -84, -64, 46, 25, -84, -94);
+  }
+
+  &commend {
+    //赞 
+    @include get_btn(4, -150, 0, 15, 14, -150, -20);
+
+    &.active {
+      @include get_icon(-170, 0, 15, 14);
+    }
+  }
+}

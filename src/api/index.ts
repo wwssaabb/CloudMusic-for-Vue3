@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-18 15:23:45
- * @LastEditTime: 2021-09-27 17:10:40
+ * @LastEditTime: 2021-09-28 15:05:00
  * @FilePath: \CloudMusic-for-Vue3\src\api\index.ts
  */
 
@@ -15,6 +15,8 @@ import type {
   PlaylistType,
   getCommentType,
   reqCommentType,
+  sortType,
+  newApi_reqCommentType,
 } from "../types/types";
 
 //获取banner数据
@@ -43,8 +45,8 @@ export const reqTopListDetail = (id: number) =>
     id,
   });
 
-//获取榜单评论
-export const reqTopListComment = (
+//获取榜单最新评论
+export const reqTopListNewComment = (
   id: number,
   type: getCommentType = 2,
   limit: number = 20
@@ -53,4 +55,18 @@ export const reqTopListComment = (
     id,
     type,
     limit,
+  });
+
+//获取榜单精彩评论(新接口)
+export const reqTopListHotComment = (
+  id: number,
+  type: getCommentType = 2,
+  sortType: sortType = 2,
+  pageSize: number = 15
+) =>
+  http<{ data: newApi_reqCommentType; code: number }>("/comment/new", {
+    id,
+    type,
+    sortType,
+    pageSize,
   });

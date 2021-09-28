@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-18 14:19:05
- * @LastEditTime: 2021-09-27 18:01:52
+ * @LastEditTime: 2021-09-28 15:14:04
  * @FilePath: \CloudMusic-for-Vue3\src\views\TopList.vue
 -->
 <template>
@@ -52,7 +52,7 @@
               <i class="icons_img"></i>
               <span
                 >最近更新：{{
-                  format(data.showData.updateTime, "MMM Do DD")
+                  format(data.showData.updateTime, "MM月DD日")
                 }}</span
               >
               <span>{{ "(" + getUpdateMsg() + ")" }}</span>
@@ -132,7 +132,7 @@
                     }}</i></span
                   >
                 </div>
-                <div class="name cur_p fsc">
+                <div class="name cur_p fsc f_nos">
                   <img
                     v-if="index <= 2"
                     :src="item.al.picUrl + '?param=50y50&quality=100'"
@@ -154,7 +154,7 @@
                   <i class="mv_icon f_nosg" v-if="item.mv !== 0"></i>
                 </div>
                 <div class="time fsc pr">
-                  <span>{{ format(item.dt, "LT", 'duration') }}</span>
+                  <span>{{ format(item.dt, "", "duration") }}</span>
                   <div class="icons fsc">
                     <a
                       href="javascript:;"
@@ -205,7 +205,7 @@
             </div>
             <div class="comment-input-bottom fpbc">
               <div class="fast-icons">
-                <i class="icon_smlie_face cur_p"></i>
+                <i class="icon_smile_face cur_p"></i>
                 <i class="icon_at cur_p"></i>
               </div>
               <div class="btn-wrap">
@@ -217,44 +217,21 @@
           <div class="comment-list-hot">
             <div class="comment-list-hot-title">精彩评论</div>
             <div class="list">
-              <!-- <div class="item"></div> -->
+              <CommentList
+                :comments="data.comments.hotComments"
+                :format="format"
+                :showBeReplied="false"
+              ></CommentList>
             </div>
           </div>
           <div class="comment-list-new">
             <div class="comment-list-new-title">
               最新评论({{ data.showData.commentCount }})
             </div>
-            <div class="list" v-loading="data.comments === null">
-              <div class="item fss" v-for="item in data.comments?.comments">
-                <img :src="item.user.avatarUrl + '?param=50y50'" alt="" />
-                <div class="right">
-                  <div class="comment-content">
-                    <span class="comment-user-name td_u cur_p"
-                      >{{ item.user.nickname }}：</span
-                    >
-                    <span>{{ item.content }}</span>
-                  </div>
-                  <div
-                    class="other-comment-content"
-                    v-if="item.beReplied.length !== 0"
-                  >
-                    <span class="comment-user-name td_u cur_p"
-                      >{{ item.beReplied[0].user.nickname }}：</span
-                    >
-                    <span>{{ item.beReplied[0].content }}</span>
-                  </div>
-                  <div class="comment-foot fpbc">
-                    <span>{{ item.time }}</span>
-                    <span class="fcc"
-                      ><i class="icon_commend cur_p"></i
-                      ><span v-if="item.likedCount !== 0" class="liked_count"
-                        >({{ item.likedCount }})</span
-                      ><span class="btn_apply cur_p">回复</span></span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
+            <CommentList
+              :comments="data.comments.newComments"
+              :format="format"
+            ></CommentList>
           </div>
         </div>
       </div>
@@ -269,37 +246,57 @@ import {
   DiscoverListSongType,
   trackIdType,
   reqCommentType,
+  newApi_reqCommentType,
+  formatType,
 } from "../types/types";
-import { reqTopList, reqTopListDetail, reqTopListComment } from "../api";
+import {
+  reqTopList,
+  reqTopListDetail,
+  reqTopListNewComment,
+  reqTopListHotComment,
+} from "../api";
 import { ref, onMounted } from "vue";
-import moment from "moment";
+import moment from "../utils/moment";
+import commentList from "../components/Toplist/commentList.vue";
 
-type formatType='normal'|'compare'|'duration'
-const format = (n: number, format: string, type: formatType = 'normal') => {
-  const handle={
-    normal:()=>moment(n).format(format),
-    compare:()=>{
-      let before=(new Date(n))
-      let now=new Date()
-      let diff=now.getTime()-before.getTime()
-      if(before.getDate()-now.getDate()===1) return ''
-      if(diff<3600000){ //一个小时内
-        return moment(n).startOf('hour').fromNow()
-      }else if(diff>=3600000&&diff<=86400000){//
-        return moment().subtract(1, 'days').calendar();
+const format = (n: number, format: string, type: formatType = "normal") => {
+  const handle = {
+    normal: () => moment(n).format(format), //正常格式化时间
+    compare: () => {
+      //比较时间
+      let before = new Date(n);
+      let now = new Date();
+      let diff = now.getTime() - before.getTime();
+      if (diff < 3600000) {
+        //一个小时内 格式：多少分钟之前
+        return moment(n).startOf("hour").fromNow();
+      } else if (diff >= 3600000 && diff <= 86400000) {
+        //一天以内  格式 16:44 或 昨天 16:45
+        return moment(n).subtract(0, "days").calendar();
+      } else if (diff >= 86400000 && diff <= 60 * 60 * 24 * 365 * 1000) {
+        //一年以内 格式： 9月22日 06:55
+        return moment(n).format("MM月DD日 HH:mm");
+      } else if (diff > 60 * 60 * 24 * 365 * 1000) {
+        //一年以外 格式：2014年6月30日
+        return moment(n).format("YYYY年MM月DD日");
       }
-      moment(n).startOf('hour').fromNow()
     },
-    duration:()=>{
+    duration: () => {
+      //获取时间长度 例子：03:05
       let duration = moment.duration(n);
       let m = duration.minutes();
       let s = duration.seconds();
       return (m >= 10 ? m : "0" + m) + ":" + (s >= 10 ? s : "0" + s);
     },
-  }
+  };
 
   //时间格式化
   return handle[type]();
+};
+
+type CommentsType = {
+  newComments: reqCommentType | null;
+  hotComments: newApi_reqCommentType | null;
 };
 
 type TopListDataType = {
@@ -314,7 +311,7 @@ type TopListDataType = {
     list: DiscoverListType[];
   };
   showData: PlaylistType;
-  comments: reqCommentType | null;
+  comments: CommentsType;
 };
 
 const data = ref<TopListDataType>({
@@ -341,7 +338,7 @@ const data = ref<TopListDataType>({
     tracks: [], //列表
     trackIds: [], //列表上一次排行
   },
-  comments: null,
+  comments: { newComments: null, hotComments: null },
 });
 
 onMounted(async () => {
@@ -351,9 +348,14 @@ onMounted(async () => {
   let res_showData = await reqTopListDetail(data.value.feature.list[0].id);
   data.value.showData = res_showData.playlist;
   console.log(data.value);
-  let res_comments = await reqTopListComment(data.value.showData.id, 2, 20);
-  console.log(res_comments);
-  data.value.comments = res_comments;
+
+  reqTopListNewComment(data.value.showData.id).then(
+    (res) => (data.value.comments.newComments = res)
+  );
+  reqTopListHotComment(data.value.showData.id).then(
+    (res) => (data.value.comments.hotComments = res.data)
+  );
+  console.log(data.value);
 });
 
 const getUpdateMsg = () => {
@@ -394,7 +396,7 @@ const getStatus = (index: number): string => {
 };
 const getRankNumber = (index: number): number | undefined => {
   let lr = data.value.showData.trackIds[index].lr;
-  return lr === undefined || lr === 0 ? lr : Math.abs(lr + 1 - index);
+  return lr === undefined || lr === 0 ? lr : Math.abs(lr - index);
 };
 
 //评论相关
@@ -407,154 +409,8 @@ const commentContent = ref<string>("");
   height: #{$size_y}px;
   background-position: #{$x}px #{$y}px;
 }
-@mixin get_btn(
-  $extendClassIndex,
-  $x_f,
-  $y_f,
-  $size_x_f,
-  $size_y_f,
-  $x_n: false,
-  $y_n: false
-) {
-  display: inline-block;
-  @extend .#{"icons" + $extendClassIndex + "_img"};
-  @include get_icon($x_f, $y_f, $size_x_f, $size_y_f);
-  @if ($size_y_f, $x_n, $y_n) {
-    &:hover {
-      @include get_icon($x_n, $y_n, $size_x_f, $size_y_f);
-    }
-  }
-}
-
-.icons_img {
-  background: url("https://music.163.com/style/web2/img/icon.png?7a7e3fe737f9f8c50aefdfeffabe5d20")
-    no-repeat;
-}
-.icons1_img {
-  background: url("https://music.163.com/style/web2/img/button2.png?121f168fd59c64de034a737fa613a137")
-    no-repeat;
-}
-.icons2_img {
-  background: url("https://music.163.com/style/web2/img/table.png?a58e4187ce8625d374d6085b2c4e7f0f")
-    no-repeat;
-}
-.icons3_img {
-  background: url("https://music.163.com/style/web2/img/button.png?6c44aac4f8e2faab560469bf9b7ed1b9")
-    no-repeat;
-}
-.icons4_img {
-  background: url("https://music.163.com/style/web2/img/icon2.png?c34052cb37c1e490b43ff505c4e2f71a")
-    no-repeat;
-}
-.play_icon {
-  display: inline-block;
-  @extend .icons2_img;
-  @include get_icon(0, -103, 17, 17);
-  &:hover {
-    @include get_icon(0, -128, 17, 17);
-  }
-}
-.playlist_icon {
-  display: inline-block;
-  @extend .icons_img;
-  @include get_icon(2.5, -700, 18, 16);
-  &:hover {
-    @include get_icon(-19.5, -700, 18, 16);
-  }
-}
-.addlist_icon {
-  display: inline-block;
-  @extend .icons2_img;
-  @include get_icon(0, -174, 18, 16);
-  &:hover {
-    @include get_icon(-20, -174, 18, 16);
-  }
-}
-.collectlist_icon {
-  display: inline-block;
-  @extend .icons2_img;
-  @include get_icon(0, -194, 18, 16);
-  &:hover {
-    @include get_icon(-20, -194, 18, 16);
-  }
-}
-.downloadlist_icon {
-  display: inline-block;
-  @extend .icons2_img;
-  @include get_icon(-81, -174, 18, 16);
-  &:hover {
-    @include get_icon(-104, -174, 18, 16);
-  }
-}
-
-.mv_icon {
-  display: inline-block;
-  @extend .icons2_img;
-  @include get_icon(0, -151, 23, 17);
-  &:hover {
-    @include get_icon(-30, -151, 23, 17);
-  }
-}
-
-.status_icon {
-  &_new {
-    display: inline-block;
-    @extend .icons_img;
-    @include get_icon(-67, -283, 16, 17);
-    padding-left: 16px;
-  }
-  &_stay {
-    display: inline-block;
-    @extend .icons_img;
-    @include get_icon(-74, -268, 8, 17);
-    font-size: 10px;
-    color: #999;
-    padding-left: 8px;
-  }
-  &_up {
-    display: inline-block;
-    @extend .icons_img;
-    @include get_icon(-74, -299, 8, 17);
-    font-size: 10px;
-    color: #bb2128;
-    padding-left: 8px;
-  }
-  &_down {
-    display: inline-block;
-    @extend .icons_img;
-    @include get_icon(-74, -318, 8, 17);
-    font-size: 10px;
-    color: #bb2128;
-    padding-left: 8px;
-  }
-}
-
-.icon_ {
-  &smlie_face {
-    display: inline-block;
-    @extend .icons_img;
-    @include get_icon(-40, -490, 18, 18);
-  }
-  &at {
-    display: inline-block;
-    @extend .icons_img;
-    @include get_icon(-60, -490, 18, 18);
-  }
-  &btn_comment {
-    @include get_btn(3, -84, -64, 46, 25, -84, -94);
-  }
-  &commend {
-    @include get_btn(4, -150, 0, 15, 14,-150,-20);
-    &.active{
-      @include get_icon(-170, 0, 15, 14);
-    }
-  }
-}
-
-.top-list-page {
-  background: #f5f5f5;
-}
 .top-list-wrap {
+  background: #f5f5f5;
   box-sizing: border-box;
   width: 982px;
   border-left: 1px solid #d3d3d3;
@@ -624,8 +480,6 @@ const commentContent = ref<string>("");
         border-radius: 5px;
 
         img {
-          width: 150px;
-          height: 150px;
           width: 150px;
           height: 150px;
           padding: 3px;
@@ -1026,47 +880,6 @@ const commentContent = ref<string>("");
             height: 50px;
             border-radius: 5px;
             margin-right: 10px;
-          }
-
-          .right {
-            border: none;
-            span {
-              line-height: 20px;
-              font-size: 12px;
-              color: #333;
-            }
-
-            .other-comment-content {
-              padding: 8px 19px;
-              background: #f4f4f4;
-              border: 1px solid #dedede;
-              margin-top: 10px;
-              span {
-                color: #666;
-              }
-            }
-
-            span.comment-user-name {
-              color: #0c73c2;
-            }
-
-            .comment-foot {
-              margin-top: 15px;
-
-              i {
-                margin-right: 8px;
-              }
-              .liked_count {
-                line-height: 14px;
-                margin-right: 8px;
-              }
-
-              .btn_apply{
-                line-height: 14px;
-                padding-left: 8px;
-                border-left: 1px solid #ccc;
-              }
-            }
           }
         }
       }

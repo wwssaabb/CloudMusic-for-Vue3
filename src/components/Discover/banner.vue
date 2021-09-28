@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-23 11:49:43
- * @LastEditTime: 2021-09-27 11:14:42
+ * @LastEditTime: 2021-09-28 08:51:51
  * @FilePath: \CloudMusic-for-Vue3\src\components\Discover\banner.vue
 -->
 <template>
@@ -79,7 +79,7 @@ const props = defineProps({
     },
   },
   onSlideChange: {
-    type: Function,
+    type: Function as PropType<(swiper: SwiperClass) => void>,
     required: true,
   },
 });
