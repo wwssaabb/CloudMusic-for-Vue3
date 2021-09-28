@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-23 16:12:04
- * @LastEditTime: 2021-09-24 18:01:16
+ * @LastEditTime: 2021-09-28 16:54:32
  * @FilePath: \CloudMusic-for-Vue3\src\components\Discover\music_list.vue
 -->
 <template>
@@ -233,7 +233,7 @@ const props = defineProps({
             }
 
             &:last-child {
-              display: block;
+              display: none;
               width: 0;
               height: 32px;
 
@@ -259,21 +259,22 @@ const props = defineProps({
               width: 93px;
             }
             & span:last-child {
+              display: inline-block;
               width: 82px;
               i.play_icon {
-                @include get_icon(-265, -202, 26, 26);
+                @include get_icon(-267, -268, 17, 17);
                 &:hover {
                   opacity: 0.7;
                 }
               }
               i.collect_icon {
-                @include get_icon(-297.5, -202, 26, 26);
+                @include get_icon(0, -700, 17, 17);
                 &:hover {
                   opacity: 0.7;
                 }
               }
               i.addlist_icon {
-                @include get_icon(5, -692, 26, 26);
+                @include get_icon(-297, -268, 17, 17);
                 border-radius: 50%;
                 &:hover {
                   opacity: 0.7;

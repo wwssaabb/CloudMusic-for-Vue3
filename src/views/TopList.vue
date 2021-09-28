@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-18 14:19:05
- * @LastEditTime: 2021-09-28 16:22:04
+ * @LastEditTime: 2021-09-28 17:40:15
  * @FilePath: \CloudMusic-for-Vue3\src\views\TopList.vue
 -->
 <template>
@@ -294,7 +294,7 @@ const commentContent = ref<string>("");
 
       .comment-list-hot,
       .comment-list-new {
-        margin-top: 40px;
+        margin: 20px 0;
         &-title {
           height: 21px;
           border-bottom: 1px solid #cfcfcf;

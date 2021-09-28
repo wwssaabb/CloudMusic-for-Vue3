@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-17 15:52:26
- * @LastEditTime: 2021-09-18 14:21:43
+ * @LastEditTime: 2021-09-28 17:22:12
  * @FilePath: \CloudMusic-for-Vue3\src\router\router.ts
  */
 import { createRouter, createWebHashHistory } from "vue-router";
@@ -11,31 +11,32 @@ export default createRouter({
   routes: [
     {
       path: "/",
-      component: import("../views/Discover.vue"),
+      component: () => import("../views/Discover.vue"),
     },
     {
-      path: "/discover",
-      component: import("../views/Discover.vue"),
+      path: "/discover/",
+      component: () => import("../views/Discover.vue"),
+      children: [],
     },
     {
       path: "/discover/toplist",
-      component: import("../views/TopList.vue"),
+      component: () => import("../views/TopList.vue"),
     },
     {
       path: "/discover/playlist",
-      component: import("../views/PlayList.vue"),
+      component: () => import("../views/PlayList.vue"),
     },
     {
       path: "/discover/djradio",
-      component: import("../views/DjRadio.vue"),
+      component: () => import("../views/DjRadio.vue"),
     },
     {
       path: "/discover/artist",
-      component: import("../views/Artist.vue"),
+      component: () => import("../views/Artist.vue"),
     },
     {
       path: "/discover/album",
-      component: import("../views/Album.vue"),
+      component: () => import("../views/Album.vue"),
     },
   ],
 });

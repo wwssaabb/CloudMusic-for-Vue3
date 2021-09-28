@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-18 15:23:45
- * @LastEditTime: 2021-09-28 15:05:00
+ * @LastEditTime: 2021-09-28 17:32:40
  * @FilePath: \CloudMusic-for-Vue3\src\api\index.ts
  */
 
@@ -61,7 +61,7 @@ export const reqTopListNewComment = (
 export const reqTopListHotComment = (
   id: number,
   type: getCommentType = 2,
-  sortType: sortType = 2,
+  sortType: sortType = 1,
   pageSize: number = 15
 ) =>
   http<{ data: newApi_reqCommentType; code: number }>("/comment/new", {
