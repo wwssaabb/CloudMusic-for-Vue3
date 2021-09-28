@@ -69,7 +69,6 @@ const props = defineProps({
     default: true,
   },
 });
-console.log(props);
 </script>
 
 <style lang="scss" scoped>
