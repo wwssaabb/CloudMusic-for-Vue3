@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-18 15:23:45
- * @LastEditTime: 2021-09-28 17:32:40
+ * @LastEditTime: 2021-09-29 11:57:09
  * @FilePath: \CloudMusic-for-Vue3\src\api\index.ts
  */
 
@@ -48,11 +48,13 @@ export const reqTopListDetail = (id: number) =>
 //获取榜单最新评论
 export const reqTopListNewComment = (
   id: number,
+  page: number = 1,
   type: getCommentType = 2,
   limit: number = 20
 ) =>
   http<reqCommentType>("comment/playlist", {
     id,
+    offset: (page - 1) * limit,
     type,
     limit,
   });

@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-18 14:19:05
- * @LastEditTime: 2021-09-29 11:01:14
+ * @LastEditTime: 2021-09-29 12:01:49
  * @FilePath: \CloudMusic-for-Vue3\src\views\TopList.vue
 -->
 <template>
@@ -12,7 +12,7 @@
           :feature="data.feature"
           :media="data.media"
           :showDataId="data.showData.id"
-        ></LeftList>
+        />
       </div>
       <div
         class="right"
@@ -43,39 +43,40 @@
             :getStatus="getStatus"
             :getRankNumber="getRankNumber"
             :format="format"
-          ></SongList>
+          />
         </div>
         <div class="comment-list-wrap">
           <CommentHead
             :commentContent="commentContent"
             :commentCount="data.showData.commentCount"
           />
-          <div class="comment-list-hot">
+          <div class="comment-list-hot" v-if="data.currentPage === 1">
             <div class="comment-list-hot-title">精彩评论</div>
             <div class="list">
               <CommentList
                 :comments="data.comments.hotComments"
                 :format="format"
                 :showBeReplied="false"
-              ></CommentList>
+              />
             </div>
           </div>
           <div class="comment-list-new">
-            <div class="comment-list-new-title">
+            <div class="comment-list-new-title" v-if="data.currentPage === 1">
               最新评论({{ data.showData.commentCount }})
             </div>
             <CommentList
               :comments="data.comments.newComments"
               :format="format"
-            ></CommentList>
+            />
           </div>
         </div>
-        <Pagination
-          :currentPage="data.currentPage"
-          :total="data.showData.commentCount"
-          :pageSize="20"
-          :click="paginationHandle"
-        />
+        <div class="pagination">
+          <Pagination
+            :currentPage="data.currentPage"
+            :endPage="data.totalPage"
+            :click="paginationHandle"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -98,7 +99,7 @@ import {
   reqTopListNewComment,
   reqTopListHotComment,
 } from "../api";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import moment from "../utils/moment";
 import CommentList from "../components/Toplist/commentList.vue";
 import SongList from "../components/Toplist/songList.vue";
@@ -190,9 +191,19 @@ const data = ref<TopListDataType>({
     trackIds: [], //列表上一次排行
   },
   comments: { newComments: null, hotComments: null },
-  currentPage: 2,
+  currentPage: 1,
   totalPage: 0,
 });
+
+const getNewComments = (page: number = 1): void => {
+  reqTopListNewComment(data.value.showData.id, page).then((res) => {
+    data.value.comments.newComments = res;
+    data.value.totalPage = Math.ceil(
+      data.value.comments.newComments.total /
+        data.value.comments.newComments.comments.length
+    );
+  });
+};
 
 onMounted(async () => {
   let res = await reqTopList();
@@ -202,13 +213,9 @@ onMounted(async () => {
   data.value.showData = res_showData.playlist;
   console.log(data.value);
 
-  reqTopListNewComment(data.value.showData.id).then((res) => {
-    data.value.comments.newComments = res;
-    data.value.totalPage = Math.ceil(
-      data.value.comments.newComments.total /
-        data.value.comments.newComments.comments.length
-    );
-  });
+  //获取最新评论列表，默认page=1
+  getNewComments();
+
   reqTopListHotComment(data.value.showData.id).then(
     (res) => (data.value.comments.hotComments = res.data)
   );
@@ -274,6 +281,16 @@ const paginationHandle = (type: PaginationClickType, page?: number): void => {
   };
   handle[type]();
 };
+watch(
+  () => data.value.currentPage,
+  () => {
+    console.log(data.value.currentPage);
+    getNewComments(data.value.currentPage);
+  },
+  {
+    deep: true,
+  }
+);
 </script>
 
 <style lang="scss" scoped>
@@ -301,6 +318,7 @@ const paginationHandle = (type: PaginationClickType, page?: number): void => {
     width: 739px;
     background: #fff;
     border-left: 1px solid #d3d3d3;
+    padding-bottom: 100px;
 
     .list-wrap {
       padding: 0 40px 40px;
@@ -347,6 +365,10 @@ const paginationHandle = (type: PaginationClickType, page?: number): void => {
           }
         }
       }
+    }
+
+    .pagination {
+      padding: 20px 0;
     }
   }
 }

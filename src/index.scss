@@ -157,6 +157,11 @@
   }
 }
 
+//设置不可选中
+.user_ns {
+  user-select: none;
+}
+
 //设置常用display
 .d {
   &_ib {
@@ -436,6 +441,7 @@ $--foot_color:#f2f2f2; //脚步的背景色
     //分页 上一页按钮
     &_prev {
       @extend .cur_p;
+      @extend .user_ns;
       @include get_btn(3, 0, -560, 71, 24, 0, -590);
       @include repectArt;
       padding-left: 22px;
@@ -449,6 +455,7 @@ $--foot_color:#f2f2f2; //脚步的背景色
     //分页 下一页按钮
     &_next {
       @extend .cur_p;
+      @extend .user_ns;
       @include get_btn(3, -75, -560, 71, 24, -75, -590);
       @include repectArt;
       padding-left: 12px;
@@ -462,7 +469,7 @@ $--foot_color:#f2f2f2; //脚步的背景色
     //分页 页面按钮
     &_page {
       @extend .cur_p;
-      // @include get_btn(3, -75, -560, 22, 22, -75, -560);
+      @extend .user_ns;
       min-width: 22px;
       line-height: 22px;
       font-size: 12px;
