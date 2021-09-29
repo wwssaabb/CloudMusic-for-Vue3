@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-29 08:37:32
- * @LastEditTime: 2021-09-29 11:36:04
+ * @LastEditTime: 2021-09-29 16:52:35
  * @FilePath: \CloudMusic-for-Vue3\src\components\pagination.vue
 -->
 <template>
@@ -102,13 +102,18 @@ const showPage = computed((): number[] => {
   .first-page,
   .end-page,
   .prev-btn {
-    margin-right: 2px;
+    margin-right: 5px;
+    border-radius: 2px;
+  }
+  .next-btn {
+    border-radius: 2px;
   }
 
   .pages {
     .page-item,
     .space {
-      margin-right: 2px;
+      margin-right: 5px;
+      border-radius: 2px;
     }
   }
 }

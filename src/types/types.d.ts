@@ -1,13 +1,12 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-22 09:32:37
- * @LastEditTime: 2021-09-28 09:44:40
+ * @LastEditTime: 2021-09-29 15:54:57
  * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
 
-/* 
-  ==============discover 页面的types==============
-*/
+import { type } from "os";
+
 //banner
 export type BannerType = {
   encodeId: string;
@@ -144,6 +143,29 @@ export type DiscoverDjType = {
 };
 
 //格式化类型
-type formatType = "normal" | "compare" | "duration";
+export type formatType = "normal" | "compare" | "duration";
 //分页事件类型
-type PaginationClickType = "prev" | "page" | "next";
+export type PaginationClickType = "prev" | "page" | "next";
+
+export type playListType = {
+  id: number;
+  playCount: number;
+  name: string;
+  coverImgUrl: string;
+  creator: {
+    userId: number;
+    nickname: string;
+    avatarUrl: string;
+    avatarDetail: {
+      identityIconUrl: string;
+    };
+  };
+};
+
+export type reqPlayListType = {
+  cat: string;
+  more: boolean;
+  total: number;
+  playlists: playListType[];
+  code: number;
+};

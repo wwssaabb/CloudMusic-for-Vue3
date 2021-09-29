@@ -195,7 +195,7 @@
 
 $--fixed_width:980px; //内容的宽度
 $--head_color:#242424; //头部的背景色
-$--content_color:#fff; //中间内容的背景色
+$--content_color:#f5f5f5; //中间内容的背景色
 $--foot_color:#f2f2f2; //脚步的背景色
 
 
@@ -294,6 +294,14 @@ $--foot_color:#f2f2f2; //脚步的背景色
 
 .icons4_img {
   background: url("https://music.163.com/style/web2/img/icon2.png?c34052cb37c1e490b43ff505c4e2f71a") no-repeat;
+}
+
+.icons5_img {
+  background: url("https://music.163.com/style/web2/img/iconall.png?3b842806447563578eadc3999414e2e1") no-repeat;
+}
+
+.icons6_img {
+  background: url("https://music.163.com/style/web2/img/coverall.png?544674b7fdb18c4ed7fd416cdd1f1f33") no-repeat;
 }
 
 //播放按钮
@@ -489,5 +497,37 @@ $--foot_color:#f2f2f2; //脚步的背景色
         color: #fff;
       }
     }
+  }
+
+  //playlist title的热门按钮
+  &btn_hot {
+    @extend .td_u;
+    @include get_btn(3, 0, 0, 46, 29);
+    text-align: center;
+    line-height: 29px;
+    font-size: 12px;
+    color: #fff;
+    border-radius: 3px;
+  }
+
+  //playlist item cover bottom 的背景
+  &cov_bot_bg {
+    @include get_btn(6, 0, -537, 140, 27);
+    display: flex;
+  }
+
+  //耳机icon
+  &headset {
+    @include get_btn(5, 0, -24, 14, 11);
+  }
+
+  //playlist item cover bottom 的 播放 icon
+  &play {
+    @include get_btn(5, 0, 0, 16, 17, 0, -60);
+  }
+
+  //
+  &cover_mask {
+    @include get_btn(6, 0, 0, 140, 140);
   }
 }

@@ -17,6 +17,8 @@ import type {
   reqCommentType,
   sortType,
   newApi_reqCommentType,
+  playListType,
+  reqPlayListType,
 } from "../types/types";
 
 //获取banner数据
@@ -71,4 +73,11 @@ export const reqTopListHotComment = (
     type,
     sortType,
     pageSize,
+  });
+
+export const reqPlayLists = (page: number = 1, limit: number = 35) =>
+  http<reqPlayListType>("/top/playlist", {
+    page,
+    limit,
+    offset: (page - 1) * limit,
   });
