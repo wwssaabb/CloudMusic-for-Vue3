@@ -169,3 +169,14 @@ export type reqPlayListType = {
   playlists: playListType[];
   code: number;
 };
+
+export type DjCategoryType = {
+  id: number;
+  name: string;
+  picWebUrl: string;
+};
+
+export type reqDjCategoryType = {
+  categories: DjCategoryType[];
+  code: number;
+};

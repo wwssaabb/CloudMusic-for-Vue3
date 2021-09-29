@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-18 15:23:45
- * @LastEditTime: 2021-09-29 11:57:09
+ * @LastEditTime: 2021-09-29 17:52:30
  * @FilePath: \CloudMusic-for-Vue3\src\api\index.ts
  */
 
@@ -17,8 +17,8 @@ import type {
   reqCommentType,
   sortType,
   newApi_reqCommentType,
-  playListType,
   reqPlayListType,
+  reqDjCategoryType,
 } from "../types/types";
 
 //获取banner数据
@@ -75,9 +75,13 @@ export const reqTopListHotComment = (
     pageSize,
   });
 
+//获取歌单列表
 export const reqPlayLists = (page: number = 1, limit: number = 35) =>
   http<reqPlayListType>("/top/playlist", {
     page,
     limit,
     offset: (page - 1) * limit,
   });
+
+//获取dj分类列表
+export const reqDjCategories = () => http<reqDjCategoryType>("/dj/catelist");
