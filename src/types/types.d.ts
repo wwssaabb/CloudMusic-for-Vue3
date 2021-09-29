@@ -145,3 +145,5 @@ export type DiscoverDjType = {
 
 //格式化类型
 type formatType = "normal" | "compare" | "duration";
+//分页事件类型
+type PaginationClickType = "prev" | "page" | "next";

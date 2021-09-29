@@ -140,14 +140,43 @@
 }
 
 //设置指标的显示
-.cur_p {
-  cursor: pointer;
+.cur {
+  &_p {
+    cursor: pointer;
+  }
+
+  &_n_a {
+    cursor: not-allowed;
+  }
 }
 
 //设置文字hover时样式为underline
 .td_u {
   &:hover {
     text-decoration: underline;
+  }
+}
+
+//设置常用display
+.d {
+  &_ib {
+    display: inline-block;
+  }
+
+  &_i {
+    display: inline-block;
+  }
+
+  &_b {
+    display: block;
+  }
+
+  &_f {
+    display: flex;
+  }
+
+  &_wk_b {
+    display: -webkit-box;
   }
 }
 
@@ -211,7 +240,14 @@ $--foot_color:#f2f2f2; //脚步的背景色
 
 //获取方法
 @mixin get_icon($x, $y, $size_x, $size_y) {
-  width: #{$size_x}px;
+  @if($size_x=='auto') {
+    width: auto;
+  }
+
+  @else {
+    width: #{$size_x}px;
+  }
+
   height: #{$size_y}px;
   background-position: #{$x}px #{$y}px;
 }
@@ -385,6 +421,66 @@ $--foot_color:#f2f2f2; //脚步的背景色
 
     &.active {
       @include get_icon(-170, 0, 15, 14);
+    }
+  }
+
+  &btn_pagination {
+
+    //重复的属性
+    @mixin repectArt {
+      line-height: 24px;
+      font-size: 12px;
+      color: #333;
+    }
+
+    //分页 上一页按钮
+    &_prev {
+      @extend .cur_p;
+      @include get_btn(3, 0, -560, 71, 24, 0, -590);
+      @include repectArt;
+      padding-left: 22px;
+
+      &.cannot_click {
+        @extend .cur_n_a;
+        @include get_btn(3, 0, -620, 71, 24);
+      }
+    }
+
+    //分页 下一页按钮
+    &_next {
+      @extend .cur_p;
+      @include get_btn(3, -75, -560, 71, 24, -75, -590);
+      @include repectArt;
+      padding-left: 12px;
+
+      &.cannot_click {
+        @extend .cur_n_a;
+        @include get_btn(3, -75, -620, 71, 24);
+      }
+    }
+
+    //分页 页面按钮
+    &_page {
+      @extend .cur_p;
+      // @include get_btn(3, -75, -560, 22, 22, -75, -560);
+      min-width: 22px;
+      line-height: 22px;
+      font-size: 12px;
+      text-align: center;
+      padding: 0 8px;
+      border-radius: 2px;
+      color: #333;
+      border: 1px solid #ccc;
+
+      &:hover {
+        border-color: #666
+      }
+
+      &.active {
+        @include get_btn(3, 0, -650, auto, 22);
+        border-color: #A2161B;
+        color: #fff;
+      }
     }
   }
 }

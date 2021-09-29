@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-18 14:19:05
- * @LastEditTime: 2021-09-28 17:40:15
+ * @LastEditTime: 2021-09-29 11:01:14
  * @FilePath: \CloudMusic-for-Vue3\src\views\TopList.vue
 -->
 <template>
@@ -70,6 +70,12 @@
             ></CommentList>
           </div>
         </div>
+        <Pagination
+          :currentPage="data.currentPage"
+          :total="data.showData.commentCount"
+          :pageSize="20"
+          :click="paginationHandle"
+        />
       </div>
     </div>
   </div>
@@ -84,6 +90,7 @@ import {
   reqCommentType,
   newApi_reqCommentType,
   formatType,
+  PaginationClickType,
 } from "../types/types";
 import {
   reqTopList,
@@ -98,6 +105,7 @@ import SongList from "../components/Toplist/songList.vue";
 import LeftList from "../components/Toplist/leftList.vue";
 import RightHead from "../components/Toplist/rightHead.vue";
 import CommentHead from "../components/Toplist/commentHead.vue";
+import Pagination from "../components/pagination.vue";
 
 const format = (n: number, format: string, type: formatType = "normal") => {
   const handle = {
@@ -153,6 +161,8 @@ type TopListDataType = {
   };
   showData: PlaylistType;
   comments: CommentsType;
+  currentPage: number;
+  totalPage: number;
 };
 
 const data = ref<TopListDataType>({
@@ -180,6 +190,8 @@ const data = ref<TopListDataType>({
     trackIds: [], //列表上一次排行
   },
   comments: { newComments: null, hotComments: null },
+  currentPage: 2,
+  totalPage: 0,
 });
 
 onMounted(async () => {
@@ -190,9 +202,13 @@ onMounted(async () => {
   data.value.showData = res_showData.playlist;
   console.log(data.value);
 
-  reqTopListNewComment(data.value.showData.id).then(
-    (res) => (data.value.comments.newComments = res)
-  );
+  reqTopListNewComment(data.value.showData.id).then((res) => {
+    data.value.comments.newComments = res;
+    data.value.totalPage = Math.ceil(
+      data.value.comments.newComments.total /
+        data.value.comments.newComments.comments.length
+    );
+  });
   reqTopListHotComment(data.value.showData.id).then(
     (res) => (data.value.comments.hotComments = res.data)
   );
@@ -242,6 +258,22 @@ const getRankNumber = (index: number): number | undefined => {
 
 //评论相关
 const commentContent = ref<string>("");
+
+//分页相关
+const paginationHandle = (type: PaginationClickType, page?: number): void => {
+  const p = data.value.currentPage;
+  const handle = {
+    page: () =>
+      type === "page" && page ? (data.value.currentPage = page) : null,
+    prev: () => (data.value.currentPage = p === 1 || p === 2 ? 1 : p - 1),
+    next: () =>
+      (data.value.currentPage =
+        p === data.value.totalPage || p + 1 === data.value.totalPage
+          ? data.value.totalPage
+          : p + 1),
+  };
+  handle[type]();
+};
 </script>
 
 <style lang="scss" scoped>
