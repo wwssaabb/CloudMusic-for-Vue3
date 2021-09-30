@@ -180,3 +180,38 @@ export type reqDjCategoryType = {
   categories: DjCategoryType[];
   code: number;
 };
+
+//dj主播 节目排行榜 相关类型
+export type programType = {
+  radio: { id: number; name: string; category: string };
+  coverUrl: string;
+  description: string;
+  id: number;
+  name: string;
+  shareCount: number;
+  likedCount: number;
+  commentCount: number;
+};
+
+export type RankListType = {
+  program: programType[];
+  rank: number;
+  lastRank: number;
+  score: number;
+  programFeeType: number;
+};
+
+export type reqDjRankListType = {
+  toplist: RankListType[];
+  code: number;
+  updateTime: number;
+};
+
+//dj主播 推荐节目 相关类型
+
+export type reqProgramRecommendListType = {
+  programs: programType[];
+  code: number;
+  name: string;
+  more: boolean;
+};

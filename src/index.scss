@@ -304,6 +304,10 @@ $--foot_color:#f2f2f2; //脚步的背景色
   background: url("https://music.163.com/style/web2/img/coverall.png?544674b7fdb18c4ed7fd416cdd1f1f33") no-repeat;
 }
 
+.icons7_img {
+  background: url("https://music.163.com/style/web2/img/iconall.png?82783b9ec199e0be36d4bfbcd89d22b6") no-repeat;
+}
+
 //播放按钮
 .play_icon {
   display: inline-block;
@@ -529,5 +533,9 @@ $--foot_color:#f2f2f2; //脚步的背景色
   //
   &cover_mask {
     @include get_btn(6, 0, 0, 140, 140);
+  }
+
+  &program_play {
+    @include get_btn(7, 0, -85, 22, 22);
   }
 }

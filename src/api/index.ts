@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-18 15:23:45
- * @LastEditTime: 2021-09-29 17:52:30
+ * @LastEditTime: 2021-09-30 15:31:40
  * @FilePath: \CloudMusic-for-Vue3\src\api\index.ts
  */
 
@@ -19,6 +19,8 @@ import type {
   newApi_reqCommentType,
   reqPlayListType,
   reqDjCategoryType,
+  reqDjRankListType,
+  reqProgramRecommendListType,
 } from "../types/types";
 
 //获取banner数据
@@ -85,3 +87,13 @@ export const reqPlayLists = (page: number = 1, limit: number = 35) =>
 
 //获取dj分类列表
 export const reqDjCategories = () => http<reqDjCategoryType>("/dj/catelist");
+
+//获取dj主播页面  推荐节目列表
+export const reqDjRecommends = () =>
+  http<reqProgramRecommendListType>("/program/recommend");
+
+//获取dj主播页面  节目排行榜,默认获取10条
+export const reqDjRankList = (limit: number = 10) =>
+  http<reqDjRankListType>("/dj/program/toplist", {
+    limit,
+  });
