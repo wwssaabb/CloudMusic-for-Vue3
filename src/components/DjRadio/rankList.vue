@@ -9,13 +9,13 @@
   <div class="recommend-list">
     <Title title="节目排行榜">
       <template #right>
-        <span class="more td_u">更多></span>
+        <span class="more td_u cur_p">更多></span>
       </template>
     </Title>
     <div class="list" v-loading="list.length === 0">
       <div
-        class="item fsc"
-        v-for="(item, index) in list"
+        class="item fsc cur_p"
+        v-for="item in list"
         :key="item.program.id"
       >
         <div class="rank fd_col fcc">
@@ -33,16 +33,16 @@
         </div>
         <div class="center">
           <div class="name t_ovl1">
-            <span class="td_u">{{ item.program.name }}</span>
+            <span class="td_u" :title="item.program.name">{{ item.program.name }}</span>
           </div>
           <div class="desc t_ovl1">
-            <span class="td_u">{{ item.program.radio.name }}</span>
+            <span class="td_u" :title="item.program.radio.name">{{ item.program.radio.name }}</span>
           </div>
         </div>
         <div class="hot pr">
           <i
             class="hot-bar d_ib pa"
-            :style="'width: ' + getHotRatio(list[0].rank, item.rank) + '%'"
+            :style="'width: ' + getHotRatio(list[0].score, item.score) + '%'"
           ></i>
         </div>
       </div>
@@ -77,6 +77,7 @@ const getRankIcon = (last: number, now: number): string => {
   );
 };
 const getHotRatio = (max: number, self: number): number => {
+  console.log((self / max) * 100)
   return (self / max) * 100;
 };
 </script>
@@ -181,7 +182,7 @@ const getHotRatio = (max: number, self: number): number => {
             position: absolute;
             top: 0;
             left: 0;
-            width: calc(100% - 4px);
+            width: calc(100% - 3px);
             height: 8px;
             background: url("https://music.163.com//style/web2/img/table.png?66c616bbd6d49f9b9acff4d398211404")
               no-repeat;

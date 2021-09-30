@@ -8,24 +8,24 @@
   <div class="recommend-list">
     <Title title="推荐节目">
       <template #right>
-        <span class="more td_u">更多></span>
+        <span class="more td_u cur_p">更多></span>
       </template>
     </Title>
     <div class="list" v-loading="list.length === 0">
-      <div class="item fsc" v-for="item in list" :key="item.id">
+      <div class="item fsc cur_p" v-for="item in list" :key="item.id">
         <div class="cover pr">
           <img :src="item.coverUrl + '?param=40x40'" alt="" />
           <i class="icon_program_play pa"></i>
         </div>
         <div class="center">
           <div class="name t_ovl1">
-            <span class="td_u">{{ item.name }}</span>
+            <span class="td_u" :title="item.name">{{ item.name }}</span>
           </div>
           <div class="desc t_ovl1">
-            <span class="td_u">{{ item.radio.name }}</span>
+            <span class="td_u" :title="item.radio.name">{{ item.radio.name }}</span>
           </div>
         </div>
-        <div class="tag">{{ item.radio.category }}</div>
+        <div class="tag cur_p">{{ item.radio.category }}</div>
       </div>
     </div>
   </div>
