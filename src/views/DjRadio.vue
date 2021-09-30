@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-18 14:20:47
- * @LastEditTime: 2021-09-30 15:36:12
+ * @LastEditTime: 2021-09-30 16:29:18
  * @FilePath: \CloudMusic-for-Vue3\src\views\DjRadio.vue
 -->
 <template>
@@ -11,7 +11,9 @@
       <div class="recommend">
         <RecommendList :list="data.programRecommends"></RecommendList>
       </div>
-      <div class="rank"></div>
+      <div class="rank">
+        <RankList :list="data.rankList"></RankList>
+      </div>
     </div>
   </div>
 </template>
@@ -20,6 +22,7 @@
 import CategoryList from "../components/DjRadio/categoryList.vue";
 import Title from "../components/Title.vue";
 import RecommendList from "../components/DjRadio/recommendList.vue";
+import RankList from "../components/DjRadio/rankList.vue";
 import { reqDjCategories, reqDjRankList, reqDjRecommends } from "../api";
 import { DjCategoryType, RankListType, programType } from "../types/types";
 import { ref, onMounted } from "vue";

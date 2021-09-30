@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-30 15:39:29
- * @LastEditTime: 2021-09-30 16:20:57
+ * @LastEditTime: 2021-09-30 16:34:55
  * @FilePath: \CloudMusic-for-Vue3\src\components\DjRadio\recommendList.vue
 -->
 <template>
@@ -18,8 +18,12 @@
           <i class="icon_program_play pa"></i>
         </div>
         <div class="center">
-          <div class="name td_u t_ovl1">{{ item.name }}</div>
-          <div class="desc td_u t_ovl1">{{ item.radio.name }}</div>
+          <div class="name t_ovl1">
+            <span class="td_u">{{ item.name }}</span>
+          </div>
+          <div class="desc t_ovl1">
+            <span class="td_u">{{ item.radio.name }}</span>
+          </div>
         </div>
         <div class="tag">{{ item.radio.category }}</div>
       </div>
@@ -84,14 +88,17 @@ const props = defineProps({
       }
 
       .center {
+        width: 272px;
         margin-left: 10px;
         color: #333;
         .name,
         .desc {
-          font-size: 12px;
           width: 254px;
           height: 20px;
           line-height: 20px;
+          span {
+            font-size: 12px;
+          }
         }
 
         .desc {
@@ -106,6 +113,7 @@ const props = defineProps({
         color: #999;
         border: 1px solid #999;
         padding: 0 6px;
+        justify-self: end;
 
         &:hover {
           color: #666;

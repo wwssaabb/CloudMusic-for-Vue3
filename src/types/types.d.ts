@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-22 09:32:37
- * @LastEditTime: 2021-09-29 15:54:57
+ * @LastEditTime: 2021-09-30 16:27:59
  * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
 
@@ -194,7 +194,7 @@ export type programType = {
 };
 
 export type RankListType = {
-  program: programType[];
+  program: programType;
   rank: number;
   lastRank: number;
   score: number;
