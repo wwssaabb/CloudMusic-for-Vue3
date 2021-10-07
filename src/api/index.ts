@@ -21,6 +21,7 @@ import type {
   reqDjCategoryType,
   reqDjRankListType,
   reqProgramRecommendListType,
+  reqDjHotListType,
 } from "../types/types";
 
 //获取banner数据
@@ -97,3 +98,6 @@ export const reqDjRankList = (limit: number = 10) =>
   http<reqDjRankListType>("/dj/program/toplist", {
     limit,
   });
+
+//获取类别热门电台
+export const reqDjHotList = (cateId: number, page: number = 1, limit: number = 20) => http<reqDjHotListType>('/dj/radio/hot', { cateId, offset: (page - 1) * limit, limit })

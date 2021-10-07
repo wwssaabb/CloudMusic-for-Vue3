@@ -208,10 +208,28 @@ export type reqDjRankListType = {
 };
 
 //dj主播 推荐节目 相关类型
-
 export type reqProgramRecommendListType = {
   programs: programType[];
   code: number;
   name: string;
   more: boolean;
 };
+
+
+//dj 节目type
+export type DjRadioType = {
+  id: string,
+  category: string,
+  picUrl: string,
+  name: string,
+  desc: string,
+  rcmdtext: string,
+}
+
+//dj 类型请求结果
+export type reqDjHotListType = {
+  djRadios: DjRadioType[];
+  code: number;
+  count: number;
+  hasMore: boolean;
+}
