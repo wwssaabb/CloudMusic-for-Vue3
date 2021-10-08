@@ -8,7 +8,7 @@
   <div class="mixin-show">
     <div class="enter-artist">
       <Title title="入驻歌手">
-        <template #right><span class="td_u">更多 ></span></template>
+        <template #right><span class="td_u cur_p">更多 ></span></template>
       </Title>
       <div class="enter-artist-list" v-loading="enterList.length === 0">
         <CoverShow :list="enterList"></CoverShow>
@@ -63,6 +63,7 @@ const props = defineProps({
 
     .cover-list {
       border-bottom: 1px dotted #999;
+      margin-bottom: 12px;
     }
   }
 }

@@ -37,8 +37,8 @@
 </template>
 
 <script lang="ts" setup>
-import { sidebarType, artistType } from "../types/types";
-import { onMounted, ref } from "vue";
+import { sidebarType, artistType,initialType } from "../types/types";
+import { onMounted, ref,provide } from "vue";
 import { reqArtistsList } from "../api";
 import Sidebar from "../components/Artist/sidebar.vue";
 import IndexShow from "../components/Artist/indexShow.vue";
@@ -200,6 +200,19 @@ const showType = ["mixin", "cover", "index"];
 onMounted(async () => {
   data.value.mixinHotData = await getArtistsList(-1, -1, 1, 100);
 });
+
+//首字母组件change方法
+const initialChange=(initial:initialType):void=>{
+  console.log(initial);
+  let target = sidebarList.value.find((i) => i.id === chooseSidebar.value[0]);
+  console.log(target);
+  if (target) {
+    target.list[chooseSidebar.value[1]].initial = initial
+  }
+}
+provide(
+  'initialChange',initialChange
+)
 </script>
 
 <style lang="scss" scoped>
