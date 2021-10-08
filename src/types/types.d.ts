@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-22 09:32:37
- * @LastEditTime: 2021-09-30 16:27:59
+ * @LastEditTime: 2021-10-08 17:06:36
  * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
 
@@ -215,16 +215,15 @@ export type reqProgramRecommendListType = {
   more: boolean;
 };
 
-
 //dj 节目type
 export type DjRadioType = {
-  id: string,
-  category: string,
-  picUrl: string,
-  name: string,
-  desc: string,
-  rcmdtext: string,
-}
+  id: string;
+  category: string;
+  picUrl: string;
+  name: string;
+  desc: string;
+  rcmdtext: string;
+};
 
 //dj 类型请求结果
 export type reqDjHotListType = {
@@ -232,4 +231,62 @@ export type reqDjHotListType = {
   code: number;
   count: number;
   hasMore: boolean;
-}
+};
+
+//歌手分类列表
+//侧边栏渲染对象数组类型
+export type listRenderType = "mixin" | "cover" | "index";
+export type initialType =
+  | -1
+  | "A"
+  | "B"
+  | "C"
+  | "D"
+  | "E"
+  | "F"
+  | "G"
+  | "H"
+  | "I"
+  | "J"
+  | "K"
+  | "L"
+  | "M"
+  | "N"
+  | "O"
+  | "P"
+  | "Q"
+  | "R"
+  | "S"
+  | "T"
+  | "U"
+  | "V"
+  | "W"
+  | "X"
+  | "Y"
+  | "Z"
+  | 0;
+
+export type sidebarType = {
+  id: number;
+  name: string;
+  list: {
+    name: string;
+    type: listRenderType;
+    list: artistType[];
+    initial: initialType;
+  }[];
+};
+
+//歌手Type
+export type artistType = {
+  id: number;
+  name: string;
+  picUrl: string;
+  accountId?: number;
+};
+
+export type reqArtistsType = {
+  artists: artistType[];
+  more: boolean;
+  code: number;
+};

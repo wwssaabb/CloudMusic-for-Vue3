@@ -22,6 +22,7 @@ import type {
   reqDjRankListType,
   reqProgramRecommendListType,
   reqDjHotListType,
+  reqArtistsType,
 } from "../types/types";
 
 //获取banner数据
@@ -107,6 +108,21 @@ export const reqDjHotList = (
 ) =>
   http<reqDjHotListType>("/dj/radio/hot", {
     cateId,
+    offset: (page - 1) * limit,
+    limit,
+  });
+
+//获取歌手列表
+export const reqArtistsList = (
+  type: number,
+  area: number,
+  page: number = 1,
+  limit: number = 10
+) =>
+  http<reqArtistsType>("/artist/list", {
+    type,
+    area,
+    page,
     offset: (page - 1) * limit,
     limit,
   });

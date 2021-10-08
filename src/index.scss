@@ -308,6 +308,10 @@ $--foot_color:#f2f2f2; //脚步的背景色
   background: url("https://music.163.com/style/web2/img/iconall.png?82783b9ec199e0be36d4bfbcd89d22b6") no-repeat;
 }
 
+.icons8_img {
+  background: url("https://music.163.com/style/web2/img/icon.png?6c2f8d104760735b730ad5b31153d531") no-repeat;
+}
+
 //播放按钮
 .play_icon {
   display: inline-block;
@@ -530,12 +534,23 @@ $--foot_color:#f2f2f2; //脚步的背景色
     @include get_btn(5, 0, 0, 16, 17, 0, -60);
   }
 
-  //
+  //封面的mask
   &cover_mask {
     @include get_btn(6, 0, 0, 140, 140);
   }
 
+  //节目播放icon
   &program_play {
     @include get_btn(7, 0, -85, 22, 22);
+  }
+
+  //个人主页图标
+  &personal {
+    @include get_btn(8, 0, -740, 17, 18);
+  }
+
+  //封面的mask 130x130
+  &cover_mask_130 {
+    @include get_btn(6, 0, 0, 130, 130);
   }
 }

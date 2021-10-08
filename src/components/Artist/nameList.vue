@@ -1,0 +1,41 @@
+<!--
+ * @Author: wwssaabb
+ * @Date: 2021-10-08 11:14:23
+ * @LastEditTime: 2021-10-08 15:48:56
+ * @FilePath: \CloudMusic-for-Vue3\src\components\Artist\nameList.vue
+-->
+<template>
+  <div class="name-list fss fw">
+    <div class="item fsc" v-for="item in list" :key="item.id">
+      <span class="td_u cur_p">{{ item.name }}</span>
+      <i
+        v-if="item.accountId"
+        class="icon_personal cur_p"
+        :title="item.name + '的个人主页'"
+      ></i>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { artistType } from "../../types/types";
+import { PropType } from "vue";
+
+const Props = defineProps({
+  list: {
+    type: Array as PropType<artistType[]>,
+    required: true,
+  },
+});
+</script>
+
+<style lang="scss" scoped>
+.item {
+  width: 20%;
+  height: 30px;
+  span {
+    font-size: 12px;
+    margin-right: 2px;
+  }
+}
+</style>
