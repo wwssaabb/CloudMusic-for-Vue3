@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-18 15:23:45
- * @LastEditTime: 2021-09-30 15:31:40
+ * @LastEditTime: 2021-10-08 08:34:56
  * @FilePath: \CloudMusic-for-Vue3\src\api\index.ts
  */
 
@@ -100,4 +100,13 @@ export const reqDjRankList = (limit: number = 10) =>
   });
 
 //获取类别热门电台
-export const reqDjHotList = (cateId: number, page: number = 1, limit: number = 20) => http<reqDjHotListType>('/dj/radio/hot', { cateId, offset: (page - 1) * limit, limit })
+export const reqDjHotList = (
+  cateId: number,
+  page: number = 1,
+  limit: number = 20
+) =>
+  http<reqDjHotListType>("/dj/radio/hot", {
+    cateId,
+    offset: (page - 1) * limit,
+    limit,
+  });

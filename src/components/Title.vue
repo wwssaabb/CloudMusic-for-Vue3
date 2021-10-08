@@ -1,12 +1,15 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-29 14:04:21
- * @LastEditTime: 2021-09-29 14:21:25
+ * @LastEditTime: 2021-10-08 08:40:30
  * @FilePath: \CloudMusic-for-Vue3\src\components\Title.vue
 -->
 <template>
   <div class="title-wrap fsc">
-    <div class="left">{{ title }}</div>
+    <div class="left">
+      <template v-if="title !== ''">{{ title }}</template>
+      <slot name="title" v-else></slot>
+    </div>
     <div class="center d_ib">
       <slot name="center"></slot>
     </div>
@@ -20,7 +23,7 @@
 const props = defineProps({
   title: {
     type: String,
-    required: true,
+    default: "",
   },
 });
 </script>
@@ -37,9 +40,7 @@ const props = defineProps({
     color: #333;
     margin-right: 12px;
   }
-  .left {
-    margin-left: 12px;
-  }
+
   .center {
     flex: 1;
   }
