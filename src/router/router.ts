@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-17 15:52:26
- * @LastEditTime: 2021-09-28 17:22:12
+ * @LastEditTime: 2021-10-09 14:41:55
  * @FilePath: \CloudMusic-for-Vue3\src\router\router.ts
  */
 import { createRouter, createWebHashHistory } from "vue-router";
@@ -37,6 +37,10 @@ export default createRouter({
     {
       path: "/discover/album",
       component: () => import("../views/Album.vue"),
+    },
+    {
+      path: "/song",
+      component: () => import("../views/Song.vue"),
     },
   ],
 });

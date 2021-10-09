@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-22 09:32:37
- * @LastEditTime: 2021-10-09 11:02:09
+ * @LastEditTime: 2021-10-09 15:36:19
  * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
 
@@ -296,5 +296,20 @@ export type albumAreaType = "ALL" | "ZH" | "EA" | "KR" | "JP";
 export type reqAllAlbumsType = {
   total: number;
   albums: AlbumType[];
+  code: number;
+};
+
+//获取歌曲详情请求类型
+export type SongType = DiscoverListSongType;
+export type reqSongDetailType = {
+  songs: SongType[];
+  privileges: any[];
+  code: number;
+};
+
+//获取歌词请求类型
+export type SongLyricType = { version: number; lyric: string };
+export type reqSongLyricType = {
+  lrc: SongLyricType;
   code: number;
 };

@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-09 10:04:26
- * @LastEditTime: 2021-10-09 11:27:54
+ * @LastEditTime: 2021-10-09 11:28:59
  * @FilePath: \CloudMusic-for-Vue3\src\components\Album\allAlbums.vue
 -->
 <template>
@@ -72,7 +72,6 @@ const getAllAlbums = async () => {
   list.value = res.albums;
   total.value = res.total;
   endPage.value = Math.ceil(res.total / 35);
-  console.log(list.value);
 };
 
 //

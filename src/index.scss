@@ -316,6 +316,10 @@ $--foot_color:#f2f2f2; //脚步的背景色
   background: url("https://music.163.com/style/web2/img/coverall.png?3505c0904f0a67f8d8ee467beacf8f17") no-repeat;
 }
 
+.icons10_img {
+  background: url("https://music.163.com/style/web2/img/button2.png?28b755c9f690485ed9b4e84553693db5") no-repeat;
+}
+
 //播放按钮
 .play_icon {
   display: inline-block;
@@ -567,4 +571,61 @@ $--foot_color:#f2f2f2; //脚步的背景色
   &album_play_28x28 {
     @include get_btn(7, 0, -140, 28, 28, 0, -170);
   }
+
+  //song 页面 歌曲cover的光碟背景
+  &cover_disk {
+    @include get_btn(9, -140, -580, 206, 205);
+  }
+
+  //song 页面 外链左边的音乐icon ，蓝色
+  &music {
+    @include get_btn(8, -34, -863, 16, 16);
+  }
+
+  //song 页面 单曲icon
+  &single_song {
+    @include get_btn(8, 0, -463, 54, 24);
+  }
+
+  //song 页面 MV icon
+  &mv {
+    @include get_btn(8, 0, -18, 21, 18);
+  }
+
+  //song 页面 播放btn 背景
+  &btn_play_bg {
+    @include get_btn(10, 0, -633, 66, 31, 0, -719);
+  }
+
+  //song 页面 播放btn icon
+  &btn_play_icon {
+    @include get_btn(10, 0, -1622, 20, 18, -28, -1622);
+  }
+
+  //song 页面 新增播放列表btn
+  &add_play {
+    @include get_btn(10, 0, -1588, 31, 31, -40, -1588);
+  }
+
+  //song 页面 收藏btn 背景
+  &btn_collect_bg {
+    @include get_btn(10, 0, -977, 54, 31, 0, -1063);
+  }
+
+  //song 页面 收藏btn 背景
+  &btn_share_bg {
+    @include get_btn(10, 0, -1225, 54, 31, 0, -1268);
+  }
+
+  //song 页面 收藏btn 背景
+  &btn_download_bg {
+    @include get_btn(10, 0, -2761, 54, 31, 0, -2805);
+  }
+
+  //song 页面 评论btn 背景
+  &btn_comment_bg {
+    @include get_btn(10, 0, -1465, 54, 31, 0, -1508);
+  }
+
+
 }

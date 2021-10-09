@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-18 14:19:05
- * @LastEditTime: 2021-09-29 14:04:54
+ * @LastEditTime: 2021-10-09 14:26:27
  * @FilePath: \CloudMusic-for-Vue3\src\views\TopList.vue
 -->
 <template>
@@ -101,11 +101,11 @@ import {
 } from "../api";
 import { ref, onMounted, watch } from "vue";
 import moment from "../utils/moment";
-import CommentList from "../components/Toplist/commentList.vue";
+import CommentList from "../components/CommentList.vue";
 import SongList from "../components/Toplist/songList.vue";
 import LeftList from "../components/Toplist/leftList.vue";
 import RightHead from "../components/Toplist/rightHead.vue";
-import CommentHead from "../components/Toplist/commentHead.vue";
+import CommentHead from "../components/CommentHead.vue";
 import Pagination from "../components/Pagination.vue";
 
 const format = (n: number, format: string, type: formatType = "normal") => {

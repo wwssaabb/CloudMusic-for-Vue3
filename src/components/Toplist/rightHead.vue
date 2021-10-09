@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-28 15:59:12
- * @LastEditTime: 2021-09-28 16:10:40
+ * @LastEditTime: 2021-10-09 16:21:20
  * @FilePath: \CloudMusic-for-Vue3\src\components\Toplist\rightHead.vue
 -->
 <template>
@@ -163,8 +163,8 @@ const props = defineProps({
               }
             }
             .text {
-              top: 7px;
-              left: 28px;
+              top: 6px;
+              left: 25px;
             }
           }
           &.add_icon {

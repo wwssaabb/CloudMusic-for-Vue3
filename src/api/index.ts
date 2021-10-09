@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-18 15:23:45
- * @LastEditTime: 2021-10-09 11:00:52
+ * @LastEditTime: 2021-10-09 14:36:29
  * @FilePath: \CloudMusic-for-Vue3\src\api\index.ts
  */
 
@@ -26,6 +26,8 @@ import type {
   initialType,
   albumAreaType,
   reqAllAlbumsType,
+  reqSongDetailType,
+  reqSongLyricType,
 } from "../types/types";
 
 //获取banner数据
@@ -143,3 +145,11 @@ export const reqAllAlbums = (
     offset: (page - 1) * limit,
     limit,
   });
+
+//获取歌曲详情
+export const reqSongDetail = (ids: number) =>
+  http<reqSongDetailType>("/song/detail", { ids });
+
+//获取歌词
+export const reqSongLyric = (id: number) =>
+  http<reqSongLyricType>("/lyric", { id });

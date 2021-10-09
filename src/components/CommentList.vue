@@ -51,7 +51,7 @@ import {
   reqCommentType,
   newApi_reqCommentType,
   formatType,
-} from "../../types/types";
+} from "../types/types";
 import { PropType } from "vue";
 const props = defineProps({
   comments: {
