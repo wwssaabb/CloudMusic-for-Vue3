@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-17 16:07:22
- * @LastEditTime: 2021-09-27 17:13:06
+ * @LastEditTime: 2021-10-09 10:09:54
  * @FilePath: \CloudMusic-for-Vue3\src\views\Discover.vue
 -->
 <template>
@@ -89,6 +89,7 @@ const tags = ref<TagType[]>([]);
 onMounted(async () => {
   let res = await reqDiscoverRecommendCategory();
   tags.value = res.tags.slice(0, 5);
+  console.log(tags.value);
 });
 const recommendList = ref<RecommendType[]>([]);
 //获取热门推荐列表

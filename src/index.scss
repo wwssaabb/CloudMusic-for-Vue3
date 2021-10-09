@@ -269,7 +269,7 @@ $--foot_color:#f2f2f2; //脚步的背景色
   @extend .#{"icons" + $extendClassIndex + "_img"};
   @include get_icon($x_f, $y_f, $size_x_f, $size_y_f);
 
-  @if ($size_y_f, $x_n, $y_n) {
+  @if ($x_n, $y_n) {
     &:hover {
       @include get_icon($x_n, $y_n, $size_x_f, $size_y_f);
     }
@@ -310,6 +310,10 @@ $--foot_color:#f2f2f2; //脚步的背景色
 
 .icons8_img {
   background: url("https://music.163.com/style/web2/img/icon.png?6c2f8d104760735b730ad5b31153d531") no-repeat;
+}
+
+.icons9_img {
+  background: url("https://music.163.com/style/web2/img/coverall.png?3505c0904f0a67f8d8ee467beacf8f17") no-repeat;
 }
 
 //播放按钮
@@ -552,5 +556,15 @@ $--foot_color:#f2f2f2; //脚步的背景色
   //封面的mask 130x130
   &cover_mask_130 {
     @include get_btn(6, 0, 0, 130, 130);
+  }
+
+  //封面的mask 153x130
+  &cover_mask_153x130 {
+    @include get_btn(9, 0, -845, 153, 130);
+  }
+
+  //Album 页面的play按钮 28x28
+  &album_play_28x28 {
+    @include get_btn(7, 0, -140, 28, 28, 0, -170);
   }
 }

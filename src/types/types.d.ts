@@ -1,11 +1,9 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-22 09:32:37
- * @LastEditTime: 2021-10-09 08:25:37
+ * @LastEditTime: 2021-10-09 11:02:09
  * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
-
-import { type } from "os";
 
 //banner
 export type BannerType = {
@@ -288,5 +286,15 @@ export type artistType = {
 export type reqArtistsType = {
   artists: artistType[];
   more: boolean;
+  code: number;
+};
+
+//album category 类型
+export type albumAreaType = "ALL" | "ZH" | "EA" | "KR" | "JP";
+
+//all album 请求结果类型
+export type reqAllAlbumsType = {
+  total: number;
+  albums: AlbumType[];
   code: number;
 };

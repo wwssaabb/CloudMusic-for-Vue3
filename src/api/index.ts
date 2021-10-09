@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-18 15:23:45
- * @LastEditTime: 2021-10-09 08:13:42
+ * @LastEditTime: 2021-10-09 11:00:52
  * @FilePath: \CloudMusic-for-Vue3\src\api\index.ts
  */
 
@@ -24,6 +24,8 @@ import type {
   reqDjHotListType,
   reqArtistsType,
   initialType,
+  albumAreaType,
+  reqAllAlbumsType,
 } from "../types/types";
 
 //获取banner数据
@@ -126,6 +128,18 @@ export const reqArtistsList = (
     area,
     initial,
     page,
+    offset: (page - 1) * limit,
+    limit,
+  });
+
+//获取全部新碟列表
+export const reqAllAlbums = (
+  area: albumAreaType,
+  page: number = 1,
+  limit: number = 35
+) =>
+  http<reqAllAlbumsType>("/album/new", {
+    area,
     offset: (page - 1) * limit,
     limit,
   });

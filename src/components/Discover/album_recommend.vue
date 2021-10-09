@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-23 16:01:37
- * @LastEditTime: 2021-09-23 17:30:13
+ * @LastEditTime: 2021-10-09 08:45:18
  * @FilePath: \CloudMusic-for-Vue3\src\components\Discover\album_recommend.vue
 -->
 <template>
@@ -76,14 +76,15 @@
                       background:
                         'radial-gradient(circle at -200% -200%,transparent,rgba(255, 255, 255, 0.3) 85%,rgba(0, 0, 0, 0.05) 85.5%,rgba(0, 0, 0, 0.05) 100%),url(' +
                         item.picUrl +
-                        ')',
+                        '?param=100y100)',
                       backgroundSize: '100px 100px',
                     }"
+                    :title="item.name"
                   ></div>
                   <i class="bg_cover_icon play_icon"></i>
                 </div>
-                <div class="name">{{ item.name }}</div>
-                <div class="artists">
+                <div class="name" :title="item.name">{{ item.name }}</div>
+                <div class="artists" :title="getArtistName(item)">
                   {{ getArtistName(item) }}
                 </div>
               </div>
