@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-18 15:23:45
- * @LastEditTime: 2021-10-08 08:34:56
+ * @LastEditTime: 2021-10-09 08:13:42
  * @FilePath: \CloudMusic-for-Vue3\src\api\index.ts
  */
 
@@ -23,6 +23,7 @@ import type {
   reqProgramRecommendListType,
   reqDjHotListType,
   reqArtistsType,
+  initialType,
 } from "../types/types";
 
 //获取banner数据
@@ -116,12 +117,14 @@ export const reqDjHotList = (
 export const reqArtistsList = (
   type: number,
   area: number,
+  initial: initialType,
   page: number = 1,
   limit: number = 10
 ) =>
   http<reqArtistsType>("/artist/list", {
     type,
     area,
+    initial,
     page,
     offset: (page - 1) * limit,
     limit,

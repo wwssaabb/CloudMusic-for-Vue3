@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-22 09:32:37
- * @LastEditTime: 2021-10-08 17:06:36
+ * @LastEditTime: 2021-10-09 08:25:37
  * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
 
@@ -237,7 +237,7 @@ export type reqDjHotListType = {
 //侧边栏渲染对象数组类型
 export type listRenderType = "mixin" | "cover" | "index";
 export type initialType =
-  | -1
+  | "-1"
   | "A"
   | "B"
   | "C"
@@ -264,7 +264,7 @@ export type initialType =
   | "X"
   | "Y"
   | "Z"
-  | 0;
+  | "0";
 
 export type sidebarType = {
   id: number;

@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-18 14:21:13
- * @LastEditTime: 2021-10-08 18:04:01
+ * @LastEditTime: 2021-10-09 08:27:50
  * @FilePath: \CloudMusic-for-Vue3\src\views\Artist.vue
 -->
 <template>
@@ -21,24 +21,17 @@
       ></MixinShow>
       <IndexShow
         v-else
-        :title="
-          sidebarList.find((i) => i.id === chooseSidebar[0])?.list[
-            chooseSidebar[1]
-          ].name
-        "
-        :list="
-          sidebarList.find((i) => i.id === chooseSidebar[0])?.list[
-            chooseSidebar[1]
-          ].list
-        "
+        :title="indexData?.list[chooseSidebar[1]].name"
+        :list="indexData?.list[chooseSidebar[1]].list"
+        :chooseId="indexData?.list[chooseSidebar[1]].initial"
       ></IndexShow>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { sidebarType, artistType,initialType } from "../types/types";
-import { onMounted, ref,provide } from "vue";
+import { sidebarType, artistType, initialType } from "../types/types";
+import { onMounted, ref, provide, computed } from "vue";
 import { reqArtistsList } from "../api";
 import Sidebar from "../components/Artist/sidebar.vue";
 import IndexShow from "../components/Artist/indexShow.vue";
@@ -62,7 +55,7 @@ renderMap.forEach((v: string, k: number) => {
       name: v + i,
       type: "index",
       list: [],
-      initial: -1,
+      initial: "-1",
     })),
   });
 });
@@ -70,8 +63,8 @@ sidebarList.value.unshift({
   id: -1,
   name: "推荐",
   list: [
-    { name: "推荐歌手", type: "mixin", list: [], initial: -1 },
-    { name: "入驻歌手", type: "cover", list: [], initial: -1 },
+    { name: "推荐歌手", type: "mixin", list: [], initial: "-1" },
+    { name: "入驻歌手", type: "cover", list: [], initial: "-1" },
   ],
 });
 
@@ -85,29 +78,29 @@ const setChooseSidebar = (id: number, index: number): void => {
   }
   if (chooseSidebar.value[0] === id && chooseSidebar.value[1] === index) return; //避免重复请求
   chooseSidebar.value = [id, index];
-  console.log(chooseSidebar.value);
   if (id !== -1) {
     getIndexArtistsList();
   }
 };
 
-console.log(sidebarList);
-
 //右侧数据展示
 //mixin 推荐歌手列表的展示，cover 入驻歌手列表的展示，歌手的cover为主，index 以名字的首字母为索引
 const getIndexArtistsList = async () => {
   let target = sidebarList.value.find((i) => i.id === chooseSidebar.value[0]);
-  console.log(target);
   if (target) {
     target.list[chooseSidebar.value[1]].list = await getArtistsList(
       chooseSidebar.value[0],
       chooseSidebar.value[1] + 1,
+      target.list[chooseSidebar.value[1]].initial,
       1,
       100
     );
-    console.log(target.list[chooseSidebar.value[1]].list);
   }
 };
+
+const indexData = computed(() =>
+  sidebarList.value.find((i) => i.id === chooseSidebar.value[0])
+);
 //入驻歌手列表10个，接口暂时无法提供
 const enterArtists: artistType[] = [
   {
@@ -191,28 +184,28 @@ const data = ref<DataType>({
 const getArtistsList = async (
   area: number = -1,
   type: number = -1,
+  initial: initialType = "-1",
   page: number = 1,
   limit: number = 10
 ) => {
-  return (await reqArtistsList(type, area, page, limit)).artists;
+  return (await reqArtistsList(type, area, initial, page, limit)).artists;
 };
 const showType = ["mixin", "cover", "index"];
 onMounted(async () => {
-  data.value.mixinHotData = await getArtistsList(-1, -1, 1, 100);
+  data.value.mixinHotData = await getArtistsList(-1, -1, "-1", 1, 100);
 });
 
 //首字母组件change方法
-const initialChange=(initial:initialType):void=>{
-  console.log(initial);
+const initialChange = (initial: initialType): void => {
   let target = sidebarList.value.find((i) => i.id === chooseSidebar.value[0]);
-  console.log(target);
   if (target) {
-    target.list[chooseSidebar.value[1]].initial = initial
+    if (target.list[chooseSidebar.value[1]].initial === initial) return; //避免重复赋值请求
+    target.list[chooseSidebar.value[1]].list = [];
+    target.list[chooseSidebar.value[1]].initial = initial;
+    getIndexArtistsList();
   }
-}
-provide(
-  'initialChange',initialChange
-)
+};
+provide("initialChange", initialChange);
 </script>
 
 <style lang="scss" scoped>

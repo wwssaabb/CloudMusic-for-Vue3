@@ -1,13 +1,13 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-08 11:14:23
- * @LastEditTime: 2021-10-08 15:48:56
+ * @LastEditTime: 2021-10-09 08:32:33
  * @FilePath: \CloudMusic-for-Vue3\src\components\Artist\nameList.vue
 -->
 <template>
   <div class="name-list fss fw">
     <div class="item fsc" v-for="item in list" :key="item.id">
-      <span class="td_u cur_p">{{ item.name }}</span>
+      <span class="d_ib td_u cur_p t_ovl1">{{ item.name }}</span>
       <i
         v-if="item.accountId"
         class="icon_personal cur_p"
@@ -34,6 +34,7 @@ const Props = defineProps({
   width: 20%;
   height: 30px;
   span {
+    max-width: calc(100% - 27px);
     font-size: 12px;
     margin-right: 2px;
   }

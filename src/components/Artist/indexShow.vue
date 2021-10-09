@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-08 11:13:22
- * @LastEditTime: 2021-10-08 18:04:25
+ * @LastEditTime: 2021-10-09 08:34:46
  * @FilePath: \CloudMusic-for-Vue3\src\components\Artist\indexShow.vue
 -->
 <template>
@@ -16,8 +16,8 @@
 </template>
 
 <script setup lang="ts">
-import { artistType,initialType } from "../../types/types";
-import { PropType,ref } from "vue";
+import { artistType, initialType } from "../../types/types";
+import { PropType, ref } from "vue";
 import Title from "../Title.vue";
 import CoverShow from "../Artist/coverShow.vue";
 import NameList from "../Artist/nameList.vue";
@@ -32,19 +32,46 @@ const props = defineProps({
     type: Array as PropType<artistType[]>,
     default: [],
   },
+  chooseId: {
+    type: String as PropType<initialType>,
+    default: -1,
+  },
 });
 
-const initialList=ref<{id:initialType,label:string|initialType}[]>([])
+const initialList = ref<{ id: initialType; label: string | initialType }[]>([]);
 
-const letters:initialType[]=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+const letters: initialType[] = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "N",
+  "O",
+  "P",
+  "Q",
+  "R",
+  "S",
+  "T",
+  "U",
+  "V",
+  "W",
+  "X",
+  "Y",
+  "Z",
+];
 
-initialList.value=letters.map(i=>({id:i,label:i}))
-initialList.value.unshift({id:-1,label:'热门'})
-initialList.value.push({id:0,label:'其它'})
-
-const chooseId=ref<initialType>(-1)
-
-console.log(initialList.value);
+initialList.value = letters.map((i) => ({ id: i, label: i }));
+initialList.value.unshift({ id: "-1", label: "热门" });
+initialList.value.push({ id: "0", label: "其它" });
 </script>
 
 <style lang="scss" scoped>
