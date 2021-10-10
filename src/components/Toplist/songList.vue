@@ -18,6 +18,7 @@
         :style="'padding:' + (index <= 2 ? '10px 0' : '6px 0')"
         v-for="(item, index) in showData.tracks"
         :key="item.id"
+        @click="goDetail(item.id)"
       >
         <div class="index fpbc">
           <span>{{ index + 1 }}</span>
@@ -76,6 +77,9 @@ import {
   formatType,
 } from "../../types/types";
 import { PropType } from "vue";
+import { useRouter } from "vue-router";
+
+const router=useRouter()
 
 const props = defineProps({
   showData: {
@@ -103,6 +107,7 @@ const props = defineProps({
     required: true,
   },
 });
+const goDetail=(id:number)=>router.push('/song?id='+id)
 </script>
 
 <style lang="scss" scoped>

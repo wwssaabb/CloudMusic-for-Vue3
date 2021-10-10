@@ -32,21 +32,21 @@
       </div>
       <div class="features fsc">
         <div class="play_addlist">
-          <i class="icon_btn_play_bg pr" title="播放">
+          <i class="icon_btn_play_bg pr cur_p" title="播放">
             <span class="text pa">播放</span>
           </i>
-          <i class="icon_add_play" title="添加到播放列表"></i>
+          <i class="icon_add_play cur_p" title="添加到播放列表"></i>
         </div>
-        <div class="collect pr">
+        <div class="collect pr cur_p">
           <i class="icon_btn_collect_bg"><span class="text pa">收藏</span></i>
         </div>
-        <div class="share pr">
+        <div class="share pr cur_p">
           <i class="icon_btn_share_bg"><span class="text pa">分享</span></i>
         </div>
-        <div class="download pr">
+        <div class="download pr cur_p">
           <i class="icon_btn_download_bg"><span class="text pa">下载</span></i>
         </div>
-        <div class="comment">
+        <div class="comment cur_p">
           <i class="icon_btn_comment_bg"
             ><span class="text"
               >(<span>{{ 454545 }}</span
@@ -58,7 +58,7 @@
       <div class="lyric pr">
         {{ lyric.replace(/((\[[\d\:\.]+\])+)/g, "") }}
 
-        <div class="expand-btn pa"></div>
+        <div class="expand-btn pa">展开<i class="icon_expand_arrow"></i></div>
       </div>
     </div>
   </div>
@@ -150,7 +150,7 @@ console.log(props.lyric);
       .share,
       .comment,
       .download {
-        width: 59px;
+        width: 60px;
         height: 31px;
         margin-right: 5px;
         background: url("https://music.163.com/style/web2/img/button2.png?28b755c9f690485ed9b4e84553693db5")
@@ -172,7 +172,7 @@ console.log(props.lyric);
 
       .comment {
         width: auto;
-        padding-right: 5px;
+        padding-right: 3px;
 
         i.icon_btn_comment_bg {
           width: auto;
@@ -196,7 +196,7 @@ console.log(props.lyric);
       font-size: 12px;
       color: #333;
       line-height: 23px;
-      max-height: 327px;
+      max-height: 322px;
       overflow: hidden;
     }
   }

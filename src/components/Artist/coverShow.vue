@@ -22,6 +22,9 @@
 <script setup lang="ts">
 import { artistType } from "../../types/types";
 import { PropType } from "vue";
+import { useRouter } from "vue-router";
+
+const router=useRouter()
 
 const props = defineProps({
   list: {
@@ -29,6 +32,8 @@ const props = defineProps({
     required: true,
   },
 });
+
+// const goDetail
 </script>
 
 <style lang="scss" scoped>

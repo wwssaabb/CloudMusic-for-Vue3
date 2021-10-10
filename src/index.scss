@@ -609,22 +609,27 @@ $--foot_color:#f2f2f2; //脚步的背景色
 
   //song 页面 收藏btn 背景
   &btn_collect_bg {
-    @include get_btn(10, 0, -977, 54, 31, 0, -1063);
+    @include get_btn(10, 0, -977, 55, 31, 0, -1063);
   }
 
   //song 页面 收藏btn 背景
   &btn_share_bg {
-    @include get_btn(10, 0, -1225, 54, 31, 0, -1268);
+    @include get_btn(10, 0, -1225, 55, 31, 0, -1268);
   }
 
   //song 页面 收藏btn 背景
   &btn_download_bg {
-    @include get_btn(10, 0, -2761, 54, 31, 0, -2805);
+    @include get_btn(10, 0, -2761, 55, 31, 0, -2805);
   }
 
   //song 页面 评论btn 背景
   &btn_comment_bg {
-    @include get_btn(10, 0, -1465, 54, 31, 0, -1508);
+    @include get_btn(10, 0, -1465, 55, 31, 0, -1508);
+  }
+
+  //song 页面 展开箭头
+  &expand_arrow {
+    @include get_btn(10, 0, -1465, 55, 31, 0, -1508);
   }
 
 
