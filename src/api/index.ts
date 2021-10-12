@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-18 15:23:45
- * @LastEditTime: 2021-10-12 15:38:08
+ * @LastEditTime: 2021-10-12 18:04:07
  * @FilePath: \CloudMusic-for-Vue3\src\api\index.ts
  */
 
@@ -29,6 +29,7 @@ import type {
   reqSongDetailType,
   reqSongLyricType,
   reqSongCommentsType,
+  reqSimiPlaylistsType,
 } from "../types/types";
 
 //获取banner数据
@@ -168,3 +169,9 @@ export const reqSongComments = (
     limit,
     before,
   });
+
+//获取包含这首歌的歌单
+export const reqSimiPlaylists = (id: number) =>
+  http<reqSimiPlaylistsType>("/simi/playlist", { id });
+
+//获取相识歌曲

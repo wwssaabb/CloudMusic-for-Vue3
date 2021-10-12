@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-22 09:32:37
- * @LastEditTime: 2021-10-09 15:36:19
+ * @LastEditTime: 2021-10-12 17:49:14
  * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
 
@@ -316,3 +316,6 @@ export type reqSongLyricType = {
 
 //获取歌曲评论请求类型
 export type reqSongCommentsType = reqCommentType;
+
+//获取包含歌曲的歌单请求类型
+export type reqSimiPlaylistsType = { playlists: playListType[]; code: number };
