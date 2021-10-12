@@ -76,11 +76,11 @@
 </template>
 
 <script setup lang="ts">
-import { SongType } from "../../types/types";
+import { DiscoverListSongType } from "../../types/types";
 import { PropType, ref } from "vue";
 const props = defineProps({
   data: {
-    type: Object as PropType<SongType | undefined>,
+    type: Object as PropType<DiscoverListSongType | undefined>,
     default: undefined,
   },
   lyric: {

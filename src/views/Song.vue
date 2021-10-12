@@ -37,11 +37,15 @@
     <div class="right d_ib">
       <div class="recommend-albums">
         <div class="title">包含这首歌的歌单</div>
-        <div class="list"></div>
+        <div class="list">
+          <RecommendAlbum :list="data.simiPlaylists"></RecommendAlbum>
+        </div>
       </div>
       <div class="recommend-songs">
         <div class="title">相似歌曲</div>
-        <div class="list"></div>
+        <div class="list">
+          <RecommendSongs :list="data.simiSongs"></RecommendSongs>
+        </div>
       </div>
       <div class="app-download"></div>
     </div>
@@ -50,20 +54,23 @@
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
-import { reqSongDetail, reqSongLyric, reqSongComments } from "../api";
-import { SongType, CommentType, PaginationClickType } from "../types/types";
+import { reqSongDetail, reqSongLyric, reqSongComments,reqSimiPlaylists,reqSimiSongs } from "../api";
+import { DiscoverListSongType,CommentType, PaginationClickType,playListType,SongType } from "../types/types";
 import { useRouter } from "vue-router";
 import Detail from "../components/Song/detail.vue";
 import CommentHead from "../components/CommentHead.vue";
 import CommentList from "../components/CommentList.vue";
 import Pagination from "../components/Pagination.vue";
+import RecommendAlbum from "../components/Song/recommendAlbums.vue";
+import RecommendSongs from "../components/Song/recommendSongs.vue";
+
 
 //获取hash路由的query里的id
 const id: string | undefined =
   useRouter().currentRoute.value.query.id?.toString();
 
 type DataType = {
-  detail: SongType | undefined;
+  detail: DiscoverListSongType | undefined;
   lyric: string | undefined;
   hotComments: CommentType[];
   newComments: CommentType[];
@@ -71,6 +78,8 @@ type DataType = {
   currentPage: number;
   endPage: number;
   comment: string;
+  simiPlaylists: playListType[];
+  simiSongs: SongType[];
 };
 const data = ref<DataType>({
   detail: undefined,
@@ -81,6 +90,8 @@ const data = ref<DataType>({
   currentPage: 1,
   endPage: 1,
   comment: "",
+  simiPlaylists:[],
+  simiSongs:[]
 });
 
 const getDetail = async () => {
@@ -102,13 +113,26 @@ const getSongComments = async (page: number = 1) => {
   data.value.total = res.total;
   data.value.endPage = Math.ceil(data.value.total / res.comments.length);
 };
+const getSimiPlaylists=async ()=>{
+  if(!id)return
+  data.value.simiPlaylists=(await reqSimiPlaylists(id)).playlists
+}
+
+const getSimiSongs=async ()=>{
+  if(!id)return
+  data.value.simiSongs=(await reqSimiSongs(id)).songs
+}
 onMounted(() => {
   //获取歌曲详情
   getDetail();
   //获取歌词
   getLyric();
-  //获取歌曲评论（hot和正常评论）
+  //获取歌曲评论（hot和最新评论）
   getSongComments();
+  //获取包含此歌曲的专辑
+  getSimiPlaylists()
+  //获取相似歌曲
+  getSimiSongs()
 });
 
 const pageChange = (type: PaginationClickType, page?: number): void => {

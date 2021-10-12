@@ -30,6 +30,7 @@ import type {
   reqSongLyricType,
   reqSongCommentsType,
   reqSimiPlaylistsType,
+  reqSimiSongsType,
 } from "../types/types";
 
 //获取banner数据
@@ -171,7 +172,8 @@ export const reqSongComments = (
   });
 
 //获取包含这首歌的歌单
-export const reqSimiPlaylists = (id: number) =>
+export const reqSimiPlaylists = (id: number | string) =>
   http<reqSimiPlaylistsType>("/simi/playlist", { id });
 
 //获取相识歌曲
+export const reqSimiSongs = (id: number | string) => http<reqSimiSongsType>('/simi/song', { id })

@@ -300,9 +300,8 @@ export type reqAllAlbumsType = {
 };
 
 //获取歌曲详情请求类型
-export type SongType = DiscoverListSongType;
 export type reqSongDetailType = {
-  songs: SongType[];
+  songs: DiscoverListSongType[];
   privileges: any[];
   code: number;
 };
@@ -319,3 +318,18 @@ export type reqSongCommentsType = reqCommentType;
 
 //获取包含歌曲的歌单请求类型
 export type reqSimiPlaylistsType = { playlists: playListType[]; code: number };
+
+//歌曲Type
+export type SongType = {
+  id: number;
+  name: string;
+  mp3Url: string;
+  duration: number;
+  artists: ArtistType[];
+  album: AlbumType[];
+}
+
+//获取相似歌曲请求类型
+
+
+export type reqSimiSongsType = { songs: SongType[]; code: number };
