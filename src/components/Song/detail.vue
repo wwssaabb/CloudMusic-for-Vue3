@@ -1,12 +1,12 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-09 15:18:37
- * @LastEditTime: 2021-10-09 18:00:15
+ * @LastEditTime: 2021-10-12 10:28:43
  * @FilePath: \CloudMusic-for-Vue3\src\components\Song\detail.vue
 -->
 <template>
   <div class="song-detail fss">
-    <div class="left">
+    <div class="left" v-loading="data === undefined">
       <div class="cover pr" v-if="data">
         <img :src="data.al.picUrl + '?param=130y130'" alt="" />
         <i class="disk icon_cover_disk pa"></i>
@@ -16,7 +16,7 @@
         <span>生成外链播放器</span>
       </div>
     </div>
-    <div class="right">
+    <div class="right" v-loading="data === undefined">
       <div class="song-name fsc">
         <i class="icon_single_song"></i>
         <span>{{ data?.name }}</span>
@@ -49,16 +49,27 @@
         <div class="comment cur_p">
           <i class="icon_btn_comment_bg"
             ><span class="text"
-              >(<span>{{ 454545 }}</span
+              >(<span>{{ commentCount }}</span
               >)</span
             ></i
           >
         </div>
       </div>
       <div class="lyric pr">
-        {{ lyric.replace(/((\[[\d\:\.]+\])+)/g, "") }}
+        <div
+          class="lyric-content"
+          :style="{ height: isShowFull ? 'auto' : '322px' }"
+        >
+          {{ lyric.replace(/((\[[\d\:\.]+\])+)/g, "") }}
+        </div>
 
-        <div class="expand-btn pa">展开<i class="icon_expand_arrow"></i></div>
+        <div class="expand-btn pa td_u" @click="isShowFull = !isShowFull">
+          {{ isShowFull ? "收起" : "展开"
+          }}<i class="icon_expand_arrow" :class="isShowFull ? 'rot' : ''"></i>
+        </div>
+      </div>
+      <div class="sub-lyric-err">
+        <span class="cur_p">报错</span>
       </div>
     </div>
   </div>
@@ -66,7 +77,7 @@
 
 <script setup lang="ts">
 import { SongType } from "../../types/types";
-import { PropType } from "vue";
+import { PropType, ref } from "vue";
 const props = defineProps({
   data: {
     type: Object as PropType<SongType | undefined>,
@@ -76,8 +87,14 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  commentCount: {
+    type: Number,
+    default: 0,
+  },
 });
 console.log(props.lyric);
+
+const isShowFull = ref(false);
 </script>
 
 <style lang="scss" scoped>
@@ -86,6 +103,7 @@ console.log(props.lyric);
 
   .left {
     width: 206px;
+    min-height: 205px;
 
     .cover {
       width: 206px;
@@ -110,6 +128,7 @@ console.log(props.lyric);
   .right {
     width: 420px;
     margin-left: 20px;
+    min-height: 537px;
 
     .song-name {
       span {
@@ -192,12 +211,32 @@ console.log(props.lyric);
 
     .lyric {
       margin: 13px;
-      white-space: pre-line;
-      font-size: 12px;
-      color: #333;
-      line-height: 23px;
-      max-height: 322px;
-      overflow: hidden;
+
+      .lyric-content {
+        white-space: pre-line;
+        font-size: 12px;
+        color: #333;
+        line-height: 23px;
+        overflow: hidden;
+      }
+
+      .expand-btn {
+        font-size: 12px;
+        color: #0c73c2;
+        height: 20px;
+        bottom: -30px;
+        left: 0;
+        z-index: 10;
+      }
+    }
+    .sub-lyric-err {
+      margin-top: 50px;
+      text-align: right;
+      span {
+        font-size: 12px;
+        color: #999;
+      }
+      text-decoration: underline;
     }
   }
 }

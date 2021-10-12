@@ -313,3 +313,6 @@ export type reqSongLyricType = {
   lrc: SongLyricType;
   code: number;
 };
+
+//获取歌曲评论请求类型
+export type reqSongCommentsType = reqCommentType;

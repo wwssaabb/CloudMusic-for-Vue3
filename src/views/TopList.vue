@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-18 14:19:05
- * @LastEditTime: 2021-10-09 14:26:27
+ * @LastEditTime: 2021-10-12 09:58:28
  * @FilePath: \CloudMusic-for-Vue3\src\views\TopList.vue
 -->
 <template>
@@ -55,7 +55,6 @@
             <div class="list">
               <CommentList
                 :comments="data.comments.hotComments"
-                :format="format"
                 :showBeReplied="false"
               />
             </div>
@@ -64,10 +63,7 @@
             <div class="comment-list-new-title" v-if="data.currentPage === 1">
               最新评论({{ data.showData.commentCount }})
             </div>
-            <CommentList
-              :comments="data.comments.newComments"
-              :format="format"
-            />
+            <CommentList :comments="data.comments.newComments" />
           </div>
         </div>
         <div class="pagination">
@@ -87,9 +83,7 @@ import {
   DiscoverListType,
   PlaylistType,
   DiscoverListSongType,
-  trackIdType,
-  reqCommentType,
-  newApi_reqCommentType,
+  CommentType,
   formatType,
   PaginationClickType,
 } from "../types/types";
@@ -145,8 +139,8 @@ const format = (n: number, format: string, type: formatType = "normal") => {
 };
 
 type CommentsType = {
-  newComments: reqCommentType | null;
-  hotComments: newApi_reqCommentType | null;
+  newComments: CommentType[];
+  hotComments: CommentType[];
 };
 
 type TopListDataType = {
@@ -190,17 +184,16 @@ const data = ref<TopListDataType>({
     tracks: [], //列表
     trackIds: [], //列表上一次排行
   },
-  comments: { newComments: null, hotComments: null },
+  comments: { newComments: [], hotComments: [] },
   currentPage: 1,
   totalPage: 0,
 });
 
 const getNewComments = (page: number = 1): void => {
   reqTopListNewComment(data.value.showData.id, page).then((res) => {
-    data.value.comments.newComments = res;
+    data.value.comments.newComments = res.comments;
     data.value.totalPage = Math.ceil(
-      data.value.comments.newComments.total /
-        data.value.comments.newComments.comments.length
+      res.total / data.value.comments.newComments.length
     );
   });
 };
@@ -217,7 +210,7 @@ onMounted(async () => {
   getNewComments();
 
   reqTopListHotComment(data.value.showData.id).then(
-    (res) => (data.value.comments.hotComments = res.data)
+    (res) => (data.value.comments.hotComments = res.data.comments)
   );
   console.log(data.value);
 });

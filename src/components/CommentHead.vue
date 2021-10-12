@@ -1,8 +1,8 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-28 16:17:14
- * @LastEditTime: 2021-09-28 16:17:15
- * @FilePath: \CloudMusic-for-Vue3\src\components\Toplist\commentHead.vue
+ * @LastEditTime: 2021-10-12 09:35:20
+ * @FilePath: \CloudMusic-for-Vue3\src\components\commentHead.vue
 -->
 <template>
   <div class="comment-list-head">
@@ -75,7 +75,7 @@ const props = defineProps({
       margin-left: 15px;
 
       textarea {
-        width: 583px;
+        width: 88.60182%;
         height: 50px;
         border: none;
         outline: none;

@@ -1,8 +1,8 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-17 16:24:12
- * @LastEditTime: 2021-09-18 17:39:52
- * @FilePath: \CloudMusic-for-Vue3\src\components\head.vue
+ * @LastEditTime: 2021-10-12 11:03:18
+ * @FilePath: \CloudMusic-for-Vue3\src\components\Head.vue
 -->
 <template>
   <div
@@ -96,7 +96,7 @@ const features: featureType[] = [
       { id: 2, name: "排行榜", path: "/discover/toplist" },
       { id: 3, name: "歌单", path: "/discover/playlist", badge: "®" },
       { id: 4, name: "主播电台", path: "/discover/djradio" },
-      { id: 5, name: "歌手", path: "/discover/artist" },
+      { id: 5, name: "歌手", path: "/discover/artists" },
       { id: 6, name: "新碟上架", path: "/discover/album" },
     ],
   },

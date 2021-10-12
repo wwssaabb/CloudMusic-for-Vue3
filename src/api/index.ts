@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-18 15:23:45
- * @LastEditTime: 2021-10-09 14:36:29
+ * @LastEditTime: 2021-10-12 09:08:02
  * @FilePath: \CloudMusic-for-Vue3\src\api\index.ts
  */
 
@@ -28,6 +28,7 @@ import type {
   reqAllAlbumsType,
   reqSongDetailType,
   reqSongLyricType,
+  reqSongCommentsType,
 } from "../types/types";
 
 //获取banner数据
@@ -153,3 +154,17 @@ export const reqSongDetail = (ids: number) =>
 //获取歌词
 export const reqSongLyric = (id: number) =>
   http<reqSongLyricType>("/lyric", { id });
+
+//获取歌曲评论
+export const reqSongComments = (
+  id: number,
+  page: number = 1,
+  limit = 20,
+  before?: number //分页参数，上一页最后一项的time，获取超过5000条评论时需要用到
+) =>
+  http<reqSongCommentsType>("/comment/music", {
+    id,
+    offset: (page - 1) * limit,
+    limit,
+    before,
+  });

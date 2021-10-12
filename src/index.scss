@@ -629,7 +629,11 @@ $--foot_color:#f2f2f2; //脚步的背景色
 
   //song 页面 展开箭头
   &expand_arrow {
-    @include get_btn(10, 0, -1465, 55, 31, 0, -1508);
+    @include get_btn(8, -65, -520, 11, 8);
+
+    &.rot {
+      transform: rotate(180deg);
+    }
   }
 
 
