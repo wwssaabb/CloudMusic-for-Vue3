@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-09 11:38:04
- * @LastEditTime: 2021-10-12 11:00:31
+ * @LastEditTime: 2021-10-12 11:15:25
  * @FilePath: \CloudMusic-for-Vue3\src\views\Song.vue
 -->
 <template>
@@ -34,7 +34,17 @@
         ></Pagination>
       </div>
     </div>
-    <div class="right d_ib"></div>
+    <div class="right d_ib">
+      <div class="recommend-albums">
+        <div class="title">包含这首歌的歌单</div>
+        <div class="list"></div>
+      </div>
+      <div class="recommend-songs">
+        <div class="title">相似歌曲</div>
+        <div class="list"></div>
+      </div>
+      <div class="app-download"></div>
+    </div>
   </div>
 </template>
 
@@ -156,6 +166,23 @@ $min_height: 655px;
 
   .right {
     width: 270px;
+    padding: 20px 40px 30px;
+
+    .recommend-albums,
+    .recommend-songs {
+      .title {
+        line-height: 24px;
+        font-size: 12px;
+        color: #333;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #ccc;
+        font-weight: bold;
+      }
+
+      .list {
+        margin-bottom: 20px;
+      }
+    }
   }
 }
 </style>
