@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-17 10:20:33
- * @LastEditTime: 2021-09-28 17:59:19
+ * @LastEditTime: 2021-10-13 10:21:35
  * @FilePath: \CloudMusic-for-Vue3\src\App.vue
 -->
 <template>
@@ -23,8 +23,10 @@ import { ref } from "vue";
 
 const router = useRouter();
 
-router.beforeEach((to, from) => {
+router.beforeEach((to, from, next) => {
   console.log(to);
   console.log(from);
+  // if(to.path===from.path )
+  next();
 });
 </script>

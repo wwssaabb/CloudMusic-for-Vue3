@@ -146,6 +146,7 @@
   }
 
   &_n_a {
+    //禁止操作提示
     cursor: not-allowed;
   }
 }
@@ -318,6 +319,14 @@ $--foot_color:#f2f2f2; //脚步的背景色
 
 .icons10_img {
   background: url("https://music.163.com/style/web2/img/button2.png?28b755c9f690485ed9b4e84553693db5") no-repeat;
+}
+
+.icons11_img {
+  background: url("https://music.163.com/style/web2/img/icon2.png?44737a7a567d8ee25b8bac12f5267376") no-repeat;
+}
+
+.icons12_img {
+  background: url("https://music.163.com/style/web2/img/sprite.png?951fdbfbda929ed4150bb7afc9fa6d1e") no-repeat;
 }
 
 //播放按钮
@@ -635,6 +644,22 @@ $--foot_color:#f2f2f2; //脚步的背景色
       transform: rotate(180deg);
     }
   }
+
+  //song 页面 右侧相似歌曲区域 的播放按钮
+  &song_play {
+    @include get_btn(11, -69, -455, 10, 11);
+  }
+
+  //song 页面 右侧相似歌曲区域 的添加播放列表按钮
+  &song_add {
+    @include get_btn(11, -87, -454, 10, 11);
+  }
+
+  //song 页面 右侧网易云音乐app下载区域 bg
+  &song_app_download_bg {
+    @include get_btn(12, -0, -392, 200, 65);
+  }
+
 
 
 }

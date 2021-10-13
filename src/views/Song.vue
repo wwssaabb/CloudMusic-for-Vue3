@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-09 11:38:04
- * @LastEditTime: 2021-10-12 11:15:25
+ * @LastEditTime: 2021-10-13 11:17:25
  * @FilePath: \CloudMusic-for-Vue3\src\views\Song.vue
 -->
 <template>
@@ -35,27 +35,54 @@
       </div>
     </div>
     <div class="right d_ib">
-      <div class="recommend-albums">
+      <div class="recommend-albums" v-if="!data.simiPlaylistsIsEmpty">
         <div class="title">包含这首歌的歌单</div>
         <div class="list">
           <RecommendAlbum :list="data.simiPlaylists"></RecommendAlbum>
         </div>
       </div>
-      <div class="recommend-songs">
+      <div class="recommend-songs" v-if="!data.simiSongsIsEmpty">
         <div class="title">相似歌曲</div>
         <div class="list">
           <RecommendSongs :list="data.simiSongs"></RecommendSongs>
         </div>
       </div>
-      <div class="app-download"></div>
+      <div class="app-download">
+        <div class="title">网易云音乐多端下载</div>
+        <div class="download-area icon_song_app_download_bg">
+          <a class="ios" href="https://itunes.apple.com/cn/app/id590338362"></a>
+          <a class="pc" href="https://music.163.com/api/pc/download/latest"></a>
+          <a
+            class="android"
+            href="https://music.163.com/api/android/download/latest2"
+          ></a>
+        </div>
+        <div class="desc">同步歌单，随时畅听320k好音乐</div>
+      </div>
+      <div class="other">
+        <span class="d_ib td_u">补充或修改歌曲资料></span>
+        <span class="d_ib td_u">用户wiki任务中心></span>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
-import { reqSongDetail, reqSongLyric, reqSongComments,reqSimiPlaylists,reqSimiSongs } from "../api";
-import { DiscoverListSongType,CommentType, PaginationClickType,playListType,SongType } from "../types/types";
+import {
+  reqSongDetail,
+  reqSongLyric,
+  reqSongComments,
+  reqSimiPlaylists,
+  reqSimiSongs,
+} from "../api";
+import {
+  DiscoverListSongType,
+  CommentType,
+  PaginationClickType,
+  playListType,
+  SongType,
+} from "../types/types";
 import { useRouter } from "vue-router";
 import Detail from "../components/Song/detail.vue";
 import CommentHead from "../components/CommentHead.vue";
@@ -63,7 +90,6 @@ import CommentList from "../components/CommentList.vue";
 import Pagination from "../components/Pagination.vue";
 import RecommendAlbum from "../components/Song/recommendAlbums.vue";
 import RecommendSongs from "../components/Song/recommendSongs.vue";
-
 
 //获取hash路由的query里的id
 const id: string | undefined =
@@ -80,6 +106,8 @@ type DataType = {
   comment: string;
   simiPlaylists: playListType[];
   simiSongs: SongType[];
+  simiSongsIsEmpty: boolean;
+  simiPlaylistsIsEmpty: boolean;
 };
 const data = ref<DataType>({
   detail: undefined,
@@ -90,8 +118,10 @@ const data = ref<DataType>({
   currentPage: 1,
   endPage: 1,
   comment: "",
-  simiPlaylists:[],
-  simiSongs:[]
+  simiPlaylists: [],
+  simiSongs: [],
+  simiSongsIsEmpty: false,
+  simiPlaylistsIsEmpty: false,
 });
 
 const getDetail = async () => {
@@ -113,15 +143,18 @@ const getSongComments = async (page: number = 1) => {
   data.value.total = res.total;
   data.value.endPage = Math.ceil(data.value.total / res.comments.length);
 };
-const getSimiPlaylists=async ()=>{
-  if(!id)return
-  data.value.simiPlaylists=(await reqSimiPlaylists(id)).playlists
-}
+const getSimiPlaylists = async () => {
+  if (!id) return;
+  data.value.simiPlaylists = (await reqSimiPlaylists(id)).playlists;
+  if (data.value.simiPlaylists.length === 0)
+    data.value.simiPlaylistsIsEmpty = true;
+};
 
-const getSimiSongs=async ()=>{
-  if(!id)return
-  data.value.simiSongs=(await reqSimiSongs(id)).songs
-}
+const getSimiSongs = async () => {
+  if (!id) return;
+  data.value.simiSongs = (await reqSimiSongs(id)).songs;
+  if (data.value.simiSongs.length === 0) data.value.simiSongsIsEmpty = true;
+};
 onMounted(() => {
   //获取歌曲详情
   getDetail();
@@ -130,9 +163,9 @@ onMounted(() => {
   //获取歌曲评论（hot和最新评论）
   getSongComments();
   //获取包含此歌曲的专辑
-  getSimiPlaylists()
+  getSimiPlaylists();
   //获取相似歌曲
-  getSimiSongs()
+  getSimiSongs();
 });
 
 const pageChange = (type: PaginationClickType, page?: number): void => {
@@ -190,12 +223,13 @@ $min_height: 655px;
 
   .right {
     width: 270px;
-    padding: 20px 40px 30px;
+    padding: 20px 40px 30px 30px;
 
     .recommend-albums,
-    .recommend-songs {
+    .recommend-songs,
+    .app-download {
       .title {
-        line-height: 24px;
+        line-height: 23px;
         font-size: 12px;
         color: #333;
         margin-bottom: 20px;
@@ -205,6 +239,60 @@ $min_height: 655px;
 
       .list {
         margin-bottom: 20px;
+      }
+    }
+
+    .app-download {
+      margin: 20px 0;
+      .download-area {
+        margin-bottom: 10px;
+        a {
+          display: inline-block;
+        }
+        .ios {
+          width: 42px;
+          height: 48px;
+          &:hover {
+            background: url("https://music.163.com/style/web2/img/sprite.png?951fdbfbda929ed4150bb7afc9fa6d1e")
+              no-repeat;
+            background-position: 0 -472px;
+          }
+        }
+        .pc {
+          width: 60px;
+          height: 48px;
+          margin: 0 26px 0 30px;
+
+          &:hover {
+            background: url("https://music.163.com/style/web2/img/sprite.png?951fdbfbda929ed4150bb7afc9fa6d1e")
+              no-repeat;
+            background-position: -72px -472px;
+          }
+        }
+
+        .android {
+          width: 42px;
+          height: 48px;
+
+          &:hover {
+            background: url("https://music.163.com/style/web2/img/sprite.png?951fdbfbda929ed4150bb7afc9fa6d1e")
+              no-repeat;
+            background-position: -158px -472px;
+          }
+        }
+      }
+
+      .desc {
+        font-size: 12px;
+        color: #999;
+        text-align: center;
+      }
+    }
+
+    .other {
+      span {
+        font-size: 12px;
+        color: #333;
       }
     }
   }
