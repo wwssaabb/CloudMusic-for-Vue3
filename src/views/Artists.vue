@@ -1,8 +1,8 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-18 14:21:13
- * @LastEditTime: 2021-10-09 08:27:50
- * @FilePath: \CloudMusic-for-Vue3\src\views\Artist.vue
+ * @LastEditTime: 2021-10-13 11:20:40
+ * @FilePath: \CloudMusic-for-Vue3\src\views\Artists.vue
 -->
 <template>
   <div class="artist-page fss">
@@ -32,10 +32,16 @@
 <script lang="ts" setup>
 import { sidebarType, artistType, initialType } from "../types/types";
 import { onMounted, ref, provide, computed } from "vue";
+import { useRouter } from "vue-router";
 import { reqArtistsList } from "../api";
-import Sidebar from "../components/Artist/sidebar.vue";
-import IndexShow from "../components/Artist/indexShow.vue";
-import MixinShow from "../components/Artist/mixinShow.vue";
+import Sidebar from "../components/Artists/sidebar.vue";
+import IndexShow from "../components/Artists/indexShow.vue";
+import MixinShow from "../components/Artists/mixinShow.vue";
+
+//获取useRouter实例
+const router = useRouter();
+
+provide("goArtistDetail", router.push);
 
 //获取侧边栏的渲染对象数组
 const categorys = ["男歌手", "女歌手", "组合/乐队"];

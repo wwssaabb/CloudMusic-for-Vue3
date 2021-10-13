@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-09 15:18:37
- * @LastEditTime: 2021-10-12 10:28:43
+ * @LastEditTime: 2021-10-13 15:33:22
  * @FilePath: \CloudMusic-for-Vue3\src\components\Song\detail.vue
 -->
 <template>
@@ -20,7 +20,7 @@
       <div class="song-name fsc">
         <i class="icon_single_song"></i>
         <span>{{ data?.name }}</span>
-        <i class="icon_mv"></i>
+        <i class="icon_mv" v-if="data?.mv"></i>
       </div>
       <div class="desc">
         <div class="artist">

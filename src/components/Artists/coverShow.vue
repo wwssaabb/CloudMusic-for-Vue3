@@ -1,8 +1,8 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-08 11:13:12
- * @LastEditTime: 2021-10-08 15:31:08
- * @FilePath: \CloudMusic-for-Vue3\src\components\Artist\coverShow.vue
+ * @LastEditTime: 2021-10-13 15:53:26
+ * @FilePath: \CloudMusic-for-Vue3\src\components\Artists\coverShow.vue
 -->
 <template>
   <div class="cover-list fss fw">
@@ -11,7 +11,10 @@
         <img :src="item.picUrl + '?param=130y130'" alt="" />
         <i class="mask pa icon_cover_mask cur_p"></i>
       </div>
-      <div class="msg fpbc cur_p">
+      <div
+        class="msg fpbc cur_p"
+        @click="goArtistDetail?.('/artist?id=' + item.id)"
+      >
         <span class="name td_u">{{ item.name }}</span>
         <i class="icon_personal cur_p" :title="item.name + '的个人主页'"></i>
       </div>
@@ -21,10 +24,7 @@
 
 <script setup lang="ts">
 import { artistType } from "../../types/types";
-import { PropType } from "vue";
-import { useRouter } from "vue-router";
-
-const router=useRouter()
+import { PropType, inject } from "vue";
 
 const props = defineProps({
   list: {
@@ -33,7 +33,9 @@ const props = defineProps({
   },
 });
 
-// const goDetail
+// router跳转到歌手详情页
+const goArtistDetail: ((path: string) => void) | undefined =
+  inject("goArtistDetail");
 </script>
 
 <style lang="scss" scoped>

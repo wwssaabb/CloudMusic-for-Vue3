@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-13 08:11:59
- * @LastEditTime: 2021-10-13 10:45:20
+ * @LastEditTime: 2021-10-13 15:34:35
  * @FilePath: \CloudMusic-for-Vue3\src\components\Song\recommendSongs.vue
 -->
 <template>
@@ -66,6 +66,7 @@ const getArtistsHtml = (item: SongType): string => {
 
 <style lang="scss" scoped>
 .recommend-songs {
+  min-height: 42px;
   .item {
     height: 32px;
     margin-top: 10px;

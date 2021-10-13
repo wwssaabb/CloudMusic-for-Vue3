@@ -1,8 +1,8 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-08 11:13:22
- * @LastEditTime: 2021-10-09 08:34:46
- * @FilePath: \CloudMusic-for-Vue3\src\components\Artist\indexShow.vue
+ * @LastEditTime: 2021-10-13 11:21:55
+ * @FilePath: \CloudMusic-for-Vue3\src\components\Artists\indexShow.vue
 -->
 <template>
   <div class="index-show">
@@ -19,9 +19,9 @@
 import { artistType, initialType } from "../../types/types";
 import { PropType, ref } from "vue";
 import Title from "../Title.vue";
-import CoverShow from "../Artist/coverShow.vue";
-import NameList from "../Artist/nameList.vue";
-import Initial from "../Artist/initial.vue";
+import CoverShow from "../Artists/coverShow.vue";
+import NameList from "../Artists/nameList.vue";
+import Initial from "../Artists/initial.vue";
 
 const props = defineProps({
   title: {

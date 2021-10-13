@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-12 11:17:28
- * @LastEditTime: 2021-10-13 09:19:16
+ * @LastEditTime: 2021-10-13 15:35:47
  * @FilePath: \CloudMusic-for-Vue3\src\components\Song\recommendAlbums.vue
 -->
 <template>
@@ -33,6 +33,7 @@ const props = defineProps({
 <style lang="scss" scoped>
 .recommend-albums {
   margin-bottom: 25px;
+  min-height: 65px;
   .item {
     margin-bottom: 15px;
 

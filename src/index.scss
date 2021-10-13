@@ -329,6 +329,18 @@ $--foot_color:#f2f2f2; //脚步的背景色
   background: url("https://music.163.com/style/web2/img/sprite.png?951fdbfbda929ed4150bb7afc9fa6d1e") no-repeat;
 }
 
+.icons13_img {
+  background: url("https://music.163.com/style/web2/img/ban_mask.png?5b2a30c22e251028922541be7b709b5f") no-repeat;
+}
+
+.icons14_img {
+  background: url("https://music.163.com/style/web2/img/iconall.png?a0797f36204df42efcab5f9a10509e9d") no-repeat;
+}
+
+.icons15_img {
+  background: url("https://music.163.com/style/web2/img/tab.png?641601b89b25d2b32995146a4ac5d2c1") no-repeat;
+}
+
 //播放按钮
 .play_icon {
   display: inline-block;
@@ -657,9 +669,29 @@ $--foot_color:#f2f2f2; //脚步的背景色
 
   //song 页面 右侧网易云音乐app下载区域 bg
   &song_app_download_bg {
-    @include get_btn(12, -0, -392, 200, 65);
+    @include get_btn(12, 0, -392, 200, 65);
   }
 
 
+  //artist 页面 歌手cover bg
+  &artist_cover_mask {
+    @include get_btn(13, 0, 0, 640, 300);
+  }
+
+  //artist 页面 歌手cover 个人主页按钮
+  &artist_personal {
+    @include get_btn(14, 0, -1156, 96, 32, 0, -1196);
+  }
+
+  //artist 页面 歌手cover 收藏按钮
+  &artist_collect {
+    @include get_btn(14, 0, -500, 76, 32, 0, -540);
+  }
+
+  //artist 页面 歌手cover navbar 的背景
+  &artist_detail_navbar_bg {
+    @include get_btn(15, 0, 0, 640, 39);
+    background-repeat: repeat-x;
+  }
 
 }

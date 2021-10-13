@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-22 09:32:37
- * @LastEditTime: 2021-10-12 17:49:14
+ * @LastEditTime: 2021-10-13 17:25:08
  * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
 
@@ -30,6 +30,7 @@ export type RecommendType = {
 export type ArtistType = {
   id: number;
   name: string;
+  picUrl: string;
 };
 //专辑type
 export type AlbumType = {
@@ -327,9 +328,28 @@ export type SongType = {
   duration: number;
   artists: ArtistType[];
   album: AlbumType[];
-}
+};
 
 //获取相似歌曲请求类型
-
-
 export type reqSimiSongsType = { songs: SongType[]; code: number };
+
+//获取相似歌手请求类型
+export type reqSimiArtistsType = { artists: ArtistType[]; code: number };
+
+//获取相似歌曲请求类型 ArtistType
+export type ArtistDetailType = {
+  artist: {
+    id: number;
+    name: string;
+    cover: string;
+    briefDesc: string;
+  };
+  user: { userId: number };
+  videoCount: number;
+};
+
+export type reqArtistDetailType = {
+  data: ArtistDetailType;
+  code: number;
+  message: string;
+};
