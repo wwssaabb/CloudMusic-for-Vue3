@@ -43,8 +43,14 @@ export default createRouter({
       component: () => import("../views/Song.vue"),
     },
     {
-      path: "/artist",
+      path: "/artist/",
       component: () => import("../views/Artist.vue"),
+      children: [
+        { path: '/artist/', component: () => import('../views/Artist/Index.vue') },
+        { path: '/artist/album', component: () => import('../views/Artist/Album.vue') },
+        { path: '/artist/mv', component: () => import('../views/Artist/Mv.vue') },
+        { path: '/artist/desc', component: () => import('../views/Artist/Desc.vue') },
+      ]
     },
   ],
 });

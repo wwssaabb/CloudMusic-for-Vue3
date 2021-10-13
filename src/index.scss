@@ -7,6 +7,12 @@
   font-size: 14px;
 }
 
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
 /* 配置常用的flex布局 */
 .f {
 

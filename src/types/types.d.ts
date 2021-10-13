@@ -348,8 +348,17 @@ export type ArtistDetailType = {
   videoCount: number;
 };
 
+//获取歌手详情
 export type reqArtistDetailType = {
   data: ArtistDetailType;
   code: number;
   message: string;
 };
+
+
+//artist detailNavbar type
+export type detailNavbarType = {
+  id: number;
+  name: string;
+  path: string;
+}

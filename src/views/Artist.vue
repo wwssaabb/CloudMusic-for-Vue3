@@ -8,7 +8,10 @@
   <div class="artist-page fss">
     <div class="left">
       <ArtistDetail :detail="data.detail"></ArtistDetail>
-      <DetailNavbar></DetailNavbar>
+      <DetailNavbar :list="data.navbarList" :chooseIndex="data.chooseNavbarIndex" :changeNavbar="changeNavbar"></DetailNavbar>
+      <div class="artist-content">
+        <router-view></router-view>
+      </div>
     </div>
     <div class="right">
       <SimiArtists :list="data.simiArtists.slice(0, 6)"></SimiArtists>
@@ -21,7 +24,7 @@
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { reqSimiArtists, reqArtistDetail } from "../api";
-import { ArtistType, ArtistDetailType } from "../types/types";
+import { ArtistType, ArtistDetailType,detailNavbarType } from "../types/types";
 import SimiArtists from "../components/Artist/simiArtists.vue";
 import ArtistDetail from "../components/Artist/artistDetail.vue";
 import DetailNavbar from "../components/Artist/detailNavbar.vue";
@@ -32,14 +35,25 @@ const id: string | undefined =
   useRouter().currentRoute.value.query.id?.toString();
 console.log(id);
 
+const router =useRouter()
+
 type DataType = {
   simiArtists: ArtistType[];
   detail: ArtistDetailType;
+  navbarList:detailNavbarType[];
+  chooseNavbarId:number
 };
 
 const data = ref<DataType>({
   simiArtists: [],
   detail: null,
+  navbarList: [
+    {id:1,name:'热门作品',path:'/artist?id=5781'},
+    {id:2,name:'所有专辑',path:'/artist/album?id=5781'},
+    {id:3,name:'相关MV',path:'/artist/mv?id=5781'},
+    {id:4,name:'艺人介绍',path:'/artist/desc?id=5781'},
+  ],
+  chooseNavbarIndex:0
 });
 
 const getSimiArtists = async () => {
@@ -60,6 +74,12 @@ onMounted(() => {
   getArtistDetail();
 });
 
+const changeNavbar=(index:number)=>{
+  if(index===data.value.chooseNavbarIndex)return;
+  data.value.chooseNavbarIndex=index
+  router.push(data.value.navbarList[index].path)
+}
+
 console.log(data.value);
 </script>
 
@@ -75,7 +95,11 @@ console.log(data.value);
     border-right: 1px solid #d3d3d3;
     padding-bottom: 40px;
     min-height: 659px;
-    padding: 25px 30px 40px 30px;
+    padding: 25px 38px 40px 30px;
+
+    .artist-content{
+      background: skyblue;
+    }
   }
 
   .right {
