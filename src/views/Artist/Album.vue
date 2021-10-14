@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-14 08:24:51
- * @LastEditTime: 2021-10-14 15:07:53
+ * @LastEditTime: 2021-10-14 17:31:50
  * @FilePath: \CloudMusic-for-Vue3\src\views\Artist\Album.vue
 -->
 <template>
@@ -20,10 +20,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
 import { reqArtistAlbums } from "../../api";
-import { AlbumType } from "../../types/types";
+import { AlbumType, PaginationClickType } from "../../types/types";
 import AlbumCoverList from "../../components/AlbumCoverList.vue";
 import Pagination from "../../components/Pagination.vue";
 
@@ -50,7 +50,7 @@ const getAlbums = async () => {
   let res = await reqArtistAlbums(id, data.value.currentPage);
   data.value.list = res.hotAlbums;
   data.value.totalPage = res.artist.mvSize;
-  data.value.endPage = Math.ceil(res.artist.albumSize / data.value.list.length);
+  data.value.endPage = Math.ceil(res.artist.albumSize / 12); //limit 12
 };
 
 onMounted(() => {
@@ -58,7 +58,32 @@ onMounted(() => {
   getAlbums();
 });
 
-const changePage = () => {};
+const changePage = (type: PaginationClickType, page?: number): void => {
+  const p = data.value.currentPage;
+  const handle = {
+    page: () =>
+      type === "page" && page ? (data.value.currentPage = page) : null,
+    prev: () => (data.value.currentPage = p === 1 || p === 2 ? 1 : p - 1),
+    next: () =>
+      (data.value.currentPage =
+        p === data.value.totalPage || p + 1 === data.value.totalPage
+          ? data.value.totalPage
+          : p + 1),
+  };
+  handle[type]();
+};
+watch(
+  () => data.value.currentPage,
+  () => {
+    console.log(data.value.currentPage);
+    data.value.list = [];
+    getAlbums();
+  },
+  {
+    deep: true,
+  }
+);
+console.log(data.value);
 </script>
 
 <style lang="scss" scoped></style>

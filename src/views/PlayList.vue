@@ -57,7 +57,7 @@ const getPlaylists = async (page: number = 1) => {
   pageInfo.value.isLoading = true;
   data.value = await reqPlayLists(page);
   pageInfo.value.totalPage = Math.ceil(
-    data.value.total / data.value.playlists.length
+    data.value.total / 35 //limit 35
   );
   pageInfo.value.isLoading = false;
 };

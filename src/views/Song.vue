@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-09 11:38:04
- * @LastEditTime: 2021-10-13 15:28:00
+ * @LastEditTime: 2021-10-14 17:39:31
  * @FilePath: \CloudMusic-for-Vue3\src\views\Song.vue
 -->
 <template>
@@ -127,7 +127,7 @@ const getSongComments = async (page: number = 1) => {
     data.value.hotComments = res.hotComments;
   data.value.newComments = res.comments;
   data.value.total = res.total;
-  data.value.endPage = Math.ceil(data.value.total / res.comments.length);
+  data.value.endPage = Math.ceil(data.value.total / 20); //limit 20
 };
 const getSimiPlaylists = async () => {
   if (!id) return;

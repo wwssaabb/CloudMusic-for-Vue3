@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-18 15:23:45
- * @LastEditTime: 2021-10-14 11:24:07
+ * @LastEditTime: 2021-10-14 17:52:13
  * @FilePath: \CloudMusic-for-Vue3\src\api\index.ts
  */
 
@@ -34,6 +34,7 @@ import type {
   reqSimiArtistsType,
   reqArtistIndexType,
   reqArtistAlbumsType,
+  reqArtistMvsType,
 } from "../types/types";
 
 //获取banner数据
@@ -201,6 +202,18 @@ export const reqArtistAlbums = (
   limit: number = 12
 ) =>
   http<reqArtistAlbumsType>("/artist/album", {
+    id,
+    offset: (page - 1) * limit,
+    limit,
+  });
+
+//获取歌手mv
+export const reqArtistMvs = (
+  id: number | string,
+  page: number = 1,
+  limit: number = 12
+) =>
+  http<reqArtistMvsType>("/artist/mv", {
     id,
     offset: (page - 1) * limit,
     limit,

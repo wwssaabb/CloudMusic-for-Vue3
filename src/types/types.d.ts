@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-22 09:32:37
- * @LastEditTime: 2021-10-14 15:15:21
+ * @LastEditTime: 2021-10-14 17:56:14
  * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
 
@@ -379,4 +379,20 @@ export type reqArtistAlbumsType = {
   hotAlbums: AlbumType[];
   more: boolean;
   code: number;
+};
+
+//mv 的type
+export type MvType = {
+  id: number;
+  name: string;
+  artistName: string;
+  imgurl: string;
+};
+
+//获取歌手mv列表
+export type reqArtistMvsType = {
+  mvs: MvType[];
+  more: boolean;
+  code: number;
+  time: number;
 };

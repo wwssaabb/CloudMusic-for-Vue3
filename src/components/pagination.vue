@@ -1,8 +1,8 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-29 08:37:32
- * @LastEditTime: 2021-09-29 16:52:35
- * @FilePath: \CloudMusic-for-Vue3\src\components\pagination.vue
+ * @LastEditTime: 2021-10-14 17:26:40
+ * @FilePath: \CloudMusic-for-Vue3\src\components\Pagination.vue
 -->
 <template>
   <div class="pagination-wrap fcc" v-if="endPage !== 0">
@@ -107,6 +107,10 @@ const showPage = computed((): number[] => {
   }
   .next-btn {
     border-radius: 2px;
+
+    &.cannot_click {
+      color: #cacaca;
+    }
   }
 
   .pages {

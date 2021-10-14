@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-28 15:14:46
- * @LastEditTime: 2021-10-14 14:14:18
+ * @LastEditTime: 2021-10-14 17:40:11
  * @FilePath: \CloudMusic-for-Vue3\src\components\songList.vue
 -->
 <template>
@@ -63,7 +63,7 @@
           </div>
         </div>
         <div class="singer t_ovl1">
-          <span v-if="!singerSlot">{{
+          <span v-if="!singerSlot" class="td_u">{{
             item.ar.map((i) => i.name).join("/")
           }}</span>
           <slot name="default" :item="item" v-else></slot>
