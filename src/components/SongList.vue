@@ -1,12 +1,12 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-28 15:14:46
- * @LastEditTime: 2021-09-28 16:30:43
- * @FilePath: \CloudMusic-for-Vue3\src\components\Toplist\songList.vue
+ * @LastEditTime: 2021-10-14 14:14:18
+ * @FilePath: \CloudMusic-for-Vue3\src\components\songList.vue
 -->
 <template>
   <div class="list">
-    <div class="list-title fsc">
+    <div class="list-title fsc" v-if="showHead">
       <div class="index"></div>
       <div class="name">标题</div>
       <div class="time">时长</div>
@@ -16,13 +16,13 @@
       <div
         class="item fsc"
         :style="'padding:' + (index <= 2 ? '10px 0' : '6px 0')"
-        v-for="(item, index) in showData.tracks"
+        v-for="(item, index) in list"
         :key="item.id"
         @click="goDetail(item.id)"
       >
         <div class="index fpbc">
           <span>{{ index + 1 }}</span>
-          <span class="rank_icon fcc"
+          <span class="rank_icon fcc" v-if="showRank"
             ><i :class="getStatus(index)">{{
               getRankNumber(index) === undefined ? "" : getRankNumber(index)
             }}</i></span
@@ -30,7 +30,7 @@
         </div>
         <div class="name cur_p fsc f_nos">
           <img
-            v-if="index <= 2"
+            v-if="index <= specialTop - 1"
             :src="item.al.picUrl + '?param=50y50&quality=100'"
             alt=""
           />
@@ -47,7 +47,7 @@
             :title="getTitle(item, false)"
             >- ({{ item.alia?.[0] }})</span
           >
-          <i class="mv_icon f_nosg" v-if="item.mv !== 0"></i>
+          <i class="mv_icon f_nosg cur_p" v-if="item.mv !== 0"></i>
         </div>
         <div class="time fsc pr">
           <span>{{ format(item.dt, "", "duration") }}</span>
@@ -63,7 +63,10 @@
           </div>
         </div>
         <div class="singer t_ovl1">
-          <span>{{ item.ar.map((i) => i.name).join("/") }}</span>
+          <span v-if="!singerSlot">{{
+            item.ar.map((i) => i.name).join("/")
+          }}</span>
+          <slot name="default" :item="item" v-else></slot>
         </div>
       </div>
     </div>
@@ -74,40 +77,101 @@
 import {
   PlaylistType,
   DiscoverListSongType,
+  SongType,
   formatType,
-} from "../../types/types";
+} from "../types/types";
 import { PropType } from "vue";
 import { useRouter } from "vue-router";
+import moment from "../utils/moment";
 
-const router=useRouter()
+const router = useRouter();
 
 const props = defineProps({
-  showData: {
-    type: Object as PropType<PlaylistType>,
+  list: {
+    type: Array as PropType<DiscoverListSongType[]>,
     required: true,
   },
   getStatus: {
     type: Function as PropType<(index: number) => string>,
     required: true,
   },
-  getTitle: {
+  /* getTitle: {
     type: Function as PropType<
       (item: DiscoverListSongType, isNameTitle?: boolean) => string | undefined
     >,
     required: true,
-  },
+  }, */
   getRankNumber: {
     type: Function as PropType<(index: number) => number | undefined>,
     required: true,
   },
-  format: {
-    type: Function as PropType<
-      (n: number, format: string, type?: formatType) => string | undefined
-    >,
-    required: true,
+  showHead: {
+    type: Boolean,
+    default: true,
+  },
+  showRank: {
+    type: Boolean,
+    default: true,
+  },
+  specialTop: {
+    type: Number,
+    default: 3,
+  },
+  singerSlot: {
+    type: Boolean,
+    default: false,
   },
 });
-const goDetail=(id:number)=>router.push('/song?id='+id)
+const goDetail = (id: number) => router.push("/song?id=" + id);
+
+const getTitle = (
+  item: DiscoverListSongType,
+  isNameTitle: boolean = true
+): string | undefined => {
+  if (isNameTitle) {
+    return item.alia.length !== 0
+      ? item.name + "-(" + item.alia?.[0] + ")"
+      : item.name;
+  } else {
+    return item.alia?.join("/");
+  }
+};
+
+const format = (n: number, format: string, type: formatType = "normal") => {
+  const handle = {
+    normal: () => moment(n).format(format), //正常格式化时间
+    compare: () => {
+      //比较时间
+      let before = new Date(n);
+      let now = new Date();
+      //时间戳差，毫秒值
+      let diff = now.getTime() - before.getTime();
+      if (diff < 3600000) {
+        //一个小时内 格式：多少分钟之前
+        return moment(n).startOf("hour").fromNow();
+      } else if (diff >= 3600000 && diff <= 86400000) {
+        //一天以内  格式 16:44 或 昨天 16:45
+        return moment(n).subtract(0, "days").calendar();
+      } else if (diff >= 86400000 && diff <= 30758400000) {
+        //一年以内 格式： 9月22日 06:55
+        return moment(n).format("MM月DD日 HH:mm");
+      } else if (diff > 30758400000) {
+        //一年以外 格式：2014年6月30日
+        return moment(n).format("YYYY年MM月DD日");
+      }
+    },
+    duration: () => {
+      //获取时间长度 例子：03:05
+      let duration = moment.duration(n);
+      let m = duration.minutes();
+      let s = duration.seconds();
+      return (m >= 10 ? m : "0" + m) + ":" + (s >= 10 ? s : "0" + s);
+    },
+  };
+
+  //时间格式化
+  return handle[type]();
+};
 </script>
 
 <style lang="scss" scoped>

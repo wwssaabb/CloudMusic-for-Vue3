@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-18 14:19:05
- * @LastEditTime: 2021-10-12 09:58:28
+ * @LastEditTime: 2021-10-14 11:26:59
  * @FilePath: \CloudMusic-for-Vue3\src\views\TopList.vue
 -->
 <template>
@@ -38,7 +38,7 @@
             </div>
           </div>
           <SongList
-            :showData="data.showData"
+            :list="data.showData.tracks"
             :getTitle="getTitle"
             :getStatus="getStatus"
             :getRankNumber="getRankNumber"
@@ -96,7 +96,7 @@ import {
 import { ref, onMounted, watch } from "vue";
 import moment from "../utils/moment";
 import CommentList from "../components/CommentList.vue";
-import SongList from "../components/Toplist/songList.vue";
+import SongList from "../components/SongList.vue";
 import LeftList from "../components/Toplist/leftList.vue";
 import RightHead from "../components/Toplist/rightHead.vue";
 import CommentHead from "../components/CommentHead.vue";

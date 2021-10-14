@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-18 15:23:45
- * @LastEditTime: 2021-10-13 16:04:37
+ * @LastEditTime: 2021-10-14 11:24:07
  * @FilePath: \CloudMusic-for-Vue3\src\api\index.ts
  */
 
@@ -32,7 +32,8 @@ import type {
   reqSimiPlaylistsType,
   reqSimiSongsType,
   reqSimiArtistsType,
-  reqArtistDetailType,
+  reqArtistIndexType,
+  reqArtistAlbumsType,
 } from "../types/types";
 
 //获取banner数据
@@ -185,10 +186,22 @@ export const reqSimiSongs = (id: number | string) =>
 export const reqSimiArtists = (id: number | string) =>
   http<reqSimiArtistsType>("/simi/artist", { id });
 
-//获取歌手、artist详情
-export const reqArtistDetail = (id: number | string) =>
-  http<reqArtistDetailType>("/artist/detail", { id });
+//获取歌手部分信息和热门歌曲
+export const reqArtistIndex = (id: number | string) =>
+  http<reqArtistIndexType>("/artists", { id });
 
 //获取歌手描述
 export const reqArtistDesc = (id: number | string) =>
   http("/artist/desc", { id });
+
+//获取歌手专辑
+export const reqArtistAlbums = (
+  id: number | string,
+  page: number = 1,
+  limit: number = 12
+) =>
+  http<reqArtistAlbumsType>("/artist/album", {
+    id,
+    offset: (page - 1) * limit,
+    limit,
+  });

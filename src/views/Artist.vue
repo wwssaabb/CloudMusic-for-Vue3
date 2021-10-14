@@ -1,14 +1,18 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-12 11:04:23
- * @LastEditTime: 2021-10-13 17:57:52
+ * @LastEditTime: 2021-10-14 11:22:45
  * @FilePath: \CloudMusic-for-Vue3\src\views\Artist.vue
 -->
 <template>
   <div class="artist-page fss">
     <div class="left">
       <ArtistDetail :detail="data.detail"></ArtistDetail>
-      <DetailNavbar :list="data.navbarList" :chooseIndex="data.chooseNavbarIndex" :changeNavbar="changeNavbar"></DetailNavbar>
+      <DetailNavbar
+        :list="data.navbarList"
+        :chooseIndex="data.chooseNavbarIndex"
+        :changeNavbar="changeNavbar"
+      ></DetailNavbar>
       <div class="artist-content">
         <router-view></router-view>
       </div>
@@ -23,8 +27,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import { reqSimiArtists, reqArtistDetail } from "../api";
-import { ArtistType, ArtistDetailType,detailNavbarType } from "../types/types";
+import { reqSimiArtists, reqArtistIndex } from "../api";
+import { ArtistType, ArtistDetailType, detailNavbarType } from "../types/types";
 import SimiArtists from "../components/Artist/simiArtists.vue";
 import ArtistDetail from "../components/Artist/artistDetail.vue";
 import DetailNavbar from "../components/Artist/detailNavbar.vue";
@@ -35,25 +39,25 @@ const id: string | undefined =
   useRouter().currentRoute.value.query.id?.toString();
 console.log(id);
 
-const router =useRouter()
+const router = useRouter();
 
 type DataType = {
   simiArtists: ArtistType[];
   detail: ArtistDetailType;
-  navbarList:detailNavbarType[];
-  chooseNavbarId:number
+  navbarList: detailNavbarType[];
+  chooseNavbarIndex: number;
 };
 
 const data = ref<DataType>({
   simiArtists: [],
   detail: null,
   navbarList: [
-    {id:1,name:'热门作品',path:'/artist?id=5781'},
-    {id:2,name:'所有专辑',path:'/artist/album?id=5781'},
-    {id:3,name:'相关MV',path:'/artist/mv?id=5781'},
-    {id:4,name:'艺人介绍',path:'/artist/desc?id=5781'},
+    { id: 1, name: "热门作品", path: "/artist?id=5781" },
+    { id: 2, name: "所有专辑", path: "/artist/album?id=5781" },
+    { id: 3, name: "相关MV", path: "/artist/mv?id=5781" },
+    { id: 4, name: "艺人介绍", path: "/artist/desc?id=5781" },
   ],
-  chooseNavbarIndex:0
+  chooseNavbarIndex: 0,
 });
 
 const getSimiArtists = async () => {
@@ -63,7 +67,7 @@ const getSimiArtists = async () => {
 
 const getArtistDetail = async () => {
   if (!id) return;
-  data.value.detail = (await reqArtistDetail(id)).data;
+  data.value.detail = (await reqArtistIndex(id)).artist;
 };
 
 //组件挂载
@@ -74,11 +78,12 @@ onMounted(() => {
   getArtistDetail();
 });
 
-const changeNavbar=(index:number)=>{
-  if(index===data.value.chooseNavbarIndex)return;
-  data.value.chooseNavbarIndex=index
-  router.push(data.value.navbarList[index].path)
-}
+//navbar 改变
+const changeNavbar = (index: number) => {
+  if (index === data.value.chooseNavbarIndex) return;
+  data.value.chooseNavbarIndex = index;
+  router.push(data.value.navbarList[index].path);
+};
 
 console.log(data.value);
 </script>
@@ -97,8 +102,7 @@ console.log(data.value);
     min-height: 659px;
     padding: 25px 38px 40px 30px;
 
-    .artist-content{
-      background: skyblue;
+    .artist-content {
     }
   }
 

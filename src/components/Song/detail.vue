@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-09 15:18:37
- * @LastEditTime: 2021-10-13 15:33:22
+ * @LastEditTime: 2021-10-14 09:01:37
  * @FilePath: \CloudMusic-for-Vue3\src\components\Song\detail.vue
 -->
 <template>
@@ -31,12 +31,7 @@
         </div>
       </div>
       <div class="features fsc">
-        <div class="play_addlist">
-          <i class="icon_btn_play_bg pr cur_p" title="播放">
-            <span class="text pa">播放</span>
-          </i>
-          <i class="icon_add_play cur_p" title="添加到播放列表"></i>
-        </div>
+        <PlayAddlistBtn />
         <div class="collect pr cur_p">
           <i class="icon_btn_collect_bg"><span class="text pa">收藏</span></i>
         </div>
@@ -78,6 +73,8 @@
 <script setup lang="ts">
 import { DiscoverListSongType } from "../../types/types";
 import { PropType, ref } from "vue";
+import PlayAddlistBtn from "../../components/Botton/play_addlist.vue";
+
 const props = defineProps({
   data: {
     type: Object as PropType<DiscoverListSongType | undefined>,
@@ -154,17 +151,7 @@ const isShowFull = ref(false);
 
     .features {
       margin-bottom: 25px;
-      .play_addlist {
-        height: 31px;
-        margin-right: 5px;
-        span.text {
-          line-height: 21px;
-          font-size: 12px;
-          color: #fff;
-          left: 33px;
-          top: 5px;
-        }
-      }
+
       .collect,
       .share,
       .comment,

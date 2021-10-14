@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-22 09:32:37
- * @LastEditTime: 2021-10-13 17:25:08
+ * @LastEditTime: 2021-10-14 15:15:21
  * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
 
@@ -336,29 +336,47 @@ export type reqSimiSongsType = { songs: SongType[]; code: number };
 //获取相似歌手请求类型
 export type reqSimiArtistsType = { artists: ArtistType[]; code: number };
 
+//歌曲下拉筛选type
+export type IdentitiesType = "作词" | "作曲";
+
 //获取相似歌曲请求类型 ArtistType
 export type ArtistDetailType = {
-  artist: {
-    id: number;
-    name: string;
-    cover: string;
-    briefDesc: string;
-  };
-  user: { userId: number };
-  videoCount: number;
+  id: number;
+  name: string;
+  picUrl: string;
+  briefDesc: string;
+  identities: IdentitiesType[];
+  alias: string[];
+  musicSize: number;
+  albumSize: number;
+  mvSize: number;
 };
 
-//获取歌手详情
-export type reqArtistDetailType = {
-  data: ArtistDetailType;
+//获取歌手部分信息和热门歌曲
+export type reqArtistIndexType = {
+  artist: ArtistDetailType;
+  hotSongs: DiscoverListSongType[];
   code: number;
-  message: string;
+  more: boolean;
 };
-
 
 //artist detailNavbar type
 export type detailNavbarType = {
   id: number;
   name: string;
   path: string;
-}
+};
+
+//artist index filter 的筛选的type
+export type ArtistPage_filterType = {
+  id: number;
+  name: string;
+};
+
+//artist album 获取专辑请求类型
+export type reqArtistAlbumsType = {
+  artist: ArtistDetailType;
+  hotAlbums: AlbumType[];
+  more: boolean;
+  code: number;
+};

@@ -1,16 +1,30 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-09 08:48:24
- * @LastEditTime: 2021-10-09 10:03:47
+ * @LastEditTime: 2021-10-14 15:11:24
  * @FilePath: \CloudMusic-for-Vue3\src\components\AlbumCoverList.vue
 -->
 <template>
   <div class="album-cover-list fss fw" v-loading="list.length === 0">
-    <div class="album-item d_ib" v-for="item in list">
-      <div class="cover pr">
-        <img :src="item.picUrl + '?param=130y130'" alt="" />
+    <div
+      class="album-item d_ib"
+      :class="`line${lineSize}_mg`"
+      v-for="item in list"
+    >
+      <div
+        class="cover pr"
+        :style="{ width: size + 'px', height: size + 'px' }"
+      >
+        <img
+          :src="item.picUrl + `?param=${size}y${size}`"
+          alt=""
+          :style="{ width: size + 'px', height: size + 'px' }"
+        />
         <i class="play icon_album_play_28x28 pa"></i>
-        <i class="mask icon_cover_mask_153x130 pa"></i>
+        <i
+          class="mask pa"
+          :class="`icon_cover_mask_${size === 130 ? '153x130' : '143x120'}`"
+        ></i>
       </div>
       <div class="msg">
         <div class="name t_ovl1">
@@ -42,6 +56,18 @@ const props = defineProps({
     type: Array as PropType<AlbumType[]>,
     required: true,
   },
+  size: {
+    type: Number,
+    default: function () {
+      return 130;
+    },
+  },
+  lineSize: {
+    type: Number,
+    default: function () {
+      return 5;
+    },
+  },
 });
 console.log(props.list);
 
@@ -57,11 +83,19 @@ const getArtists = (item: AlbumType) => {};
 
   .album-item {
     width: 153px;
-    margin: 0 0 30px 33px;
-    background: url();
 
-    &:nth-child(5n + 1) {
-      margin: 0 0 30px 0;
+    &.line5_mg {
+      margin: 0 0 30px 33px;
+      &:nth-child(5n + 1) {
+        margin: 0 0 30px 0;
+      }
+    }
+
+    &.line4_mg {
+      margin: 0 0 30px 9px;
+      &:nth-child(4n + 1) {
+        margin: 0 0 30px 0;
+      }
     }
 
     &:hover {
@@ -76,7 +110,7 @@ const getArtists = (item: AlbumType) => {};
         height: 130px;
       }
       .play {
-        right: 33px;
+        right: 10px;
         bottom: 10px;
         opacity: 0;
       }
