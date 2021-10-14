@@ -62,7 +62,7 @@ const props = defineProps({
     .icon_collect50 {
       width: 90px;
       span {
-        width: 95px;
+        width: 94px;
         height: 31px;
         padding: 7px 0 0 27px;
         font-size: 12px;
