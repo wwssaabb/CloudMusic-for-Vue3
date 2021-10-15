@@ -355,6 +355,10 @@ $--foot_color:#f2f2f2; //脚步的背景色
   background: url("https://music.163.com/style/web2/img/coverall.png?8a8f8c0c02d3d02e74b78b513cdb6bd3") no-repeat;
 }
 
+.icons18_img {
+  background: url("https://music.163.com/style/web2/img/iconall.png?b9b17f1aab9fa69abd8431abf9dee47a") no-repeat;
+}
+
 //播放按钮
 .play_icon {
   display: inline-block;
@@ -718,5 +722,15 @@ $--foot_color:#f2f2f2; //脚步的背景色
   //artist 页面 热门作品 filter 按钮 背景
   &artist_filter_bg {
     @include get_btn(16, 0, -59, 102, 31, 0, -140);
+  }
+
+  //artist 页面 相关mv mv的mask
+  &mv_cover_mask {
+    @include get_btn(17, 0, -1170, 137, 103);
+  }
+
+  //artist 页面 相关mv mv播放按钮的背景
+  &mv_play_bg {
+    @include get_btn(18, -30, -135, 44, 44, -30, -85);
   }
 }

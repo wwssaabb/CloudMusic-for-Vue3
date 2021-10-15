@@ -28,8 +28,9 @@ import AlbumCoverList from "../../components/AlbumCoverList.vue";
 import Pagination from "../../components/Pagination.vue";
 
 //获取query id参数
-const id: string | undefined =
-  useRouter().currentRoute.value.query.id?.toString();
+const query = useRouter().currentRoute.value.query;
+const id: string | undefined = query.id?.toString();
+const total: string | undefined = query.total?.toString();
 
 type dataType = {
   list: AlbumType[];

@@ -35,6 +35,7 @@ import type {
   reqArtistIndexType,
   reqArtistAlbumsType,
   reqArtistMvsType,
+  reqArtistDescType,
 } from "../types/types";
 
 //获取banner数据
@@ -193,7 +194,7 @@ export const reqArtistIndex = (id: number | string) =>
 
 //获取歌手描述
 export const reqArtistDesc = (id: number | string) =>
-  http("/artist/desc", { id });
+  http<reqArtistDescType>("/artist/desc", { id });
 
 //获取歌手专辑
 export const reqArtistAlbums = (

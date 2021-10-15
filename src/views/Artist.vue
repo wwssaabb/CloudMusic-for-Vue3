@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-12 11:04:23
- * @LastEditTime: 2021-10-14 11:22:45
+ * @LastEditTime: 2021-10-15 14:56:57
  * @FilePath: \CloudMusic-for-Vue3\src\views\Artist.vue
 -->
 <template>
@@ -52,10 +52,10 @@ const data = ref<DataType>({
   simiArtists: [],
   detail: null,
   navbarList: [
-    { id: 1, name: "热门作品", path: "/artist?id=5781" },
-    { id: 2, name: "所有专辑", path: "/artist/album?id=5781" },
-    { id: 3, name: "相关MV", path: "/artist/mv?id=5781" },
-    { id: 4, name: "艺人介绍", path: "/artist/desc?id=5781" },
+    { id: 1, name: "热门作品", path: "/artist?id=" + id },
+    { id: 2, name: "所有专辑", path: "/artist/album?id=" + id },
+    { id: 3, name: "相关MV", path: "/artist/mv?id=" + id },
+    { id: 4, name: "艺人介绍", path: "/artist/desc?id=" + id },
   ],
   chooseNavbarIndex: 0,
 });
@@ -68,6 +68,15 @@ const getSimiArtists = async () => {
 const getArtistDetail = async () => {
   if (!id) return;
   data.value.detail = (await reqArtistIndex(id)).artist;
+  data.value.navbarList[1].path = data.value.navbarList[1].path.concat(
+    "&total=" + data.value.detail.albumSize
+  );
+  data.value.navbarList[2].path = data.value.navbarList[2].path.concat(
+    "&total=" + data.value.detail.mvSize
+  );
+  data.value.navbarList[3].path = data.value.navbarList[3].path.concat(
+    "&name=" + data.value.detail.name
+  );
 };
 
 //组件挂载

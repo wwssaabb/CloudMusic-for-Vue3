@@ -396,3 +396,16 @@ export type reqArtistMvsType = {
   code: number;
   time: number;
 };
+
+//歌手描述type
+export type ArtistDescType = {
+  ti: string;
+  txt: string;
+};
+
+//获取歌手描述
+export type reqArtistDescType = {
+  introduction: ArtistDescType[];
+  briefDesc: string;
+  code: number;
+};

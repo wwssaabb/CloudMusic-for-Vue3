@@ -1,8 +1,8 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-14 10:40:19
- * @LastEditTime: 2021-10-14 10:40:19
- * @FilePath: \CloudMusic-for-Vue3\src\components\Artist\head.vue
+ * @LastEditTime: 2021-10-15 09:31:07
+ * @FilePath: \CloudMusic-for-Vue3\src\components\Artist\Index\head.vue
 -->
 <template>
   <div class="head fpbc">
@@ -99,6 +99,12 @@ const props = defineProps({
         }
         span.show {
           background-position: right -181px;
+        }
+      }
+
+      .item:active {
+        .selector {
+          display: none;
         }
       }
 
