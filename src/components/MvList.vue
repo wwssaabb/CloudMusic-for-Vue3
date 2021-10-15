@@ -1,20 +1,20 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-14 17:41:41
- * @LastEditTime: 2021-10-15 13:42:44
+ * @LastEditTime: 2021-10-15 16:15:11
  * @FilePath: \CloudMusic-for-Vue3\src\components\MvList.vue
 -->
 <template>
   <div class="mv-list fss fw" v-loading="list.length === 0">
     <div class="item" v-for="item in list" :key="item.id">
-      <div class="cover pr">
+      <div class="cover pr" @click="goMvPage(item.id)">
         <img :src="item.imgurl + '?param=137y103'" alt="" />
         <i class="icon_mv_cover_mask pa"></i>
         <i class="icon_mv_play_bg pa">
           <i class="icon_mv_play d_ib"></i>
         </i>
       </div>
-      <div class="name t_ovl1">
+      <div class="name t_ovl1" @click="goMvPage(item.id)">
         <span class="td_u">{{ item.name }}</span>
       </div>
     </div>
@@ -23,7 +23,12 @@
 
 <script setup lang="ts">
 import { PropType } from "vue";
+import { useRouter } from "vue-router";
 import { MvType } from "../types/types";
+
+const router = useRouter();
+
+const goMvPage = (id: number) => router.push("/mv?id=" + id);
 
 const props = defineProps({
   list: {

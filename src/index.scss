@@ -359,6 +359,14 @@ $--foot_color:#f2f2f2; //脚步的背景色
   background: url("https://music.163.com/style/web2/img/iconall.png?b9b17f1aab9fa69abd8431abf9dee47a") no-repeat;
 }
 
+.icons19_img {
+  background: url("https://music.163.com/style/web2/img/icon2.png?4719aa5bbfb68e0e401513573bab4511") no-repeat;
+}
+
+.icons20_img {
+  background: url("https://music.163.com/style/web2/img/button2.png?4ebaf9776631e932014ff5bd943e73ca") no-repeat;
+}
+
 //播放按钮
 .play_icon {
   display: inline-block;
@@ -733,4 +741,28 @@ $--foot_color:#f2f2f2; //脚步的背景色
   &mv_play_bg {
     @include get_btn(18, -30, -135, 44, 44, -30, -85);
   }
+
+  //mv 页面 mv tag
+  &mv_tag {
+    @include get_btn(19, -230, -480, 29, 18);
+  }
+
+  //mv 页面 mv icons
+  &mv_icon_like {
+    @include get_btn(20, 0, -59, 80, 31);
+
+    i {
+      @include get_btn(20, 0, -95, 17, 15);
+      margin: 6.5px 0 0 10px;
+    }
+  }
+
+  &mv_icon_collect {
+    @include get_btn(20, 0, -977, 70, 31);
+  }
+
+  &mv_icon_share {
+    @include get_btn(20, 0, -1225, 76, 31);
+  }
+
 }

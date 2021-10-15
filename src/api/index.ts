@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-18 15:23:45
- * @LastEditTime: 2021-10-14 17:52:13
+ * @LastEditTime: 2021-10-15 16:59:14
  * @FilePath: \CloudMusic-for-Vue3\src\api\index.ts
  */
 
@@ -36,6 +36,9 @@ import type {
   reqArtistAlbumsType,
   reqArtistMvsType,
   reqArtistDescType,
+  reqMvDetailType,
+  reqMvUrlType,
+  reqSimiMvsType,
 } from "../types/types";
 
 //获取banner数据
@@ -219,3 +222,15 @@ export const reqArtistMvs = (
     offset: (page - 1) * limit,
     limit,
   });
+
+//获取mv详情
+export const reqMvDetail = (mvid: number | string) =>
+  http<reqMvDetailType>("/mv/detail", { mvid });
+
+//获取mv播放地址  r为分辨率，默认1080
+export const reqMvUrl = (id: number | string, r: number = 1080) =>
+  http<reqMvUrlType>("/mv/url", { id, r });
+
+//获取相关mv推荐
+export const reqSimiMvs = (mvid: number | string) =>
+  http<reqSimiMvsType>("/simi/mv", { mvid });

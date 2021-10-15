@@ -409,3 +409,55 @@ export type reqArtistDescType = {
   briefDesc: string;
   code: number;
 };
+
+//分辨率 type
+export type PixelType = {
+  size: number;
+  br: number;
+  point: number;
+};
+
+//Mv 类型
+export type MvDetailType = {
+  id: number;
+  name: string;
+  artistName: string;
+  artistId: string;
+  cover: string;
+  desc: string;
+  playCount: number;
+  subCount: number;
+  shareCount: number;
+  commentCount: number;
+  duration: number;
+  price: number;
+  publishTime: string;
+  brs: PixelType[];
+  commentThreadId: string;
+};
+
+//获取mv详情请求的type
+export type reqMvDetailType = {
+  data: MvDetailType;
+  code: number;
+};
+
+//mv 视频视频地址的type
+export type mvUrlDataType = {
+  id: number;
+  url: string;
+  r: number;
+  size: number;
+};
+
+//获取 mv地址请求的type
+export type reqMvUrlType = {
+  data: mvUrlDataType;
+  code: number;
+};
+
+//获取 相关mv 推荐请求type
+export type reqSimiMvsType = {
+  mvs: MvDetailType[];
+  code: number;
+};

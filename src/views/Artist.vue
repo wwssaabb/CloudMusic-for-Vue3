@@ -1,13 +1,13 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-12 11:04:23
- * @LastEditTime: 2021-10-15 14:56:57
+ * @LastEditTime: 2021-10-15 15:12:32
  * @FilePath: \CloudMusic-for-Vue3\src\views\Artist.vue
 -->
 <template>
   <div class="artist-page fss">
     <div class="left">
-      <ArtistDetail :detail="data.detail"></ArtistDetail>
+      <ArtistDetail :detail="data.detail" v-if="data.detail"></ArtistDetail>
       <DetailNavbar
         :list="data.navbarList"
         :chooseIndex="data.chooseNavbarIndex"
@@ -43,7 +43,7 @@ const router = useRouter();
 
 type DataType = {
   simiArtists: ArtistType[];
-  detail: ArtistDetailType;
+  detail: ArtistDetailType | null;
   navbarList: detailNavbarType[];
   chooseNavbarIndex: number;
 };
@@ -110,9 +110,6 @@ console.log(data.value);
     padding-bottom: 40px;
     min-height: 659px;
     padding: 25px 38px 40px 30px;
-
-    .artist-content {
-    }
   }
 
   .right {
