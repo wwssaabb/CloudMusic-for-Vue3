@@ -37,6 +37,7 @@ import type {
   reqArtistMvsType,
   reqArtistDescType,
   reqMvDetailType,
+  reqMvDetailInfoType,
   reqMvUrlType,
   reqSimiMvsType,
 } from "../types/types";
@@ -226,6 +227,10 @@ export const reqArtistMvs = (
 //获取mv详情
 export const reqMvDetail = (mvid: number | string) =>
   http<reqMvDetailType>("/mv/detail", { mvid });
+
+//获取mv 评论、点赞、转发数据
+export const reqMvDetailInfo = (mvid: number | string) =>
+  http<reqMvDetailInfoType>("/mv/detail/info", { mvid });
 
 //获取mv播放地址  r为分辨率，默认1080
 export const reqMvUrl = (id: number | string, r: number = 1080) =>

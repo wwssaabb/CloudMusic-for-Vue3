@@ -8,9 +8,7 @@
   <div class="mv-page">
     <div class="left">
       <MvPlay
-        :mvName="data.detail.name"
-        :artist-name="data.detail.artistName"
-        :cover="data.detail.cover"
+        :detail="data.detail"
         :mvUrl="data.mvUrlData.url"
         v-if="data.detail && data.mvUrlData"
       ></MvPlay>
@@ -22,8 +20,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { reqMvDetail, reqMvUrl, reqSimiMvs } from "../api";
-import { MvDetailType, mvUrlDataType } from "../types/types";
+import { reqMvDetail, reqMvUrl, reqSimiMvs,reqMvDetailInfo } from "../api";
+import { MvDetailType, mvUrlDataType,reqMvDetailInfoType } from "../types/types";
 import MvPlay from "../components/Mv/mvPlay.vue";
 
 const router = useRouter();
@@ -31,12 +29,15 @@ const id: string | undefined = router.currentRoute.value.query.id?.toString();
 
 type dataType = {
   detail: MvDetailType | null;
+  detailInfo: reqMvDetailInfoType | null;
   simiMvs: MvDetailType[];
   mvUrlData: mvUrlDataType | null;
+
 };
 
 const data = ref<dataType>({
   detail: null,
+  detailInfo: null,
   simiMvs: [],
   mvUrlData: null,
 });
@@ -45,6 +46,17 @@ const getMvDetail = async () => {
   //获取mv 详情
   if (!id) return;
   data.value.detail = (await reqMvDetail(id)).data;
+};
+const getMvDetailInfo = async () => {
+  //获取mv 详情
+  if (!id) return;
+  let res=await reqMvDetailInfo(id)
+  data.value.detailInfo = res;
+  if(!data.value.detail)return
+  data.value.detail.shareCount=res.shareCount
+  data.value.detail.commentCount=res.commentCount
+  data.value.detail.likedCount=res.likedCount
+  data.value.detail.liked=res.liked
 };
 const getMvUrl = async () => {
   //获取mv 播放地址
@@ -59,6 +71,7 @@ const getSimiMvs = async () => {
 
 onMounted(() => {
   getMvDetail();
+  getMvDetailInfo();
   getMvUrl();
   getSimiMvs();
 });

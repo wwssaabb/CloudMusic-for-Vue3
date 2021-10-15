@@ -434,11 +434,22 @@ export type MvDetailType = {
   publishTime: string;
   brs: PixelType[];
   commentThreadId: string;
+  likedCount: number;
+  liked: boolean;
 };
 
 //获取mv详情请求的type
 export type reqMvDetailType = {
   data: MvDetailType;
+  code: number;
+};
+
+//获取mv 点赞、分享、评论请求的type
+export type reqMvDetailInfoType = {
+  likedCount: number,
+  shareCount: number,
+  commentCount: number,
+  liked: boolean,
   code: number;
 };
 

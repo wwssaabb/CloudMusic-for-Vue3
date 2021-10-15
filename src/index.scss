@@ -749,20 +749,32 @@ $--foot_color:#f2f2f2; //脚步的背景色
 
   //mv 页面 mv icons
   &mv_icon_like {
-    @include get_btn(20, 0, -59, 80, 31);
+    @include get_btn(20, 0, -59, 80, 31, 0, -141);
+    width: auto;
+    min-width: 58px;
 
-    i {
+    i.like_icon {
+      position: absolute;
+      left: 10px;
+      top: 6.5px;
       @include get_btn(20, 0, -95, 17, 15);
-      margin: 6.5px 0 0 10px;
+
+      &.active {
+        @include get_btn(20, -30, -95, 17, 15);
+      }
     }
   }
 
   &mv_icon_collect {
-    @include get_btn(20, 0, -977, 70, 31);
+    @include get_btn(20, 0, -977, 70, 31, 0, -1063);
+    width: auto;
+    min-width: 58px;
   }
 
   &mv_icon_share {
-    @include get_btn(20, 0, -1225, 76, 31);
+    @include get_btn(20, 0, -1225, 76, 31, 0, -1268);
+    width: auto;
+    min-width: 58px;
   }
 
 }
