@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-15 15:43:45
- * @LastEditTime: 2021-10-15 17:16:36
+ * @LastEditTime: 2021-10-16 09:54:13
  * @FilePath: \CloudMusic-for-Vue3\src\views\Mv.vue
 -->
 <template>
@@ -20,8 +20,19 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { reqMvDetail, reqMvUrl, reqSimiMvs,reqMvDetailInfo } from "../api";
-import { MvDetailType, mvUrlDataType,reqMvDetailInfoType } from "../types/types";
+import {
+  reqMvDetail,
+  reqMvUrl,
+  reqSimiMvs,
+  reqMvDetailInfo,
+  reqMvComments,
+} from "../api";
+import {
+  MvDetailType,
+  mvUrlDataType,
+  reqMvDetailInfoType,
+  reqMvCommentsType,
+} from "../types/types";
 import MvPlay from "../components/Mv/mvPlay.vue";
 
 const router = useRouter();
@@ -32,7 +43,10 @@ type dataType = {
   detailInfo: reqMvDetailInfoType | null;
   simiMvs: MvDetailType[];
   mvUrlData: mvUrlDataType | null;
-
+  commentData: reqMvCommentsType | null;
+  currentPage: number;
+  endPage: number;
+  total: number;
 };
 
 const data = ref<dataType>({
@@ -40,24 +54,39 @@ const data = ref<dataType>({
   detailInfo: null,
   simiMvs: [],
   mvUrlData: null,
+  commentData: null,
+  currentPage: 1,
+  endPage: 1,
+  total: 0,
 });
 
 const getMvDetail = async () => {
   //获取mv 详情
   if (!id) return;
   data.value.detail = (await reqMvDetail(id)).data;
+  data.value.detail.likedCount = 0;
 };
 const getMvDetailInfo = async () => {
-  //获取mv 详情
+  //获取mv 点赞数、分享数、评论数
   if (!id) return;
-  let res=await reqMvDetailInfo(id)
+  let res = await reqMvDetailInfo(id);
   data.value.detailInfo = res;
-  if(!data.value.detail)return
-  data.value.detail.shareCount=res.shareCount
-  data.value.detail.commentCount=res.commentCount
-  data.value.detail.likedCount=res.likedCount
-  data.value.detail.liked=res.liked
+  if (!data.value.detail)
+    return Promise.resolve(function () {
+      if (!data.value.detail) return;
+      data.value.detail.shareCount = res.shareCount;
+      data.value.detail.commentCount = res.commentCount;
+      data.value.detail.likedCount = res.likedCount;
+      data.value.detail.liked = res.liked;
+    });
 };
+
+const getMvComments = async () => {
+  //获取mv评论列表
+  if (!id) return;
+  data.value.commentData = await reqMvComments(id);
+};
+
 const getMvUrl = async () => {
   //获取mv 播放地址
   if (!id) return;
@@ -70,8 +99,10 @@ const getSimiMvs = async () => {
 };
 
 onMounted(() => {
-  getMvDetail();
-  getMvDetailInfo();
+  let callball: (() => void) | undefined;
+  getMvDetailInfo().then((res) => (callball = res));
+  getMvDetail().then(() => callball?.());
+  getMvComments();
   getMvUrl();
   getSimiMvs();
 });

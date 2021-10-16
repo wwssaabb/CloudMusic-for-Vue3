@@ -446,10 +446,10 @@ export type reqMvDetailType = {
 
 //获取mv 点赞、分享、评论请求的type
 export type reqMvDetailInfoType = {
-  likedCount: number,
-  shareCount: number,
-  commentCount: number,
-  liked: boolean,
+  likedCount: number;
+  shareCount: number;
+  commentCount: number;
+  liked: boolean;
   code: number;
 };
 
@@ -472,3 +472,6 @@ export type reqSimiMvsType = {
   mvs: MvDetailType[];
   code: number;
 };
+
+//获取 mv 评论列表请求type
+export type reqMvCommentsType = reqSongCommentsType;

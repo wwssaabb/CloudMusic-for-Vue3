@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-17 16:24:12
- * @LastEditTime: 2021-10-12 11:03:18
+ * @LastEditTime: 2021-10-16 09:03:56
  * @FilePath: \CloudMusic-for-Vue3\src\components\Head.vue
 -->
 <template>
@@ -105,7 +105,7 @@ const features: featureType[] = [
   { id: 4, name: "商城", path: "/store/product" },
   { id: 5, name: "下载客户端", path: "/download", badge: "HOT" },
 ];
-console.log(features);
+// console.log(features);
 
 //选中的id
 const chooseId = ref(1);

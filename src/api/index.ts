@@ -40,6 +40,7 @@ import type {
   reqMvDetailInfoType,
   reqMvUrlType,
   reqSimiMvsType,
+  reqMvCommentsType,
 } from "../types/types";
 
 //获取banner数据
@@ -239,3 +240,7 @@ export const reqMvUrl = (id: number | string, r: number = 1080) =>
 //获取相关mv推荐
 export const reqSimiMvs = (mvid: number | string) =>
   http<reqSimiMvsType>("/simi/mv", { mvid });
+
+//获取mv 评论列表
+export const reqMvComments = (id: number | string) =>
+  http<reqMvCommentsType>("/comment/mv", { id });

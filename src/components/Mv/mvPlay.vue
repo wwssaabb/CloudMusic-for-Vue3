@@ -1,28 +1,38 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-15 17:05:02
- * @LastEditTime: 2021-10-15 17:55:12
+ * @LastEditTime: 2021-10-16 09:57:16
  * @FilePath: \CloudMusic-for-Vue3\src\components\Mv\mvPlay.vue
 -->
 <template>
-  <div class="mv-play" v-loading="detail.cover===''">
+  <div class="mv-play" v-loading="detail.cover === ''">
     <div class="title">
       <i class="icon_mv_tag"></i>
       <span>{{ detail.name }}</span>
       <span class="td_u">{{ detail.artistName }}</span>
     </div>
-    <video :src="mvUrl" :poster="detail.cover" controls ></video>
+    <video :src="mvUrl" :poster="detail.cover" controls></video>
     <div class="icons fsc">
-      <div class="like icon_mv_icon_like pr" v-if="detail.likedCount"><i class="close d_ib pa icons20_img"></i><i class="like_icon d_ib pa"></i><span class="d_ib cur_p">({{detail.likedCount}})</span></div>
-      <div class="collect icon_mv_icon_collect pr"><i class="close d_ib pa icons20_img"></i><span class="d_ib cur_p">({{detail.subCount}})</span></div>
-      <div class="share icon_mv_icon_share pr"><i class="close d_ib pa icons20_img"></i><span class="d_ib cur_p">({{detail.shareCount}})</span></div>
+      <div class="like icon_mv_icon_like pr">
+        <i class="close d_ib pa icons20_img"></i
+        ><i class="like_icon d_ib pa"></i
+        ><span class="d_ib cur_p">({{ detail.likedCount ?? 0 }})</span>
+      </div>
+      <div class="collect icon_mv_icon_collect pr">
+        <i class="close d_ib pa icons20_img"></i
+        ><span class="d_ib cur_p">({{ detail.subCount }})</span>
+      </div>
+      <div class="share icon_mv_icon_share pr">
+        <i class="close d_ib pa icons20_img"></i
+        ><span class="d_ib cur_p">({{ detail.shareCount }})</span>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue'
-import { MvDetailType } from '../../types/types'
+import { PropType, watch } from "vue";
+import { MvDetailType } from "../../types/types";
 const props = defineProps({
   detail: {
     type: Object as PropType<MvDetailType>,
@@ -31,13 +41,20 @@ const props = defineProps({
   mvUrl: {
     type: String,
     required: true,
-  }
+  },
 });
-console.log(props)
+
+watch(
+  () => props.detail.likedCount,
+  () => console.log(props.detail.likedCount)
+);
+
+console.log(props);
 </script>
 
 <style lang="scss" scoped>
 .mv-play {
+  height: 442px;
   .title {
     margin-bottom: 8px;
 
@@ -58,40 +75,39 @@ console.log(props)
     height: 360px;
     border: 1px solid #333;
   }
-  .icons{
+  .icons {
     margin: 12px 0 45px;
 
     .like,
-.collect,
-.share{
-  margin-right: 13px;
-  width: auto;
-  min-width: 58px;
-  &:hover{
-    width: auto;
-    min-width: 58px;
-  }
-  
+    .collect,
+    .share {
+      margin-right: 13px;
+      width: auto;
+      min-width: 58px;
+      &:hover {
+        width: auto;
+        min-width: 58px;
+      }
 
-  .close{
-    width: calc(100% + 4px);
-    height: 31px;
-    background-position: right -100px;
-  }
+      .close {
+        width: calc(100% + 4px);
+        height: 31px;
+        background-position: right -100px;
+      }
 
-  span{
-    font-size: 12px;
-    color:#333;
-    z-index: 10;
-    margin: 7px 5px 0 32px;
-  }
+      span {
+        font-size: 12px;
+        color: #333;
+        z-index: 10;
+        margin: 8px 5px 0 32px;
+      }
 
-  &:hover{
-  .close{
-    background-position: right -182px;
-  }
-  }
-}
+      &:hover {
+        .close {
+          background-position: right -182px;
+        }
+      }
+    }
   }
 }
 </style>
