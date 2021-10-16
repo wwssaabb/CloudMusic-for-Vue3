@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-15 15:43:45
- * @LastEditTime: 2021-10-16 16:05:18
+ * @LastEditTime: 2021-10-16 16:53:36
  * @FilePath: \CloudMusic-for-Vue3\src\views\Mv.vue
 -->
 <template>
@@ -26,13 +26,13 @@
     <div class="right">
       <Introduction :detail="data.detail" v-if="data.detail"></Introduction>
       <Recommends :list="data.recommends"></Recommends>
-      <AppDownload></AppDownload>
+      <AppDownload :showCode="true"></AppDownload>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, provide } from "vue";
 import { useRouter } from "vue-router";
 import {
   reqMvDetail,
@@ -57,6 +57,9 @@ import AppDownload from "../components/AppDownload.vue";
 
 const router = useRouter();
 const id: string | undefined = router.currentRoute.value.query.id?.toString();
+
+//提供路由
+provide("router", router);
 
 type dataType = {
   detail: MvDetailType | null;
@@ -156,7 +159,6 @@ watch(
   () => data.value.currentPage,
   () => getMvComments()
 );
-console.log(data.value);
 </script>
 
 <style lang="scss" scoped>

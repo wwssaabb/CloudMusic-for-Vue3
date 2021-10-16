@@ -57,6 +57,7 @@ const props = defineProps({
 <style lang="scss" scoped>
 .head {
   margin: 20px 0 10px;
+  min-height: 31px;
 
   .left {
     .icon_collect50 {

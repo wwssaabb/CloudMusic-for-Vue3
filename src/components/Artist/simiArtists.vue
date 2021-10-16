@@ -1,14 +1,19 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-13 15:39:52
- * @LastEditTime: 2021-10-13 16:25:49
+ * @LastEditTime: 2021-10-16 17:31:21
  * @FilePath: \CloudMusic-for-Vue3\src\components\Artist\simiArtists.vue
 -->
 <template>
   <div class="simi-artists">
     <div class="title">相似歌手</div>
     <div class="list fss fw" v-loading="list.length === 0">
-      <div class="item fd_col" v-for="item in list" :key="item.id">
+      <div
+        class="item fd_col"
+        v-for="item in list"
+        :key="item.id"
+        @click="goArtistPage(item.id)"
+      >
         <img :src="item.picUrl + '?param=50y50'" alt="" />
         <div class="name t_ovl1">
           <span class="td_u cur_p">{{ item.name }}</span>
@@ -20,7 +25,8 @@
 
 <script setup lang="ts">
 import { ArtistType } from "../../types/types";
-import { PropType } from "vue";
+import { PropType, inject } from "vue";
+import { Router } from "vue-router/dist/vue-router";
 
 const props = defineProps({
   list: {
@@ -28,6 +34,12 @@ const props = defineProps({
     required: true,
   },
 });
+
+const push = inject<Router>("router")?.push;
+const goArtistPage = (id: number) => {
+  push?.("/artist?id=" + id);
+  setTimeout(() => location.reload(), 0);
+};
 </script>
 
 <style lang="scss" scoped>

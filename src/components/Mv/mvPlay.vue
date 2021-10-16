@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-15 17:05:02
- * @LastEditTime: 2021-10-16 16:06:10
+ * @LastEditTime: 2021-10-16 17:10:19
  * @FilePath: \CloudMusic-for-Vue3\src\components\Mv\mvPlay.vue
 -->
 <template>
@@ -9,7 +9,9 @@
     <div class="title">
       <i class="icon_mv_tag"></i>
       <span>{{ detail.name }}</span>
-      <span class="td_u">{{ detail.artistName }}</span>
+      <span class="td_u" @click="push?.('/artist?id=' + detail.artistId)">{{
+        detail.artistName
+      }}</span>
     </div>
     <video :src="mvUrl" :poster="detail.cover" controls></video>
     <div class="icons fsc">
@@ -31,7 +33,8 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from "vue";
+import { PropType, inject } from "vue";
+import { Router } from "vue-router/dist/vue-router";
 import { MvDetailType } from "../../types/types";
 const props = defineProps({
   detail: {
@@ -43,6 +46,8 @@ const props = defineProps({
     required: true,
   },
 });
+
+const push = inject<Router>("router")?.push;
 </script>
 
 <style lang="scss" scoped>

@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-13 17:53:00
- * @LastEditTime: 2021-10-14 10:35:15
+ * @LastEditTime: 2021-10-16 17:17:00
  * @FilePath: \CloudMusic-for-Vue3\src\components\Artist\detailNavbar.vue
 -->
 <template>
@@ -36,12 +36,10 @@ const props = defineProps({
     required: true,
   },
 });
-console.log(props);
 </script>
 
 <style lang="scss" scoped>
 .artist-detail-navbar {
-  margin-top: 2px;
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
   .navbar {

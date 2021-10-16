@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-14 08:24:51
- * @LastEditTime: 2021-10-14 14:12:58
+ * @LastEditTime: 2021-10-16 17:22:53
  * @FilePath: \CloudMusic-for-Vue3\src\views\Artist\Index.vue
 -->
 <template>
@@ -10,6 +10,7 @@
       :filters="data.filters"
       :chooseFilterIndex="data.chooseFilterIndex"
       :changeFilterIndex="changeFilterIndex"
+      v-loading="data.hotSongs.length === 0"
     ></Head>
     <SongList
       :list="data.hotSongs"
@@ -38,7 +39,6 @@ import SongList from "../../components/SongList.vue";
 //获取页面 query参数 id
 const id: string | undefined =
   useRouter().currentRoute.value.query.id?.toString();
-console.log(id);
 
 type DataType = {
   filters: ArtistPage_filterType[];

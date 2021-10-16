@@ -64,8 +64,8 @@
 </template>
 
 <script setup lang="ts">
-import { ElSkeleton, ElSkeletonItem } from "element-plus";
-import type { DiscoverListSongType, DiscoverListType } from "../../types/types";
+// import { } from "element-plus";
+import type { DiscoverListType } from "../../types/types";
 import { PropType } from "vue";
 
 const props = defineProps({
@@ -254,7 +254,8 @@ const props = defineProps({
             }
           }
 
-          &:hover {
+          // &:hover {
+
             & span:nth-child(2) {
               width: 93px;
             }
@@ -281,7 +282,7 @@ const props = defineProps({
                 }
               }
             }
-          }
+          // }
         }
       }
 

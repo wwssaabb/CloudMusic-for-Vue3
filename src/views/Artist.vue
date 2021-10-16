@@ -1,18 +1,20 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-12 11:04:23
- * @LastEditTime: 2021-10-15 15:12:32
+ * @LastEditTime: 2021-10-16 17:20:40
  * @FilePath: \CloudMusic-for-Vue3\src\views\Artist.vue
 -->
 <template>
   <div class="artist-page fss">
     <div class="left">
-      <ArtistDetail :detail="data.detail" v-if="data.detail"></ArtistDetail>
-      <DetailNavbar
-        :list="data.navbarList"
-        :chooseIndex="data.chooseNavbarIndex"
-        :changeNavbar="changeNavbar"
-      ></DetailNavbar>
+      <div class="artist-msg" v-loading="data.detail === null">
+        <ArtistDetail :detail="data.detail" v-if="data.detail"></ArtistDetail>
+        <DetailNavbar
+          :list="data.navbarList"
+          :chooseIndex="data.chooseNavbarIndex"
+          :changeNavbar="changeNavbar"
+        ></DetailNavbar>
+      </div>
       <div class="artist-content">
         <router-view></router-view>
       </div>
@@ -25,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, provide } from "vue";
 import { useRouter } from "vue-router";
 import { reqSimiArtists, reqArtistIndex } from "../api";
 import { ArtistType, ArtistDetailType, detailNavbarType } from "../types/types";
@@ -34,12 +36,12 @@ import ArtistDetail from "../components/Artist/artistDetail.vue";
 import DetailNavbar from "../components/Artist/detailNavbar.vue";
 import AppDownload from "../components/AppDownload.vue";
 
-//获取页面 query参数 id
-const id: string | undefined =
-  useRouter().currentRoute.value.query.id?.toString();
-console.log(id);
-
 const router = useRouter();
+
+//获取页面 query参数 id
+const id: string | undefined = router.currentRoute.value.query.id?.toString();
+
+provide("router", router);
 
 type DataType = {
   simiArtists: ArtistType[];
@@ -110,6 +112,10 @@ console.log(data.value);
     padding-bottom: 40px;
     min-height: 659px;
     padding: 25px 38px 40px 30px;
+
+    .artist-msg {
+      height: 376px;
+    }
   }
 
   .right {

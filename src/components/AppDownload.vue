@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-13 15:23:08
- * @LastEditTime: 2021-10-13 15:26:55
+ * @LastEditTime: 2021-10-16 16:56:09
  * @FilePath: \CloudMusic-for-Vue3\src\components\AppDownload.vue
 -->
 <template>
@@ -17,25 +17,40 @@
     </div>
     <div class="desc">同步歌单，随时畅听320k好音乐</div>
   </div>
+  <div class="app-official-qrcode" v-if="showCode">
+    <div class="title">网易云音乐公众号</div>
+    <i class="icon_mv_qrcode"></i>
+    <div class="tip d_ib">
+      关注我，我们才能 <br />
+      真正拥有彼此啊~
+    </div>
+  </div>
   <div class="other">
     <span class="d_ib td_u">补充或修改歌曲资料></span>
     <span class="d_ib td_u">用户wiki任务中心></span>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const props = defineProps({
+  showCode: {
+    type: Boolean,
+    default: false,
+  },
+});
+</script>
 
 <style lang="scss" scoped>
+.title {
+  line-height: 23px;
+  font-size: 12px;
+  color: #333;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  font-weight: bold;
+}
 .app-download {
   margin: 20px 0;
-  .title {
-    line-height: 23px;
-    font-size: 12px;
-    color: #333;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #ccc;
-    font-weight: bold;
-  }
 
   .download-area {
     margin-bottom: 10px;
@@ -85,6 +100,19 @@
   span {
     font-size: 12px;
     color: #333;
+  }
+}
+
+.app-official-qrcode {
+  margin: 60px 0 20px;
+
+  .tip {
+    width: 100px;
+    font-size: 12px;
+    color: #999;
+    margin: 34px 0 0 15px;
+    line-height: 19px;
+    white-space: nowrap;
   }
 }
 </style>

@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-13 16:53:14
- * @LastEditTime: 2021-10-14 11:24:48
+ * @LastEditTime: 2021-10-16 17:15:39
  * @FilePath: \CloudMusic-for-Vue3\src\components\Artist\artistDetail.vue
 -->
 <template>
@@ -35,7 +35,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .wrap {
-  height: 333px;
+  height: 336px;
 }
 .name-wrap {
   span.name {
