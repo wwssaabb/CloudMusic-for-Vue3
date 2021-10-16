@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-15 15:43:45
- * @LastEditTime: 2021-10-16 09:54:13
+ * @LastEditTime: 2021-10-16 10:56:02
  * @FilePath: \CloudMusic-for-Vue3\src\views\Mv.vue
 -->
 <template>
@@ -12,6 +12,16 @@
         :mvUrl="data.mvUrlData.url"
         v-if="data.detail && data.mvUrlData"
       ></MvPlay>
+      <Combination
+        v-if="data.detail"
+        :commentCount="data.detail.commentCount"
+        :commentContent="data.commentContent"
+        :hotComments="data.hotComments"
+        :comments="data.comments"
+        :endPage="data.endPage"
+        :currentPage="data.currentPage"
+        :changePage="changePage"
+      ></Combination>
     </div>
     <div class="right"></div>
   </div>
@@ -31,9 +41,11 @@ import {
   MvDetailType,
   mvUrlDataType,
   reqMvDetailInfoType,
-  reqMvCommentsType,
+  CommentType,
+  PaginationClickType,
 } from "../types/types";
 import MvPlay from "../components/Mv/mvPlay.vue";
+import Combination from "../components/Mv/combination.vue";
 
 const router = useRouter();
 const id: string | undefined = router.currentRoute.value.query.id?.toString();
@@ -43,10 +55,12 @@ type dataType = {
   detailInfo: reqMvDetailInfoType | null;
   simiMvs: MvDetailType[];
   mvUrlData: mvUrlDataType | null;
-  commentData: reqMvCommentsType | null;
+  hotComments: CommentType[];
+  comments: CommentType[];
   currentPage: number;
   endPage: number;
-  total: number;
+  // total: number;
+  commentContent: string;
 };
 
 const data = ref<dataType>({
@@ -54,17 +68,36 @@ const data = ref<dataType>({
   detailInfo: null,
   simiMvs: [],
   mvUrlData: null,
-  commentData: null,
+  hotComments: [],
+  comments: [],
   currentPage: 1,
   endPage: 1,
-  total: 0,
+  // total: 0,
+  commentContent: "",
 });
+
+const getEndPage = (total: number, limit: number = 20) =>
+  Math.ceil(total / limit);
+
+const changePage = (type: PaginationClickType, page?: number): void => {
+  const p = data.value.currentPage;
+  const end = data.value.endPage;
+  const handle = {
+    page: () =>
+      type === "page" && page ? (data.value.currentPage = page) : null,
+    prev: () => (data.value.currentPage = p === 1 || p === 2 ? 1 : p - 1),
+    next: () =>
+      (data.value.currentPage = p === end || p + 1 === end ? end : p + 1),
+  };
+  handle[type]();
+};
 
 const getMvDetail = async () => {
   //获取mv 详情
   if (!id) return;
   data.value.detail = (await reqMvDetail(id)).data;
   data.value.detail.likedCount = 0;
+  data.value.endPage = getEndPage(data.value.detail.commentCount);
 };
 const getMvDetailInfo = async () => {
   //获取mv 点赞数、分享数、评论数
@@ -78,13 +111,20 @@ const getMvDetailInfo = async () => {
       data.value.detail.commentCount = res.commentCount;
       data.value.detail.likedCount = res.likedCount;
       data.value.detail.liked = res.liked;
+      data.value.endPage = getEndPage(res.commentCount);
     });
 };
 
 const getMvComments = async () => {
   //获取mv评论列表
   if (!id) return;
-  data.value.commentData = await reqMvComments(id);
+  let res = await reqMvComments(id);
+  console.log(res);
+  console.log(res.hotComments);
+  console.log(res.comments);
+  data.value.hotComments = res.hotComments;
+  data.value.comments = res.comments;
+  console.log(data.value);
 };
 
 const getMvUrl = async () => {
@@ -122,6 +162,10 @@ console.log(data.value);
     min-height: 659px;
     border-right: 1px solid #d3d3d3;
     padding: 25px 30px 40px 39px;
+
+    .mv-play {
+      margin-bottom: 45px;
+    }
   }
   .right {
     width: 270px;
