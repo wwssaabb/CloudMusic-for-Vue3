@@ -1,11 +1,11 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-15 15:43:45
- * @LastEditTime: 2021-10-16 10:56:02
+ * @LastEditTime: 2021-10-16 11:15:28
  * @FilePath: \CloudMusic-for-Vue3\src\views\Mv.vue
 -->
 <template>
-  <div class="mv-page">
+  <div class="mv-page fss">
     <div class="left">
       <MvPlay
         :detail="data.detail"
@@ -23,7 +23,10 @@
         :changePage="changePage"
       ></Combination>
     </div>
-    <div class="right"></div>
+    <div class="right">
+      <Introduction :detail="data.detail" v-if="data.detail"></Introduction>
+      <AppDownload></AppDownload>
+    </div>
   </div>
 </template>
 
@@ -46,6 +49,8 @@ import {
 } from "../types/types";
 import MvPlay from "../components/Mv/mvPlay.vue";
 import Combination from "../components/Mv/combination.vue";
+import Introduction from "../components/Mv/introduction.vue";
+import AppDownload from "../components/AppDownload.vue";
 
 const router = useRouter();
 const id: string | undefined = router.currentRoute.value.query.id?.toString();
@@ -169,6 +174,7 @@ console.log(data.value);
   }
   .right {
     width: 270px;
+    padding: 20px 40px 40px 30px;
   }
 }
 </style>
