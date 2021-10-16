@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-15 17:05:02
- * @LastEditTime: 2021-10-16 09:57:16
+ * @LastEditTime: 2021-10-16 16:06:10
  * @FilePath: \CloudMusic-for-Vue3\src\components\Mv\mvPlay.vue
 -->
 <template>
@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, watch } from "vue";
+import { PropType } from "vue";
 import { MvDetailType } from "../../types/types";
 const props = defineProps({
   detail: {
@@ -43,13 +43,6 @@ const props = defineProps({
     required: true,
   },
 });
-
-watch(
-  () => props.detail.likedCount,
-  () => console.log(props.detail.likedCount)
-);
-
-console.log(props);
 </script>
 
 <style lang="scss" scoped>

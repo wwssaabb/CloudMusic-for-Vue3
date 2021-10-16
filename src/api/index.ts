@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-18 15:23:45
- * @LastEditTime: 2021-10-15 16:59:14
+ * @LastEditTime: 2021-10-16 16:08:43
  * @FilePath: \CloudMusic-for-Vue3\src\api\index.ts
  */
 
@@ -39,7 +39,7 @@ import type {
   reqMvDetailType,
   reqMvDetailInfoType,
   reqMvUrlType,
-  reqSimiMvsType,
+  reqRecommendMvsType,
   reqMvCommentsType,
 } from "../types/types";
 
@@ -238,9 +238,17 @@ export const reqMvUrl = (id: number | string, r: number = 1080) =>
   http<reqMvUrlType>("/mv/url", { id, r });
 
 //获取相关mv推荐
-export const reqSimiMvs = (mvid: number | string) =>
-  http<reqSimiMvsType>("/simi/mv", { mvid });
+export const reqRecommendMvs = (id: number | string) =>
+  http<reqRecommendMvsType>("/related/allvideo", { id });
 
 //获取mv 评论列表
-export const reqMvComments = (id: number | string) =>
-  http<reqMvCommentsType>("/comment/mv", { id });
+export const reqMvComments = (
+  id: number | string,
+  page: number = 1,
+  limit: number = 20
+) =>
+  http<reqMvCommentsType>("/comment/mv", {
+    id,
+    offset: (page - 1) * limit,
+    limit,
+  });

@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-29 08:37:32
- * @LastEditTime: 2021-10-15 14:07:37
+ * @LastEditTime: 2021-10-16 15:01:57
  * @FilePath: \CloudMusic-for-Vue3\src\components\Pagination.vue
 -->
 <template>
@@ -67,12 +67,10 @@ const props = defineProps({
     required: true,
   },
 });
-console.log(props);
 
 const showSpace = ref<boolean[]>([false, false]);
 
 const showPage = computed((): number[] => {
-  console.log(props.endPage);
   if (props.currentPage < 6) {
     showSpace.value = props.endPage > 9 ? [false, true] : [false, false];
     return props.endPage === 1

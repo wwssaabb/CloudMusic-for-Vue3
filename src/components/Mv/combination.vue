@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-16 10:01:23
- * @LastEditTime: 2021-10-16 10:56:42
+ * @LastEditTime: 2021-10-16 16:10:54
  * @FilePath: \CloudMusic-for-Vue3\src\components\Mv\combination.vue
 -->
 <template>
@@ -12,8 +12,10 @@
       :commentCount="commentCount"
     ></CommentHead>
     <!-- 精彩评论 -->
-    <div class="title" v-if="hotComments.length !== 0">精彩评论</div>
-    <CommentList :comments="hotComments"></CommentList>
+    <template v-if="currentPage === 1">
+      <div class="title" v-if="hotComments.length !== 0">精彩评论</div>
+      <CommentList :comments="hotComments"></CommentList>
+    </template>
     <!-- 最新评论 -->
     <div class="title" v-if="comments.length !== 0">最新评论</div>
     <CommentList :comments="comments"></CommentList>

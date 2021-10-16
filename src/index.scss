@@ -777,4 +777,9 @@ $--foot_color:#f2f2f2; //脚步的背景色
     min-width: 58px;
   }
 
+  //mv详情页 相关推荐组件的 摄影机icon
+  &mv_camera {
+    @include get_btn(19, -60, -310, 15, 10);
+  }
+
 }

@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-22 09:32:37
- * @LastEditTime: 2021-10-14 17:56:14
+ * @LastEditTime: 2021-10-16 15:33:41
  * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
 
@@ -467,9 +467,18 @@ export type reqMvUrlType = {
   code: number;
 };
 
-//获取 相关mv 推荐请求type
-export type reqSimiMvsType = {
-  mvs: MvDetailType[];
+//获取 mv详情页 相关推荐 请求type
+export type RecommendsType = {
+  alg: string;
+  title: string;
+  coverUrl: string;
+  vid: number;
+  durationms: number;
+  playTime: number;
+  creator: { userId: number; userName: string }[];
+};
+export type reqRecommendMvsType = {
+  data: RecommendsType[];
   code: number;
 };
 

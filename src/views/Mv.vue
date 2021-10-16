@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-15 15:43:45
- * @LastEditTime: 2021-10-16 11:15:28
+ * @LastEditTime: 2021-10-16 16:05:18
  * @FilePath: \CloudMusic-for-Vue3\src\views\Mv.vue
 -->
 <template>
@@ -25,23 +25,25 @@
     </div>
     <div class="right">
       <Introduction :detail="data.detail" v-if="data.detail"></Introduction>
+      <Recommends :list="data.recommends"></Recommends>
       <AppDownload></AppDownload>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
 import {
   reqMvDetail,
   reqMvUrl,
-  reqSimiMvs,
+  reqRecommendMvs,
   reqMvDetailInfo,
   reqMvComments,
 } from "../api";
 import {
   MvDetailType,
+  RecommendsType,
   mvUrlDataType,
   reqMvDetailInfoType,
   CommentType,
@@ -50,6 +52,7 @@ import {
 import MvPlay from "../components/Mv/mvPlay.vue";
 import Combination from "../components/Mv/combination.vue";
 import Introduction from "../components/Mv/introduction.vue";
+import Recommends from "../components/Mv/recommends.vue";
 import AppDownload from "../components/AppDownload.vue";
 
 const router = useRouter();
@@ -58,7 +61,7 @@ const id: string | undefined = router.currentRoute.value.query.id?.toString();
 type dataType = {
   detail: MvDetailType | null;
   detailInfo: reqMvDetailInfoType | null;
-  simiMvs: MvDetailType[];
+  recommends: RecommendsType[];
   mvUrlData: mvUrlDataType | null;
   hotComments: CommentType[];
   comments: CommentType[];
@@ -71,7 +74,7 @@ type dataType = {
 const data = ref<dataType>({
   detail: null,
   detailInfo: null,
-  simiMvs: [],
+  recommends: [],
   mvUrlData: null,
   hotComments: [],
   comments: [],
@@ -123,13 +126,10 @@ const getMvDetailInfo = async () => {
 const getMvComments = async () => {
   //获取mv评论列表
   if (!id) return;
-  let res = await reqMvComments(id);
-  console.log(res);
-  console.log(res.hotComments);
-  console.log(res.comments);
+  data.value.comments = [];
+  let res = await reqMvComments(id, data.value.currentPage);
   data.value.hotComments = res.hotComments;
   data.value.comments = res.comments;
-  console.log(data.value);
 };
 
 const getMvUrl = async () => {
@@ -140,7 +140,7 @@ const getMvUrl = async () => {
 const getSimiMvs = async () => {
   //获取相似mv 详情
   if (!id) return;
-  data.value.simiMvs = (await reqSimiMvs(id)).mvs;
+  data.value.recommends = (await reqRecommendMvs(id)).data;
 };
 
 onMounted(() => {
@@ -151,6 +151,11 @@ onMounted(() => {
   getMvUrl();
   getSimiMvs();
 });
+
+watch(
+  () => data.value.currentPage,
+  () => getMvComments()
+);
 console.log(data.value);
 </script>
 
