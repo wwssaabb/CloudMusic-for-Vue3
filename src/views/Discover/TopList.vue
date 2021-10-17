@@ -86,21 +86,21 @@ import {
   CommentType,
   formatType,
   PaginationClickType,
-} from "../types/types";
+} from "../../types/types";
 import {
   reqTopList,
   reqTopListDetail,
   reqTopListNewComment,
   reqTopListHotComment,
-} from "../api";
+} from "../../api";
 import { ref, onMounted, watch } from "vue";
-import moment from "../utils/moment";
-import CommentList from "../components/CommentList.vue";
-import SongList from "../components/SongList.vue";
-import LeftList from "../components/Toplist/leftList.vue";
-import RightHead from "../components/Toplist/rightHead.vue";
-import CommentHead from "../components/CommentHead.vue";
-import Pagination from "../components/Pagination.vue";
+import moment from "../../utils/moment";
+import CommentList from "../../components/CommentList.vue";
+import SongList from "../../components/SongList.vue";
+import LeftList from "../../components/Toplist/leftList.vue";
+import RightHead from "../../components/Toplist/rightHead.vue";
+import CommentHead from "../../components/CommentHead.vue";
+import Pagination from "../../components/Pagination.vue";
 
 const format = (n: number, format: string, type: formatType = "normal") => {
   const handle = {

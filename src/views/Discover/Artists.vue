@@ -30,13 +30,13 @@
 </template>
 
 <script lang="ts" setup>
-import { sidebarType, artistType, initialType } from "../types/types";
+import { sidebarType, artistType, initialType } from "../../types/types";
 import { onMounted, ref, provide, computed } from "vue";
 import { useRouter } from "vue-router";
-import { reqArtistsList } from "../api";
-import Sidebar from "../components/Artists/sidebar.vue";
-import IndexShow from "../components/Artists/indexShow.vue";
-import MixinShow from "../components/Artists/mixinShow.vue";
+import { reqArtistsList } from "../../api";
+import Sidebar from "../../components/Artists/sidebar.vue";
+import IndexShow from "../../components/Artists/indexShow.vue";
+import MixinShow from "../../components/Artists/mixinShow.vue";
 
 //获取useRouter实例
 const router = useRouter();

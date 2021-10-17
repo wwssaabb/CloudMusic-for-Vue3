@@ -36,7 +36,7 @@
           v-if="features.find((i) => i.id === chooseId)?.menu !== undefined"
         >
           <span
-            class="tab-item fcc"
+            class="tab-item fcc cur_p user_ns"
             :class="chooseMenuId === item.id ? 'active' : ''"
             v-for="item in features.find((i) => i.id === chooseId)?.menu"
             :key="item.id"

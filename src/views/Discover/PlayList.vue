@@ -24,11 +24,11 @@
 </template>
 
 <script setup lang="ts">
-import Title from "../components/Title.vue";
-import AlbumList from "../components/AlbumList.vue";
-import Pagination from "../components/Pagination.vue";
-import { reqPlayListType, PaginationClickType } from "../types/types";
-import { reqPlayLists } from "../api/";
+import Title from "../../components/Title.vue";
+import AlbumList from "../../components/AlbumList.vue";
+import Pagination from "../../components/Pagination.vue";
+import { reqPlayListType, PaginationClickType } from "../../types/types";
+import { reqPlayLists } from "../../api/";
 import { onMounted, ref, watch } from "vue";
 
 const data = ref<reqPlayListType>();

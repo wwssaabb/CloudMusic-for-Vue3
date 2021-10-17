@@ -46,11 +46,11 @@
                 :style="{ color: Number(index) <= 2 ? '#c10d0c' : '#000' }"
                 >{{ Number(index) + 1 }}</span
               >
-              <span class="fsc td_u">{{ item.name }}</span>
-              <span class="fsc"
+              <span class="fsc td_u cur_p">{{ item.name }}</span>
+              <span class="fpac"
                 ><i class="list_icon play_icon"></i
-                ><i class="icons_img addlist_icon"></i
-                ><i class="list_icon collect_icon"></i
+                ><i class="list_icon addlist_icon"></i
+                ><i class="icons_img collect_icon"></i
               ></span>
             </div>
           </div>
@@ -238,29 +238,29 @@ const props = defineProps({
               height: 32px;
 
               i.play_icon {
-                margin-top: 3px;
+                margin-top: 2px;
                 display: inline-block;
                 margin-right: 2px;
               }
               i.collect_icon {
-                margin-top: 3px;
+                margin-top: 2px;
                 display: inline-block;
                 margin-right: 2px;
               }
               i.addlist_icon {
-                margin-top: 3px;
+                margin-top: 2px;
                 display: inline-block;
               }
             }
           }
 
-          // &:hover {
+          &:hover {
 
             & span:nth-child(2) {
               width: 93px;
             }
             & span:last-child {
-              display: inline-block;
+              display: flex;
               width: 82px;
               i.play_icon {
                 @include get_icon(-267, -268, 17, 17);
@@ -269,20 +269,20 @@ const props = defineProps({
                 }
               }
               i.collect_icon {
-                @include get_icon(0, -700, 17, 17);
+                @include get_icon(0, -698, 17, 17);
                 &:hover {
                   opacity: 0.7;
                 }
               }
               i.addlist_icon {
                 @include get_icon(-297, -268, 17, 17);
-                border-radius: 50%;
+                // border-radius: 50%;
                 &:hover {
                   opacity: 0.7;
                 }
               }
             }
-          // }
+          }
         }
       }
 

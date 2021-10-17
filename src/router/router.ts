@@ -14,30 +14,37 @@ export default createRouter({
       component: () => import("../views/Discover.vue"),
     },
     {
-      path: "/discover/",
+      path: "/discover",
       component: () => import("../views/Discover.vue"),
-      children: [],
+      redirect: '/discover/',
+      children: [
+        {
+          path: "/discover/",
+          component: () => import("../views/Discover/Index.vue"),
+        },
+        {
+          path: "/discover/toplist",
+          component: () => import("../views/Discover/TopList.vue"),
+        },
+        {
+          path: "/discover/playlist",
+          component: () => import("../views/Discover/PlayList.vue"),
+        },
+        {
+          path: "/discover/djradio",
+          component: () => import("../views/Discover/DjRadio.vue"),
+        },
+        {
+          path: "/discover/artists",
+          component: () => import("../views/Discover/Artists.vue"),
+        },
+        {
+          path: "/discover/album",
+          component: () => import("../views/Discover/Album.vue"),
+        },
+      ],
     },
-    {
-      path: "/discover/toplist",
-      component: () => import("../views/TopList.vue"),
-    },
-    {
-      path: "/discover/playlist",
-      component: () => import("../views/PlayList.vue"),
-    },
-    {
-      path: "/discover/djradio",
-      component: () => import("../views/DjRadio.vue"),
-    },
-    {
-      path: "/discover/artists",
-      component: () => import("../views/Artists.vue"),
-    },
-    {
-      path: "/discover/album",
-      component: () => import("../views/Album.vue"),
-    },
+
     {
       path: "/song",
       component: () => import("../views/Song.vue"),

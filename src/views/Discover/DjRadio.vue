@@ -29,23 +29,23 @@
 </template>
 
 <script setup lang="ts">
-import CategoryList from "../components/DjRadio/categoryList.vue";
-import Title from "../components/Title.vue";
-import RecommendList from "../components/DjRadio/recommendList.vue";
-import RankList from "../components/DjRadio/rankList.vue";
-import BroweList from "../components/DjRadio/browseList.vue";
+import CategoryList from "../../components/DjRadio/categoryList.vue";
+import Title from "../../components/Title.vue";
+import RecommendList from "../../components/DjRadio/recommendList.vue";
+import RankList from "../../components/DjRadio/rankList.vue";
+import BroweList from "../../components/DjRadio/browseList.vue";
 import {
   reqDjCategories,
   reqDjRankList,
   reqDjRecommends,
   reqDjHotList,
-} from "../api";
+} from "../../api";
 import {
   DjCategoryType,
   RankListType,
   programType,
   DjRadioType,
-} from "../types/types";
+} from "../../types/types";
 import { ref, onMounted } from "vue";
 
 type dataType = {

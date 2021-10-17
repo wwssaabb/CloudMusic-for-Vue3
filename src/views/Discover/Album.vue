@@ -12,8 +12,8 @@
 </template>
 
 <script setup lang="ts">
-import HotAlbums from "../components/Album/hotAlbums.vue";
-import AllAlbums from "../components/Album/allAlbums.vue";
+import HotAlbums from "../../components/Album/hotAlbums.vue";
+import AllAlbums from "../../components/Album/allAlbums.vue";
 </script>
 
 <style lang="scss" scoped>
