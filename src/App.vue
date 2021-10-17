@@ -17,7 +17,7 @@
 <script lang="ts" setup>
 import Head from "./components/Head.vue";
 import Foot from "./components/Foot.vue";
-import { onBeforeRouteUpdate, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { ref } from "vue";
 // const chooseMenuId=0
 

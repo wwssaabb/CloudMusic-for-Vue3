@@ -12,6 +12,7 @@ export default createRouter({
     {
       path: "/",
       component: () => import("../views/Discover.vue"),
+      redirect: '/discover'
     },
     {
       path: "/discover",

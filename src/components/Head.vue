@@ -69,7 +69,7 @@
 
 <script setup lang="ts">
 import { ElInput } from "element-plus";
-import { ref } from "vue";
+import { ref,watch } from "vue";
 import { useRouter } from "vue-router";
 
 // const ;
@@ -109,10 +109,27 @@ const features: featureType[] = [
 
 //选中的id
 const chooseId = ref(1);
-const chooseMenuId = ref(1);
+const chooseMenuId = ref(0);
 
 //router实例化
 const router = useRouter();
+
+router.beforeEach((to,from,next)=>{
+  let path=to.path;
+
+  //discover 子路由跳转监听切换chooseMenuId
+  if(path.includes('/discover')){
+    let menu=features[0].menu
+    if(menu){
+      let newMenuId=menu.find(i=>i.path===path)?.id
+      chooseMenuId.value=newMenuId?newMenuId:chooseMenuId.value
+    }
+  }else{
+    chooseMenuId.value=0
+  }
+  
+  next()
+})
 
 const changeFeature = (item: featureType): void => {
   chooseId.value = item.id;

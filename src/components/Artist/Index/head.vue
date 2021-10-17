@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import { PropType } from "vue";
 import { ArtistPage_filterType } from "../../../types/types";
-import PlayAddlistBtn from "../../Botton/play_addlist.vue";
+import PlayAddlistBtn from "../../Button/play_addlist.vue";
 
 const props = defineProps({
   filters: {

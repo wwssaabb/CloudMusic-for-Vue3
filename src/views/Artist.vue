@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, provide } from "vue";
+import { onMounted, ref, provide,watch } from "vue";
 import { useRouter } from "vue-router";
 import { reqSimiArtists, reqArtistIndex } from "../api";
 import { ArtistType, ArtistDetailType, detailNavbarType } from "../types/types";
@@ -37,6 +37,17 @@ import DetailNavbar from "../components/Artist/detailNavbar.vue";
 import AppDownload from "../components/AppDownload.vue";
 
 const router = useRouter();
+
+//监听 子路由切换chooseNavbarIndex
+router.beforeEach((to,from,next)=>{
+  let path=to.path
+
+  if(path.includes('/artist')){
+    console.log(data.value.navbarList.findIndex(i=>i.path.includes(path)))
+    data.value.chooseNavbarIndex=data.value.navbarList.findIndex(i=>i.path.includes(path))
+  }
+  next()
+})
 
 //获取页面 query参数 id
 const id: string | undefined = router.currentRoute.value.query.id?.toString();
@@ -59,7 +70,7 @@ const data = ref<DataType>({
     { id: 3, name: "相关MV", path: "/artist/mv?id=" + id },
     { id: 4, name: "艺人介绍", path: "/artist/desc?id=" + id },
   ],
-  chooseNavbarIndex: 0,
+  chooseNavbarIndex: 0 ,
 });
 
 const getSimiArtists = async () => {
@@ -81,8 +92,18 @@ const getArtistDetail = async () => {
   );
 };
 
+const checkNavbarIndex=()=>{
+  let path=router.currentRoute.value.path
+
+  if(path.includes('/artist')){
+    console.log(data.value.navbarList.findIndex(i=>i.path.includes(path)))
+    data.value.chooseNavbarIndex=data.value.navbarList.findIndex(i=>i.path.includes(path))
+  }
+}
+
 //组件挂载
 onMounted(() => {
+  checkNavbarIndex()
   //获取相似歌手
   getSimiArtists();
   //获取歌手详情
@@ -95,6 +116,8 @@ const changeNavbar = (index: number) => {
   data.value.chooseNavbarIndex = index;
   router.push(data.value.navbarList[index].path);
 };
+
+watch(()=>data.value.chooseNavbarIndex,()=>console.log(data.value.chooseNavbarIndex))
 
 console.log(data.value);
 </script>

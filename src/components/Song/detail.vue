@@ -73,7 +73,7 @@
 <script setup lang="ts">
 import { DiscoverListSongType } from "../../types/types";
 import { PropType, ref } from "vue";
-import PlayAddlistBtn from "../../components/Botton/play_addlist.vue";
+import PlayAddlistBtn from "../../components/Button/play_addlist.vue";
 
 const props = defineProps({
   data: {
