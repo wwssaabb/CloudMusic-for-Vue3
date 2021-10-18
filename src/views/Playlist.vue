@@ -1,17 +1,19 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-18 10:02:11
- * @LastEditTime: 2021-10-18 11:03:12
+ * @LastEditTime: 2021-10-18 16:49:30
  * @FilePath: \CloudMusic-for-Vue3\src\views\Playlist.vue
 -->
 <template>
-  <div class="playlist-page">
-    <div class="left">
+  <div class="playlist-page fss">
+    <div class="left f_nosg">
       <div class="head-wrap" v-loading="data.detail === null">
         <Head :detail="data.detail" v-if="data.detail"></Head>
       </div>
     </div>
-    <div class="right"></div>
+    <div class="right f_nosg">
+      <Likers v-if="data.detail" :list="data.detail.subscribers"></Likers>
+    </div>
   </div>
 </template>
 
@@ -21,6 +23,7 @@ import { useRouter } from "vue-router";
 import { PlaylistDetailType } from "../types/types";
 import { reqPlaylistDetail } from "../api";
 import Head from "../components/Playlist/head.vue";
+import Likers from "../components/Playlist/likers.vue";
 
 const router = useRouter();
 
@@ -63,6 +66,7 @@ console.log(data.value);
 
     .head-wrap {
       height: 250px;
+      margin-bottom: 27px;
     }
   }
 
