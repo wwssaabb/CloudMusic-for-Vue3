@@ -371,6 +371,14 @@ $--foot_color:#f2f2f2; //脚步的背景色
   background: url("https://music.163.com/style/web2/img/sprite.png?8f0dccbb571eefd99fd7dfbb7de469db") no-repeat;
 }
 
+.icons22_img {
+  background: url("https://music.163.com/style/web2/img/coverall.png?6a8072e5796e5f559728ab13d717d21d") no-repeat;
+}
+
+.icons23_img {
+  background: url("https://music.163.com/style/web2/img/icon.png?63f08216a41979543294bc2ecf090025") no-repeat;
+}
+
 //播放按钮
 .play_icon {
   display: inline-block;
@@ -789,5 +797,93 @@ $--foot_color:#f2f2f2; //脚步的背景色
   //mv详情页 公众号
   &mv_qrcode {
     @include get_btn(21, 0, -300, 72, 72);
+  }
+
+  //playlist 歌单详情页 歌手cover bg
+  &playlist_cover_bg {
+    @include get_btn(22, 0, -1285, 208, 208);
+  }
+
+  //playlist 歌单tag
+  &playlist_tag {
+    @include get_btn(23, 0, -243, 54, 24);
+  }
+
+  //playlist 歌单 feature 收藏、分享、下载、评论 按钮
+  &playlist_ {
+    @mixin mixinStyle {
+      width: auto;
+
+      &:hover {
+        width: auto;
+      }
+
+      span {
+        font-size: 12px;
+        color: #333;
+        line-height: 31px;
+        margin: 0 5px 0 30px;
+      }
+
+      i.icon_close {
+        top: 0;
+        left: 0;
+        width: calc(100% + 3px);
+        height: 31px;
+        @extend .icons20_img;
+        background-position: right -1020px;
+
+        &:hover {
+          background-position: right -1106px;
+        }
+      }
+    }
+
+    &collect {
+      @include get_btn(20, 0, -977, 54, 31, 0, -1063);
+      @include mixinStyle;
+    }
+
+    &share {
+      @include get_btn(20, 0, -1225, 54, 31, 0, -1268);
+      @include mixinStyle;
+    }
+
+    &download {
+      @include get_btn(20, 0, -2761, 54, 31, 0, -2805);
+      @include mixinStyle;
+    }
+
+    &comment {
+      @include get_btn(20, 0, -1465, 54, 31, 0, -1508);
+      @include mixinStyle;
+    }
+
+    &t_tag {
+      @include get_btn(20, 0, 0, 54, 22, 0, -1400);
+      @include mixinStyle;
+
+
+
+      span {
+        position: relative;
+        color: #777;
+        line-height: 22px;
+        margin: 0 6px 0 12px;
+        z-index: 5;
+      }
+
+      i.icon_close {
+        width: calc(100% + 6px);
+        height: 22px;
+        background-position: right -27px;
+      }
+
+      &:hover {
+        i.icon_close {
+          background-position: right -1430px;
+        }
+      }
+    }
   }
 }

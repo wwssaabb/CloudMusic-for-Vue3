@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-17 15:52:26
- * @LastEditTime: 2021-10-15 15:50:44
+ * @LastEditTime: 2021-10-18 10:53:13
  * @FilePath: \CloudMusic-for-Vue3\src\router\router.ts
  */
 import { createRouter, createWebHashHistory } from "vue-router";
@@ -12,12 +12,12 @@ export default createRouter({
     {
       path: "/",
       component: () => import("../views/Discover.vue"),
-      redirect: '/discover'
+      redirect: "/discover",
     },
     {
       path: "/discover",
       component: () => import("../views/Discover.vue"),
-      redirect: '/discover/',
+      redirect: "/discover/",
       children: [
         {
           path: "/discover/",
@@ -45,11 +45,6 @@ export default createRouter({
         },
       ],
     },
-
-    {
-      path: "/song",
-      component: () => import("../views/Song.vue"),
-    },
     {
       path: "/artist/",
       component: () => import("../views/Artist.vue"),
@@ -73,8 +68,16 @@ export default createRouter({
       ],
     },
     {
+      path: "/song",
+      component: () => import("../views/Song.vue"),
+    },
+    {
       path: "/mv",
       component: () => import("../views/Mv.vue"),
+    },
+    {
+      path: "/playlist",
+      component: () => import("../views/Playlist.vue"),
     },
   ],
 });

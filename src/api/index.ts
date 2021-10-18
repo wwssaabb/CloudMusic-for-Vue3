@@ -41,6 +41,7 @@ import type {
   reqMvUrlType,
   reqRecommendMvsType,
   reqMvCommentsType,
+  reqPlaylistDetailType,
 } from "../types/types";
 
 //获取banner数据
@@ -252,3 +253,7 @@ export const reqMvComments = (
     offset: (page - 1) * limit,
     limit,
   });
+
+//获取歌单详情  ,s为最近的收藏者，默认8个
+export const reqPlaylistDetail = (id: number | string, s: number = 8) =>
+  http<reqPlaylistDetailType>("/playlist/detail", { id, s });

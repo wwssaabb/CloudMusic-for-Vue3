@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-29 16:35:36
- * @LastEditTime: 2021-10-16 16:34:25
+ * @LastEditTime: 2021-10-18 11:35:54
  * @FilePath: \CloudMusic-for-Vue3\src\utils\index.ts
  */
 
@@ -59,4 +59,15 @@ export const getCreatorHtml = <T>(creator: T[], name: keyof T): string => {
   return creator
     .map((i) => `<span class='td_u' style='font-size:12px;'>${i[name]}</span>`)
     .join("/");
+};
+
+//时间格式化方法
+export const timeFormat = (time: number): string => {
+  const t = new Date(time);
+  const y = t.getFullYear();
+  let m: number | string = t.getMonth() + 1;
+  let d: number | string = t.getDate();
+  m = m > 9 ? m : "0" + m;
+  d = d > 9 ? d : "0" + d;
+  return y + "-" + m + "-" + d;
 };

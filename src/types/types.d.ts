@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-22 09:32:37
- * @LastEditTime: 2021-10-16 15:33:41
+ * @LastEditTime: 2021-10-18 16:31:41
  * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
 
@@ -78,6 +78,12 @@ export type trackIdType = {
 //  0: 歌曲 1: mv 2: 歌单 3: 专辑 4: 电台 5: 视频
 export type getCommentType = 0 | 1 | 2 | 3 | 4 | 5;
 //榜单返回的playlist的Type
+export type PlaylistCreatorType = {
+  userId: number;
+  nickname: string;
+  avatarUrl: string;
+  avatarDetail: { identityIconUrl: string };
+};
 export type PlaylistType = {
   id: number;
   name: string;
@@ -90,6 +96,8 @@ export type PlaylistType = {
   shareCount: number; //分享数量
   commentCount: number; //评论数量
   tracks: DiscoverListSongType[]; //列表
+  creator: PlaylistCreatorType;
+  tags: string[];
 };
 //vip信息
 export type vipRightType = {
@@ -484,3 +492,20 @@ export type reqRecommendMvsType = {
 
 //获取 mv 评论列表请求type
 export type reqMvCommentsType = reqSongCommentsType;
+
+//获取 歌单详情请求type
+export type SubscriberType = {
+  userId: number;
+  nickname: string;
+  avatarUrl: string;
+};
+export type PlaylistDetailType = PlaylistType & {
+  avatarUrl: string;
+  description: string;
+  createTime: number;
+  subscribers: SubscriberType[];
+};
+export type reqPlaylistDetailType = {
+  playlist: PlaylistDetailType;
+  code: number;
+};
