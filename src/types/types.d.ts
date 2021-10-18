@@ -522,3 +522,6 @@ export type reqPlaylistRelatedListType = {
   playlists: RelatedPlaylistType[];
   code: number;
 };
+
+//获取歌单评论列表 type
+export type reqPlaylistCommentsType = reqSongCommentsType;

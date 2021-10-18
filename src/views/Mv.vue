@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-15 15:43:45
- * @LastEditTime: 2021-10-16 16:53:36
+ * @LastEditTime: 2021-10-18 17:50:47
  * @FilePath: \CloudMusic-for-Vue3\src\views\Mv.vue
 -->
 <template>
@@ -50,7 +50,7 @@ import {
   PaginationClickType,
 } from "../types/types";
 import MvPlay from "../components/Mv/mvPlay.vue";
-import Combination from "../components/Mv/combination.vue";
+import Combination from "../components/Combination.vue";
 import Introduction from "../components/Mv/introduction.vue";
 import Recommends from "../components/Mv/recommends.vue";
 import AppDownload from "../components/AppDownload.vue";

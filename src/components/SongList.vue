@@ -94,6 +94,7 @@ const props = defineProps({
   getStatus: {
     type: Function as PropType<(index: number) => string>,
     required: true,
+    default: () => {},
   },
   /* getTitle: {
     type: Function as PropType<
@@ -104,6 +105,7 @@ const props = defineProps({
   getRankNumber: {
     type: Function as PropType<(index: number) => number | undefined>,
     required: true,
+    default: () => {},
   },
   showHead: {
     type: Boolean,

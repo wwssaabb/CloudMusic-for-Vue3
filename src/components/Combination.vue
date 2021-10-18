@@ -1,8 +1,8 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-16 10:01:23
- * @LastEditTime: 2021-10-16 16:10:54
- * @FilePath: \CloudMusic-for-Vue3\src\components\Mv\combination.vue
+ * @LastEditTime: 2021-10-18 17:51:15
+ * @FilePath: \CloudMusic-for-Vue3\src\components\combination.vue
 -->
 <template>
   <div class="combination">
@@ -30,10 +30,10 @@
 
 <script setup lang="ts">
 import { PropType } from "vue";
-import CommentHead from "../CommentHead.vue";
-import CommentList from "../CommentList.vue";
-import Pagination from "../Pagination.vue";
-import { CommentType, PaginationClickType } from "../../types/types";
+import CommentHead from "./CommentHead.vue";
+import CommentList from "./CommentList.vue";
+import Pagination from "./Pagination.vue";
+import { CommentType, PaginationClickType } from "../types/types";
 
 const props = defineProps({
   commentContent: {

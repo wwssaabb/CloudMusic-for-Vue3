@@ -43,6 +43,7 @@ import type {
   reqMvCommentsType,
   reqPlaylistDetailType,
   reqPlaylistRelatedListType,
+  reqPlaylistCommentsType,
 } from "../types/types";
 
 //获取banner数据
@@ -262,3 +263,17 @@ export const reqPlaylistDetail = (id: number | string, s: number = 8) =>
 //获取相关歌单推荐
 export const reqPlaylistRelatedList = (id: number | string) =>
   http<reqPlaylistRelatedListType>("/related/playlist", { id });
+
+//获取歌单评论
+export const reqPlaylistComments = (
+  id: number | string,
+  page: number = 1,
+  limit: number = 20,
+  before?: number
+) =>
+  http<reqPlaylistCommentsType>("/comment/playlist", {
+    id,
+    offset: (page - 1) * limit,
+    limit,
+    before,
+  });

@@ -61,7 +61,7 @@ export const getCreatorHtml = <T>(creator: T[], name: keyof T): string => {
     .join("/");
 };
 
-//时间格式化方法
+//时间格式化方法 2017-04-15
 export const timeFormat = (time: number): string => {
   const t = new Date(time);
   const y = t.getFullYear();

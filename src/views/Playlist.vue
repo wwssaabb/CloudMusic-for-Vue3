@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-18 10:02:11
- * @LastEditTime: 2021-10-18 17:20:42
+ * @LastEditTime: 2021-10-18 17:59:20
  * @FilePath: \CloudMusic-for-Vue3\src\views\Playlist.vue
 -->
 <template>
@@ -10,6 +10,21 @@
       <div class="head-wrap" v-loading="data.detail === null">
         <Head :detail="data.detail" v-if="data.detail"></Head>
       </div>
+      <SongList
+        :list="data.detail.tracks"
+        v-if="data.detail"
+        :specialTop="0"
+      ></SongList>
+      <Combination
+        v-if="data.detail"
+        :commentContent="data.comment"
+        :commentCount="data.detail.commentCount"
+        :hotComments="data.hotComments"
+        :comments="data.comments"
+        :endPage="data.endPage"
+        :currentPage="data.currentPage"
+        :changePage="changePage"
+      ></Combination>
     </div>
     <div class="right f_nosg">
       <Likers v-if="data.detail" :list="data.detail.subscribers"></Likers>
@@ -22,12 +37,22 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import { PlaylistDetailType, RelatedPlaylistType } from "../types/types";
-import { reqPlaylistDetail, reqPlaylistRelatedList } from "../api";
+import {
+  PlaylistDetailType,
+  RelatedPlaylistType,
+  CommentType,
+} from "../types/types";
+import {
+  reqPlaylistDetail,
+  reqPlaylistRelatedList,
+  reqPlaylistComments,
+} from "../api";
 import Head from "../components/Playlist/head.vue";
+import SongList from "../components/SongList.vue";
 import Likers from "../components/Playlist/likers.vue";
 import RelatedList from "../components/Playlist/relatedList.vue";
 import AppDownload from "../components/AppDownload.vue";
+import Combination from "../components/Combination.vue";
 
 const router = useRouter();
 
@@ -37,12 +62,24 @@ const id: string | undefined = router.currentRoute.value.query.id?.toString();
 type dataType = {
   detail: PlaylistDetailType | null;
   relatedList: RelatedPlaylistType[];
+  hotComments: CommentType[];
+  comments: CommentType[];
+  currentPage: number;
+  endPage: number;
+  comment: string;
 };
 
 const data = ref<dataType>({
   detail: null,
   relatedList: [],
+  hotComments: [],
+  comments: [],
+  currentPage: 1,
+  endPage: 0,
+  comment: "",
 });
+
+const changePage = () => {};
 
 const getDetail = async () => {
   if (!id) return;
@@ -54,9 +91,18 @@ const getRelatedList = async () => {
   data.value.relatedList = (await reqPlaylistRelatedList(id)).playlists;
 };
 
+const getComments = async () => {
+  if (!id) return;
+  let res = await reqPlaylistComments(id, data.value.currentPage); //limit 20
+  data.value.hotComments = res.hotComments;
+  data.value.comments = res.comments;
+  data.value.endPage = Math.ceil(res.total / 20);
+};
+
 onMounted(() => {
   getDetail();
   getRelatedList();
+  getComments();
 });
 
 console.log(data.value);
@@ -69,6 +115,7 @@ console.log(data.value);
   border-left: 1px solid #d3d3d3;
   border-right: 1px solid #d3d3d3;
   background: #fff;
+  overflow: hidden;
 
   .left {
     width: 709px;
@@ -79,6 +126,10 @@ console.log(data.value);
     .head-wrap {
       height: 250px;
       margin-bottom: 27px;
+    }
+
+    .combination {
+      margin-top: 40px;
     }
   }
 
