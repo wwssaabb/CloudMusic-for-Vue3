@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-18 10:02:11
- * @LastEditTime: 2021-10-18 16:49:30
+ * @LastEditTime: 2021-10-18 17:20:42
  * @FilePath: \CloudMusic-for-Vue3\src\views\Playlist.vue
 -->
 <template>
@@ -13,6 +13,8 @@
     </div>
     <div class="right f_nosg">
       <Likers v-if="data.detail" :list="data.detail.subscribers"></Likers>
+      <relatedList :list="data.relatedList"></relatedList>
+      <AppDownload></AppDownload>
     </div>
   </div>
 </template>
@@ -20,10 +22,12 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import { PlaylistDetailType } from "../types/types";
-import { reqPlaylistDetail } from "../api";
+import { PlaylistDetailType, RelatedPlaylistType } from "../types/types";
+import { reqPlaylistDetail, reqPlaylistRelatedList } from "../api";
 import Head from "../components/Playlist/head.vue";
 import Likers from "../components/Playlist/likers.vue";
+import RelatedList from "../components/Playlist/relatedList.vue";
+import AppDownload from "../components/AppDownload.vue";
 
 const router = useRouter();
 
@@ -32,10 +36,12 @@ const id: string | undefined = router.currentRoute.value.query.id?.toString();
 
 type dataType = {
   detail: PlaylistDetailType | null;
+  relatedList: RelatedPlaylistType[];
 };
 
 const data = ref<dataType>({
   detail: null,
+  relatedList: [],
 });
 
 const getDetail = async () => {
@@ -43,8 +49,14 @@ const getDetail = async () => {
   data.value.detail = (await reqPlaylistDetail(id)).playlist;
 };
 
+const getRelatedList = async () => {
+  if (!id) return;
+  data.value.relatedList = (await reqPlaylistRelatedList(id)).playlists;
+};
+
 onMounted(() => {
   getDetail();
+  getRelatedList();
 });
 
 console.log(data.value);

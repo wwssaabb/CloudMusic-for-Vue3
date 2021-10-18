@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-22 09:32:37
- * @LastEditTime: 2021-10-18 16:31:41
+ * @LastEditTime: 2021-10-18 17:23:09
  * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
 
@@ -507,5 +507,18 @@ export type PlaylistDetailType = PlaylistType & {
 };
 export type reqPlaylistDetailType = {
   playlist: PlaylistDetailType;
+  code: number;
+};
+
+//获取 相关歌单请求type
+// export type RelatedPlaylistCreatorType = { userId: number ,nickName:string};
+export type RelatedPlaylistType = {
+  id: number;
+  coverImgUrl: string;
+  name: string;
+  creator: { userId: number; nickname: string };
+};
+export type reqPlaylistRelatedListType = {
+  playlists: RelatedPlaylistType[];
   code: number;
 };
