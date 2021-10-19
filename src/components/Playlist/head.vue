@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-18 10:09:13
- * @LastEditTime: 2021-10-18 16:36:07
+ * @LastEditTime: 2021-10-19 09:52:15
  * @FilePath: \CloudMusic-for-Vue3\src\components\Playlist\head.vue
 -->
 <template>
@@ -19,6 +19,7 @@
         <span class="creator_name td_u"
           >{{ detail.creator.nickname }}
           <img
+            v-if="detail.creator.avatarDetail"
             :src="detail.creator.avatarDetail.identityIconUrl + '?param=40y40'"
             alt=""
         /></span>

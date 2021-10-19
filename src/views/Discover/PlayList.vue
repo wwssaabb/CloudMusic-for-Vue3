@@ -24,12 +24,16 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, ref, watch, provide } from "vue";
+import { useRouter } from "vue-router";
 import Title from "../../components/Title.vue";
 import AlbumList from "../../components/AlbumList.vue";
 import Pagination from "../../components/Pagination.vue";
 import { reqPlayListType, PaginationClickType } from "../../types/types";
 import { reqPlayLists } from "../../api/";
-import { onMounted, ref, watch } from "vue";
+
+const router = useRouter();
+provide("router", router);
 
 const data = ref<reqPlayListType>();
 const pageInfo = ref({

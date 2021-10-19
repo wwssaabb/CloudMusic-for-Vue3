@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-29 14:36:54
- * @LastEditTime: 2021-09-29 16:27:57
+ * @LastEditTime: 2021-10-19 09:42:30
  * @FilePath: \CloudMusic-for-Vue3\src\components\AlbumList.vue
 -->
 
@@ -9,7 +9,11 @@
   <div class="album-list d_f fw" v-if="playLists !== undefined">
     <div v-for="item in playLists" :key="item.id" class="item cur_p f_nog">
       <div class="cover pr">
-        <img :src="item.coverImgUrl + '?param=140y140'" alt="" />
+        <img
+          :src="item.coverImgUrl + '?param=140y140'"
+          alt=""
+          @click="router.push('/playlist?id=' + item.id)"
+        />
         <div class="cover-mask pa icon_cover_mask"></div>
         <div class="cover-bottom pa icon_cov_bot_bg fpbc">
           <div class="left d_ib">
@@ -22,11 +26,19 @@
         </div>
       </div>
       <div class="msg">
-        <div class="name t_ovl1 td_u f_nog">
+        <div
+          class="name t_ovl1 td_u f_nog"
+          @click="router.push('/playlist?id=' + item.id)"
+        >
           {{ item.name }}
         </div>
         <div class="author fsc">
-          by <span class="td_u t_ovl1 d_ib">{{ item.creator.nickname }}</span>
+          by
+          <span
+            class="td_u t_ovl1 d_ib"
+            @click="router.push('/user/home?id=' + item.creator.userId)"
+            >{{ item.creator.nickname }}</span
+          >
           <img
             v-if="item.creator.avatarDetail"
             :src="item.creator.avatarDetail.identityIconUrl"
@@ -38,8 +50,12 @@
 </template>
 
 <script setup lang="ts">
-import { playListType } from "../types/types";
 import { PropType } from "vue";
+import { useRouter } from "vue-router";
+import { playListType } from "../types/types";
+
+const router = useRouter();
+
 const props = defineProps({
   playLists: {
     type: Array as PropType<playListType[] | undefined>,

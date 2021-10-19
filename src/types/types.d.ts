@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-22 09:32:37
- * @LastEditTime: 2021-10-18 17:23:09
+ * @LastEditTime: 2021-10-19 09:17:58
  * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
 
@@ -96,8 +96,6 @@ export type PlaylistType = {
   shareCount: number; //分享数量
   commentCount: number; //评论数量
   tracks: DiscoverListSongType[]; //列表
-  creator: PlaylistCreatorType;
-  tags: string[];
 };
 //vip信息
 export type vipRightType = {
@@ -500,6 +498,8 @@ export type SubscriberType = {
   avatarUrl: string;
 };
 export type PlaylistDetailType = PlaylistType & {
+  creator: PlaylistCreatorType;
+  tags: string[];
   avatarUrl: string;
   description: string;
   createTime: number;
