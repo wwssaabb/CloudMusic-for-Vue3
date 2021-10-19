@@ -1,26 +1,28 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-28 15:14:46
- * @LastEditTime: 2021-10-14 17:40:11
- * @FilePath: \CloudMusic-for-Vue3\src\components\songList.vue
+ * @LastEditTime: 2021-10-19 16:37:14
+ * @FilePath: \CloudMusic-for-Vue3\src\components\SongList.vue
 -->
 <template>
   <div class="list">
     <div class="list-title fsc" v-if="showHead">
-      <div class="index"></div>
-      <div class="name">标题</div>
-      <div class="time">时长</div>
-      <div class="singer">歌手</div>
+      <div class="index f_nos"></div>
+      <div class="name" :class="otherSlot ? 'other' : ''">标题</div>
+      <div class="time f_nos">时长</div>
+      <div class="singer f_nos" :class="otherSlot ? 'other' : ''">歌手</div>
+      <div class="other" v-if="otherSlot">
+        <slot name="title" v-if="otherSlot"></slot>
+      </div>
     </div>
-    <div class="content">
+    <div class="content" v-if="list.length !== 0">
       <div
         class="item fsc"
         :style="'padding:' + (index <= 2 ? '10px 0' : '6px 0')"
         v-for="(item, index) in list"
         :key="item.id"
-        @click="goDetail(item.id)"
       >
-        <div class="index fpbc">
+        <div class="index fpbc f_nos">
           <span>{{ index + 1 }}</span>
           <span class="rank_icon fcc" v-if="showRank"
             ><i :class="getStatus(index)">{{
@@ -28,16 +30,19 @@
             }}</i></span
           >
         </div>
-        <div class="name cur_p fsc f_nos">
+        <div class="name cur_p fsc f_nos" :class="otherSlot ? 'other' : ''">
           <img
             v-if="index <= specialTop - 1"
             :src="item.al.picUrl + '?param=50y50&quality=100'"
             alt=""
+            @click="goSongDetail(item.id)"
           />
           <i class="play_icon f_nos"></i>
           <span
-            class="name-content td_u f_nos t_ovl1"
+            class="name-content d_ib td_u f_nos t_ovl1"
+            :class="otherSlot ? 'other' : ''"
             :title="getTitle(item)"
+            @click="goSongDetail(item.id)"
             >{{ item.name }}</span
           >
           <span
@@ -49,24 +54,36 @@
           >
           <i class="mv_icon f_nosg cur_p" v-if="item.mv !== 0"></i>
         </div>
-        <div class="time fsc pr">
+        <div class="time fsc pr f_nos">
           <span>{{ format(item.dt, "", "duration") }}</span>
           <div class="icons fsc">
             <a
-              href="javascript:;"
+              href="javascript:void;"
               title="添加到播放列表"
               class="playlist_icon"
             ></a>
-            <a href="javascript:;" title="收藏" class="addlist_icon"></a>
-            <a href="javascript:;" title="分享" class="collectlist_icon"></a>
-            <a href="javascript:;" title="下载" class="downloadlist_icon"></a>
+            <a href="javascript:void;" title="收藏" class="addlist_icon"></a>
+            <a
+              href="javascript:void;"
+              title="分享"
+              class="collectlist_icon"
+            ></a>
+            <a
+              href="javascript:void;"
+              title="下载"
+              class="downloadlist_icon"
+            ></a>
           </div>
         </div>
-        <div class="singer t_ovl1">
-          <span v-if="!singerSlot" class="td_u">{{
-            item.ar.map((i) => i.name).join("/")
-          }}</span>
-          <slot name="default" :item="item" v-else></slot>
+        <div class="singer t_ovl1 f_nos" :class="otherSlot ? 'other' : ''">
+          <span
+            v-if="!singerSlot"
+            v-html="getCreatorHtml(item.ar, 'name', 'id', '/artist?id=')"
+          ></span>
+          <slot name="singer" :item="item" v-else></slot>
+        </div>
+        <div class="other t_ovl1" v-if="otherSlot">
+          <slot name="other" :item="item"></slot>
         </div>
       </div>
     </div>
@@ -83,6 +100,7 @@ import {
 import { PropType } from "vue";
 import { useRouter } from "vue-router";
 import moment from "../utils/moment";
+import { getCreatorHtml } from "../utils";
 
 const router = useRouter();
 
@@ -123,8 +141,14 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  otherSlot: {
+    type: Boolean,
+    default: false,
+  },
 });
-const goDetail = (id: number) => router.push("/song?id=" + id);
+const goSongDetail = (id: number) => router.push("/song?id=" + id);
+const goArtistDetail = (id: number) => router.push("/artist?id=" + id);
+const con = (e: any) => console.log(e);
 
 const getTitle = (
   item: DiscoverListSongType,
@@ -180,7 +204,9 @@ const format = (n: number, format: string, type: formatType = "normal") => {
 $border_color: #eee;
 .list {
   border: 1px solid $border_color;
-
+  .content {
+    min-height: 200px;
+  }
   .item {
     width: 100%;
     padding: 6px 0;
@@ -238,6 +264,9 @@ $border_color: #eee;
   .name {
     width: 327px;
     padding-left: 10px;
+    &.other {
+      width: 236px;
+    }
     span {
       margin-left: 8px;
     }
@@ -246,6 +275,9 @@ $border_color: #eee;
     }
     .name-content {
       max-width: 253px;
+      &.other {
+        max-width: 213px;
+      }
     }
   }
   .time {
@@ -260,7 +292,12 @@ $border_color: #eee;
   .singer {
     width: 170px;
     padding-left: 10px;
+    &.other {
+      width: 170px;
+      width: 90px;
+    }
   }
+
   .list-title {
     color: #666;
     div {
@@ -274,7 +311,9 @@ $border_color: #eee;
         border-right: none;
       }
     }
-
+    .other {
+      width: 127;
+    }
     height: 39px;
   }
 }

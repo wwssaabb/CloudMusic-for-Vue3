@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-16 11:38:53
- * @LastEditTime: 2021-10-16 16:40:25
+ * @LastEditTime: 2021-10-19 15:41:20
  * @FilePath: \CloudMusic-for-Vue3\src\components\Mv\recommends.vue
 -->
 <template>
@@ -27,7 +27,14 @@
             >by
             <span
               class="td_u"
-              v-html="getCreatorHtml(item.creator, 'userName')"
+              v-html="
+                getCreatorHtml(
+                  item.creator,
+                  'userName',
+                  'userId',
+                  '/user/home?id='
+                )
+              "
             ></span
           ></span>
         </div>

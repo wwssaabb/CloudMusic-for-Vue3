@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-14 08:24:51
- * @LastEditTime: 2021-10-16 17:22:53
+ * @LastEditTime: 2021-10-19 11:09:50
  * @FilePath: \CloudMusic-for-Vue3\src\views\Artist\Index.vue
 -->
 <template>
@@ -21,7 +21,7 @@
       :getRankNumber="() => 0"
       :singerSlot="true"
     >
-      <template v-slot="{ item }">
+      <template v-slot:singer="{ item }">
         <span class="album_text td_u">{{ item.al?.name }}</span>
       </template>
     </SongList>

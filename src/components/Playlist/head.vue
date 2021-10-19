@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-18 10:09:13
- * @LastEditTime: 2021-10-19 09:52:15
+ * @LastEditTime: 2021-10-19 17:44:33
  * @FilePath: \CloudMusic-for-Vue3\src\components\Playlist\head.vue
 -->
 <template>
@@ -10,13 +10,15 @@
       <img :src="detail.coverImgUrl + '?param=200y200'" alt="" />
     </div>
     <div class="right">
-      <div class="name fsc">
-        <i class="icon_playlist_tag"></i>
+      <div class="name fss">
+        <i class="icon_playlist_tag f_nosg"></i>
         <span>{{ detail.name }}</span>
       </div>
       <div class="creator fsc">
         <img :src="detail.creator.avatarUrl" alt="" />
-        <span class="creator_name td_u"
+        <span
+          class="creator_name td_u"
+          @click="router.push('/user/home?id=' + detail.creator.userId)"
           >{{ detail.creator.nickname }}
           <img
             v-if="detail.creator.avatarDetail"
@@ -51,20 +53,31 @@
           :text="tag"
         ></Normal>
       </div>
-      <div class="intro">
+      <div class="intro pr" ref="intro" :class="showFullIntro ? 'show' : ''">
         <span>介绍：</span>
         <span>{{ detail.description }}</span>
+        <span
+          class="btn_expand pa td_u"
+          style="color: #0c73c2"
+          @click="showFullIntro = !showFullIntro"
+          v-if="isShowFullIntroControl"
+          >{{ showFullIntro ? "收起" : "展开"
+          }}<i class="icon_expand_arrow" :class="showFullIntro ? 'rot' : ''"></i
+        ></span>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { PropType } from "vue";
+import { PropType, ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import { PlaylistDetailType } from "../../types/types";
 import { timeFormat } from "../../utils";
 import PlayAddList from "../Button/play_addlist.vue";
 import Normal from "../Button/normal.vue";
+
+const router = useRouter();
 
 const props = defineProps({
   detail: {
@@ -72,11 +85,23 @@ const props = defineProps({
     required: true,
   },
 });
+
+const showFullIntro = ref(false);
+const isShowFullIntroControl = ref(false);
+const intro = ref<HTMLElement>();
+onMounted(() => {
+  if (!intro.value) return;
+  let h = intro.value.clientHeight;
+  console.log(h);
+  isShowFullIntroControl.value = h >= 162;
+  console.log(isShowFullIntroControl.value);
+});
 </script>
 
 <style lang="scss" scoped>
 .playlist-head {
-  height: 250px;
+  min-height: 250px;
+  margin-bottom: 20px;
 
   .left {
     width: 208px;
@@ -91,7 +116,6 @@ const props = defineProps({
 
   .right {
     .name {
-      height: 24px;
       line-height: 24px;
       margin-bottom: 12px;
       span {
@@ -160,11 +184,32 @@ const props = defineProps({
 
     .intro {
       width: 411px;
-      margin-top: 4px;
+      padding-bottom: 18px;
+      margin: 6px 0 0;
+      max-height: 163px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 8;
+      -webkit-box-orient: vertical;
+
+      .btn_expand {
+        width: 411px;
+        height: 18px;
+        background: #fff;
+        left: 0;
+        bottom: 0;
+        font-size: 12px;
+        text-align: right;
+      }
+      &.show {
+        height: auto;
+        display: inline;
+      }
       span {
         font-size: 12px;
         color: #666;
         line-height: 18px;
+        white-space: pre-line;
       }
     }
   }

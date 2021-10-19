@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-18 10:11:49
- * @LastEditTime: 2021-10-18 17:26:59
+ * @LastEditTime: 2021-10-19 15:46:14
  * @FilePath: \CloudMusic-for-Vue3\src\components\Playlist\relatedList.vue
 -->
 <template>
@@ -9,14 +9,24 @@
     <div class="title">热门歌单</div>
     <div class="list">
       <div class="item fsc" v-for="item in list">
-        <img :src="item.coverImgUrl + '?param=50y50'" alt="" />
+        <img
+          :src="item.coverImgUrl + '?param=50y50'"
+          alt=""
+          @click="router.push('playlist?id=' + item.id)"
+        />
         <div class="right fd_col t_ovl1">
-          <span class="name d_ib t_ovl1 td_u">{{ item.name }}</span>
+          <span
+            class="name d_ib t_ovl1 td_u"
+            @click="router.push('playlist?id=' + item.id)"
+            >{{ item.name }}</span
+          >
           <span class="creator d_ib"
             >by
-            <span class="nick-name td_u">{{
-              item.creator.nickname
-            }}</span></span
+            <span
+              class="nick-name td_u"
+              @click="router.push('/user/home?id=' + item.creator.userId)"
+              >{{ item.creator.nickname }}</span
+            ></span
           >
         </div>
       </div>
@@ -26,7 +36,10 @@
 
 <script setup lang="ts">
 import { PropType } from "vue";
+import { useRouter } from "vue-router";
 import { RelatedPlaylistType } from "../../types/types";
+
+const router = useRouter();
 
 const props = defineProps({
   list: {

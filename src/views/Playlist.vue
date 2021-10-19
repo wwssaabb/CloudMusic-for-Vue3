@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-18 10:02:11
- * @LastEditTime: 2021-10-19 10:42:43
+ * @LastEditTime: 2021-10-19 15:49:43
  * @FilePath: \CloudMusic-for-Vue3\src\views\Playlist.vue
 -->
 <template>
@@ -27,10 +27,24 @@
         </template>
       </Title>
       <SongList
-        :list="data.detail.tracks"
+        :list="data.tracks"
         v-if="data.detail"
         :specialTop="0"
-      ></SongList>
+        :getStatus="() => ''"
+        :getRankNumber="() => undefined"
+        :otherSlot="true"
+      >
+        <template #title><span>专辑</span></template>
+        <template v-slot:other="{ item }">
+          <span class="album_name td_u">{{ item.al.name }}</span>
+        </template>
+      </SongList>
+      <Hint
+        v-if="data.tracks.length !== 0"
+        content="查看更多内容，请下载客户端"
+        btnText="立即下载"
+        :btnCallback="() => {}"
+      ></Hint>
       <Combination
         v-if="data.detail"
         :commentContent="data.comment"
@@ -51,27 +65,32 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch, provide } from "vue";
 import { useRouter } from "vue-router";
 import {
   PlaylistDetailType,
   RelatedPlaylistType,
   CommentType,
+  DiscoverListSongType,
+  PaginationClickType,
 } from "../types/types";
 import {
   reqPlaylistDetail,
   reqPlaylistRelatedList,
   reqPlaylistComments,
+  reqSongDetail,
 } from "../api";
 import Head from "../components/Playlist/head.vue";
 import SongList from "../components/SongList.vue";
 import Likers from "../components/Playlist/likers.vue";
 import RelatedList from "../components/Playlist/relatedList.vue";
+import Hint from "../components/Playlist/hint.vue";
 import AppDownload from "../components/AppDownload.vue";
 import Combination from "../components/Combination.vue";
 import Title from "../components/Title.vue";
 
 const router = useRouter();
+provide("push", router.push);
 
 //获取query id 参数
 const id: string | undefined = router.currentRoute.value.query.id?.toString();
@@ -84,6 +103,7 @@ type dataType = {
   currentPage: number;
   endPage: number;
   comment: string;
+  tracks: DiscoverListSongType[];
 };
 
 const data = ref<dataType>({
@@ -94,13 +114,34 @@ const data = ref<dataType>({
   currentPage: 1,
   endPage: 0,
   comment: "",
+  tracks: [],
 });
 
-const changePage = () => {};
+const changePage = (type: PaginationClickType, page?: number): void => {
+  const p = data.value.currentPage;
+  const end = data.value.endPage;
+  const handle = {
+    page: () =>
+      type === "page" && page ? (data.value.currentPage = page) : null,
+    prev: () => (data.value.currentPage = p === 1 || p === 2 ? 1 : p - 1),
+    next: () =>
+      (data.value.currentPage = p === end || p + 1 === end ? end : p + 1),
+  };
+  handle[type]();
+};
 
 const getDetail = async () => {
   if (!id) return;
   data.value.detail = (await reqPlaylistDetail(id)).playlist;
+};
+
+const getSontDetail = async () => {
+  if (!data.value.detail) return;
+  const ids = data.value.detail.trackIds
+    .slice(0, 20)
+    .map((i) => i.id)
+    .join(",");
+  data.value.tracks = (await reqSongDetail(ids)).songs;
 };
 
 const getRelatedList = async () => {
@@ -110,6 +151,7 @@ const getRelatedList = async () => {
 
 const getComments = async () => {
   if (!id) return;
+  data.value.comments = [];
   let res = await reqPlaylistComments(id, data.value.currentPage); //limit 20
   data.value.hotComments = res.hotComments;
   data.value.comments = res.comments;
@@ -117,10 +159,12 @@ const getComments = async () => {
 };
 
 onMounted(() => {
-  getDetail();
+  getDetail().then((res) => getSontDetail());
   getRelatedList();
   getComments();
 });
+
+watch(() => data.value.currentPage, getComments);
 
 console.log(data.value);
 </script>
@@ -141,7 +185,7 @@ console.log(data.value);
     padding: 25px 30px 40px 39px;
 
     .head-wrap {
-      height: 250px;
+      min-height: 250px;
       // margin-bottom: 27px;
     }
 
@@ -179,6 +223,15 @@ console.log(data.value);
           font-weight: bold;
         }
       }
+    }
+    .album_name {
+      font-size: 12px;
+      color: #333;
+      line-height: 14px;
+    }
+
+    .playlist-hint {
+      margin-top: 30px;
     }
   }
 

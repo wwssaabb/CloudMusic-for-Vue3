@@ -163,7 +163,7 @@ export const reqAllAlbums = (
   });
 
 //获取歌曲详情
-export const reqSongDetail = (ids: number) =>
+export const reqSongDetail = (ids: number | string) =>
   http<reqSongDetailType>("/song/detail", { ids });
 
 //获取歌词

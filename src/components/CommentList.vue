@@ -1,8 +1,8 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-27 17:20:03
- * @LastEditTime: 2021-10-12 10:54:13
- * @FilePath: \CloudMusic-for-Vue3\src\components\commentList.vue
+ * @LastEditTime: 2021-10-19 17:33:48
+ * @FilePath: \CloudMusic-for-Vue3\src\components\CommentList.vue
 -->
 <template>
   <div class="list" v-loading="comments.length === 0">
@@ -10,7 +10,9 @@
       <img :src="item.user.avatarUrl + '?param=50y50'" alt="" />
       <div class="right">
         <div class="comment-content">
-          <span class="comment-user-name td_u cur_p"
+          <span
+            class="comment-user-name td_u cur_p"
+            @click="router.push('/user/home?id=' + item.user.userId)"
             >{{ item.user.nickname }}
             <img
               v-if="item.user.vipRights !== null"
@@ -48,8 +50,11 @@
 
 <script setup lang="ts">
 import { formatType, CommentType } from "../types/types";
-import { onMounted, PropType, ref } from "vue";
+import { PropType } from "vue";
+import { useRouter } from "vue-router";
 import moment from "../utils/moment";
+
+const router = useRouter();
 
 const props = defineProps({
   comments: {

@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-29 16:35:36
- * @LastEditTime: 2021-10-18 11:35:54
+ * @LastEditTime: 2021-10-19 15:43:06
  * @FilePath: \CloudMusic-for-Vue3\src\utils\index.ts
  */
 
@@ -55,9 +55,20 @@ export const playCountFormat = (count: number): string =>
   count >= 10000 ? (count / 10000).toFixed(1) + "万" : count.toString();
 
 //将作者数组，返回一个包含所有作者span且hover有下划线的html字符串
-export const getCreatorHtml = <T>(creator: T[], name: keyof T): string => {
+export const getCreatorHtml = <T>(
+  creator: T[],
+  name: keyof T,
+  id: keyof T,
+  path: string
+): string => {
+  const fn = (a: any) => console.log(a);
   return creator
-    .map((i) => `<span class='td_u' style='font-size:12px;'>${i[name]}</span>`)
+    .map(
+      (i) =>
+        `<span class='td_u' style='font-size:12px;' onclick="location.href='#${
+          path + i[id]
+        }'">${i[name]}</span>`
+    )
     .join("/");
 };
 

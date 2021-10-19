@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-18 10:09:44
- * @LastEditTime: 2021-10-18 16:50:25
+ * @LastEditTime: 2021-10-19 17:31:24
  * @FilePath: \CloudMusic-for-Vue3\src\components\Playlist\likers.vue
 -->
 <template>
@@ -13,6 +13,7 @@
         v-for="item in list"
         :src="item.avatarUrl + '?param=40y40'"
         alt=""
+        @click="router.push('/user/home?id=' + item.userId)"
       />
     </div>
   </div>
@@ -20,7 +21,10 @@
 
 <script setup lang="ts">
 import { PropType } from "vue";
+import { useRouter } from "vue-router";
 import { SubscriberType } from "../../types/types";
+
+const router = useRouter();
 
 const props = defineProps({
   list: {
