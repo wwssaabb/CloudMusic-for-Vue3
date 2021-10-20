@@ -1,11 +1,17 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-20 08:55:44
- * @LastEditTime: 2021-10-20 10:05:51
+ * @LastEditTime: 2021-10-20 16:48:46
  * @FilePath: \CloudMusic-for-Vue3\src\views\User\Home.vue
 -->
 <template>
-  <div class="user-home-page" v-loading="data.detail === null"></div>
+  <div class="user-home-page" v-loading="data.detail === null">
+    <Head
+      :detail="data.detail?.profile"
+      :level="data.detail.level"
+      v-if="data.detail"
+    ></Head>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -13,6 +19,7 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { reqUserDetail } from "../../api";
 import { reqUserDetailType } from "../../types/types";
+import Head from "../../components/User/head.vue";
 
 const router = useRouter();
 
@@ -47,5 +54,6 @@ console.log(data.value);
   border-right: 1px solid #d3d3d3;
   background: #fff;
   overflow: hidden;
+  padding: 40px;
 }
 </style>

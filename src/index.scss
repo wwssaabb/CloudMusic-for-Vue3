@@ -379,6 +379,10 @@ $--foot_color:#f2f2f2; //脚步的背景色
   background: url("https://music.163.com/style/web2/img/icon.png?63f08216a41979543294bc2ecf090025") no-repeat;
 }
 
+.icons24_img {
+  background: url("https://music.163.com/style/web2/img/button.png?860d963ab3398f364d486813556d8836") no-repeat;
+}
+
 //播放按钮
 .play_icon {
   display: inline-block;
@@ -884,6 +888,65 @@ $--foot_color:#f2f2f2; //脚步的背景色
           background-position: right -1430px;
         }
       }
+    }
+  }
+
+  &user_ {
+
+    //等级
+    &level {
+      @include get_btn(19, -135, -190, 46, 19);
+      width: auto;
+      margin-right: 9px;
+
+      &:hover {
+        width: auto;
+      }
+
+      span {
+        margin: 0 0 0 29px;
+        line-height: 21px;
+        color: #e03a24;
+        font-weight: bold;
+        font-style: italic;
+      }
+
+      i.close {
+        top: 0;
+        right: -9px;
+        @extend .icons19_img;
+        background-position: -191px -190px;
+        width: 9px;
+        height: 19px;
+      }
+    }
+
+    &sex_ {
+      &m {
+        @include get_btn(23, -41, -57, 20, 20);
+      }
+
+      &w {
+        @include get_btn(23, -41, -27, 20, 20);
+      }
+    }
+
+    &email {
+      @include get_btn(24, 0, -810, 75, 31, 0, -845);
+      margin-left: 10px;
+      line-height: 31px;
+      padding-left: 30px;
+      font-size: 12px;
+      color: #333;
+    }
+
+    &follow {
+      @include get_btn(24, 0, -720, 70, 31, -80, -720);
+      margin-left: 10px;
+      line-height: 31px;
+      padding-left: 30px;
+      font-size: 12px;
+      color: #fff;
     }
   }
 }
