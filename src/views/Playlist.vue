@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-18 10:02:11
- * @LastEditTime: 2021-10-19 15:49:43
+ * @LastEditTime: 2021-10-20 09:28:53
  * @FilePath: \CloudMusic-for-Vue3\src\views\Playlist.vue
 -->
 <template>
@@ -142,6 +142,7 @@ const getSontDetail = async () => {
     .map((i) => i.id)
     .join(",");
   data.value.tracks = (await reqSongDetail(ids)).songs;
+  // console.log(data.value.tracks.map((i) => i.name[0] + " : " + i.cd));
 };
 
 const getRelatedList = async () => {

@@ -44,6 +44,7 @@ import type {
   reqPlaylistDetailType,
   reqPlaylistRelatedListType,
   reqPlaylistCommentsType,
+  reqUserDetailType,
 } from "../types/types";
 
 //获取banner数据
@@ -277,3 +278,7 @@ export const reqPlaylistComments = (
     limit,
     before,
   });
+
+//获取用户详情信息
+export const reqUserDetail = (uid: number | string) =>
+  http<reqUserDetailType>("/user/detail", { uid });

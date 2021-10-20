@@ -525,3 +525,40 @@ export type reqPlaylistRelatedListType = {
 
 //获取歌单评论列表 type
 export type reqPlaylistCommentsType = reqSongCommentsType;
+
+//获取用户详情 type
+
+export type UserDetailType = {
+  userId: number;
+  gender: number;
+  vipType: number;
+  userType: number;
+  createTime: number;
+  city: number;
+  province: number;
+  birthday: number;
+  followeds: number; //粉丝数
+  follows: number; //关注数
+  eventCount: number; //动态数
+  followTime: number;
+  followMe: number;
+  playlistCount: number; //创建歌单
+  playlistBeSubscribedCount: number; //收藏的歌单
+  followed: boolean;
+  nickname: string;
+  avatarUrl: string;
+  signature: string;
+};
+
+//请求获取用户详情 type
+export type reqUserDetailType = {
+  level: number;
+  listenSongs: number; //累计听歌数
+  mobileSign: boolean;
+  pcSign: boolean;
+  peopleCanSeeMyPlayRecord: boolean;
+  profile: UserDetailType;
+  createDays: number;
+  createTime: number;
+  code: number;
+};

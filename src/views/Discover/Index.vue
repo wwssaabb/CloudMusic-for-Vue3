@@ -1,11 +1,10 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-17 16:07:22
- * @LastEditTime: 2021-10-09 10:09:54
- * @FilePath: \CloudMusic-for-Vue3\src\views\Discover.vue
+ * @LastEditTime: 2021-10-20 09:34:45
+ * @FilePath: \CloudMusic-for-Vue3\src\views\Discover\Index.vue
 -->
 <template>
-  <RouterView>
   <div>
     <banner
       :banners="banners"
@@ -33,12 +32,9 @@
       </div>
     </div>
   </div>
-  </RouterView>
 </template>
 
 <script setup lang="ts">
-import Head from "../../components/Head.vue";
-import Foot from "../../components/Foot.vue";
 import enterSinger from "../../components/Discover/enter_singer.vue";
 import loginBlock from "../../components/Discover/login_block.vue";
 import banner from "../../components/Discover/banner.vue";
@@ -62,10 +58,9 @@ import type {
   RecommendType,
   AlbumType,
   ArtistType,
-  DiscoverListSongType,
   DiscoverListType,
 } from "../../types/types";
-import { RouterView } from 'vue-router'
+import { RouterView } from "vue-router";
 
 //banner相关
 const banners = ref<BannerType[] | []>([]);

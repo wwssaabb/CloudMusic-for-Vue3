@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-17 15:52:26
- * @LastEditTime: 2021-10-18 10:53:13
+ * @LastEditTime: 2021-10-20 09:39:38
  * @FilePath: \CloudMusic-for-Vue3\src\router\router.ts
  */
 import { createRouter, createWebHashHistory } from "vue-router";
@@ -78,6 +78,17 @@ export default createRouter({
     {
       path: "/playlist",
       component: () => import("../views/Playlist.vue"),
+    },
+    {
+      path: "/user",
+      component: () => import("../views/User.vue"),
+      redirect: "/user/home",
+      children: [
+        {
+          path: "/user/home",
+          component: () => import("../views/User/Home.vue"),
+        },
+      ],
     },
   ],
 });

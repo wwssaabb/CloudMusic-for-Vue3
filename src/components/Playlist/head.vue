@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-18 10:09:13
- * @LastEditTime: 2021-10-19 17:44:33
+ * @LastEditTime: 2021-10-20 09:12:21
  * @FilePath: \CloudMusic-for-Vue3\src\components\Playlist\head.vue
 -->
 <template>
@@ -92,9 +92,7 @@ const intro = ref<HTMLElement>();
 onMounted(() => {
   if (!intro.value) return;
   let h = intro.value.clientHeight;
-  console.log(h);
   isShowFullIntroControl.value = h >= 162;
-  console.log(isShowFullIntroControl.value);
 });
 </script>
 
