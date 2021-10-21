@@ -192,6 +192,56 @@ body {
   }
 }
 
+.m {
+  &5 {
+    margin: 5px;
+  }
+
+  &10 {
+    margin: 10px;
+  }
+
+  &r {
+    &5 {
+      margin-right: 5px;
+    }
+
+    &10 {
+      margin-right: 10px;
+    }
+  }
+
+  &l {
+    &5 {
+      margin-left: 5px;
+    }
+
+    &10 {
+      margin-left: 10px;
+    }
+  }
+
+  &t {
+    &5 {
+      margin-top: 5px;
+    }
+
+    &10 {
+      margin-top: 10px;
+    }
+  }
+
+  &b {
+    &5 {
+      margin-bottom: 5px;
+    }
+
+    &10 {
+      margin-bottom: 10px;
+    }
+  }
+}
+
 //单行文字溢出处理(需要指定宽度,不能使用百分比)
 .t_ovl1 {
   white-space: nowrap;
@@ -381,6 +431,10 @@ $--foot_color:#f2f2f2; //脚步的背景色
 
 .icons24_img {
   background: url("https://music.163.com/style/web2/img/button.png?860d963ab3398f364d486813556d8836") no-repeat;
+}
+
+.icons25_img {
+  background: url("https://music.163.com/style/web2/img/table.png?9665fa3beca263b0b8fc9bc1eb2d97b1") no-repeat;
 }
 
 //播放按钮
@@ -947,6 +1001,24 @@ $--foot_color:#f2f2f2; //脚步的背景色
       padding-left: 30px;
       font-size: 12px;
       color: #fff;
+    }
+
+    &record_ {
+      &add {
+        @include get_btn(23, 3, -700, 18, 16, -19, -700);
+      }
+
+      &collect {
+        @include get_btn(25, 0, -174, 18, 16, -20, -174);
+      }
+
+      &share {
+        @include get_btn(25, 0, -195, 18, 16, -20, -195);
+      }
+
+      &download {
+        @include get_btn(25, -81, -174, 18, 16, -104, -174);
+      }
     }
   }
 }

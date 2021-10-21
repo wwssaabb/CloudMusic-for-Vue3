@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-20 10:08:47
- * @LastEditTime: 2021-10-21 11:27:27
+ * @LastEditTime: 2021-10-21 11:36:51
  * @FilePath: \CloudMusic-for-Vue3\src\components\User\head.vue
 -->
 <template>
@@ -81,6 +81,7 @@ const countList = computed(() => [
 
 <style lang="scss" scoped>
 .user-home-head {
+  margin-bottom: 43px;
   .cover {
     width: 189px;
     height: 189px;

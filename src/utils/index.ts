@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-29 16:35:36
- * @LastEditTime: 2021-10-21 11:01:08
+ * @LastEditTime: 2021-10-21 17:25:01
  * @FilePath: \CloudMusic-for-Vue3\src\utils\index.ts
  */
 
@@ -66,7 +66,7 @@ export const getCreatorHtml = <T>(
   return creator
     .map(
       (i) =>
-        `<span class='td_u' style='font-size:12px;' onclick="location.href='#${
+        `<span class='td_u cur_p' style='font-size:12px;' onclick="location.href='#${
           path + i[id]
         }'">${i[name]}</span>`
     )

@@ -582,3 +582,18 @@ export type reqCountiesCodeType = {
   message: string;
   data: countryCodeType[];
 };
+
+//播放记录type
+export type PlayRecordSongType = DiscoverListSongType;
+export type PlayRecordType = {
+  playCount: number;
+  score: number;
+  song: PlayRecordSongType;
+};
+
+//获取用户播放记录请求type
+export type reqUserPlayRecordType = {
+  weekData: PlayRecordType[];
+  allData: PlayRecordType[];
+  code: number;
+};
