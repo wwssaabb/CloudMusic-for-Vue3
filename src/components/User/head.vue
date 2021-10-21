@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-20 10:08:47
- * @LastEditTime: 2021-10-20 18:01:11
+ * @LastEditTime: 2021-10-21 11:27:27
  * @FilePath: \CloudMusic-for-Vue3\src\components\User\head.vue
 -->
 <template>
@@ -19,7 +19,10 @@
         <i class="icon_user_level pr" v-if="level"
           ><span>{{ level }}</span> <i class="close pa"></i
         ></i>
-        <i :class="'icon_user_sex_' + (detail.gender === 1 ? 'm' : 'w')"></i>
+        <i
+          :class="'icon_user_sex_' + (detail.gender === 1 ? 'm' : 'w')"
+          v-if="detail.gender"
+        ></i>
         <i class="icon_user_email">发私信</i>
         <i class="icon_user_follow">关注</i>
       </div>
@@ -35,11 +38,18 @@
         </div>
       </div>
       <div class="bot">
-        <div class="signature"></div>
-        <div class="location">
-          <span class="birthday" v-if="detail.birthday"></span>
+        <div class="signature" v-if="detail.signature">
+          <span>个人介绍：{{ detail.signature }}</span>
         </div>
-        <div class="location"></div>
+        <div class="location" v-if="detail.province">
+          <span>
+            所在地区：{{ getCityName(detail.province, detail.city) }}
+          </span>
+          <span class="birthday" v-if="detail.birthday > 0"
+            >年龄：{{ getAgeArea(detail.birthday) }}</span
+          >
+        </div>
+        <!-- <div class="line"><span>社交网络：</span></div> -->
       </div>
     </div>
   </div>
@@ -48,6 +58,7 @@
 <script setup lang="ts">
 import { PropType, computed } from "vue";
 import { UserDetailType } from "../../types/types";
+import { getCityName, getAgeArea } from "../../utils";
 
 const props = defineProps({
   detail: {
@@ -109,6 +120,7 @@ const countList = computed(() => [
       }
     }
     .middle {
+      margin-bottom: 15px;
       .item {
         height: 40px;
         padding-right: 40px;
@@ -132,6 +144,23 @@ const countList = computed(() => [
           line-height: 16px;
           color: #666;
         }
+      }
+    }
+
+    .bot {
+      span {
+        font-size: 12px;
+        color: #666;
+        line-height: 21px;
+      }
+      .signature,
+      .location,
+      .line {
+        margin-bottom: 5px;
+      }
+
+      .birthday {
+        margin-left: 20px;
       }
     }
   }

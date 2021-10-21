@@ -45,6 +45,7 @@ import type {
   reqPlaylistRelatedListType,
   reqPlaylistCommentsType,
   reqUserDetailType,
+  reqCountiesCodeType,
 } from "../types/types";
 
 //获取banner数据
@@ -282,3 +283,7 @@ export const reqPlaylistComments = (
 //获取用户详情信息
 export const reqUserDetail = (uid: number | string) =>
   http<reqUserDetailType>("/user/detail", { uid });
+
+//获取国家编码列表
+export const reqCountriesCode = () =>
+  http<reqCountiesCodeType>("/countries/code/list");

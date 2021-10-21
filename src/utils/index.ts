@@ -1,12 +1,13 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-29 16:35:36
- * @LastEditTime: 2021-10-19 15:43:06
+ * @LastEditTime: 2021-10-21 11:01:08
  * @FilePath: \CloudMusic-for-Vue3\src\utils\index.ts
  */
 
 import { PaginationClickType } from "../types/types";
 import { useRouter } from "vue-router";
+import cities from "./city.json";
 
 //获取router实例
 // const router = useRouter();
@@ -81,4 +82,27 @@ export const timeFormat = (time: number): string => {
   m = m > 9 ? m : "0" + m;
   d = d > 9 ? d : "0" + d;
   return y + "-" + m + "-" + d;
+};
+
+//获取所在地区 格式 陕西省 - 咸阳市
+export const getCityName = (
+  cid1: number | string,
+  cid2: number | string
+): string => {
+  let city1 = cities[cid1];
+  let city2 = cities[cid2];
+  return city1 !== undefined
+    ? city2 !== undefined
+      ? city1 + " - " + city2
+      : city1
+    : "无";
+};
+
+//获取 年龄区间 例如 95后
+export const getAgeArea = (t: number) => {
+  let time = new Date(t);
+  let y = time.getFullYear().toString().slice(-2);
+  let os: string | number = parseInt(y[1]);
+  os = (os > 5 ? 5 : 0) + "";
+  return y[0] + os + "后";
 };

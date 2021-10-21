@@ -5,6 +5,8 @@
  * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
 
+import { type } from "os";
+
 //banner
 export type BannerType = {
   encodeId: string;
@@ -561,4 +563,22 @@ export type reqUserDetailType = {
   createDays: number;
   createTime: number;
   code: number;
+};
+
+//国家编码type
+export type countryType = {
+  zh: string;
+  en: string;
+  locale: string;
+  code: string;
+};
+export type countryCodeType = {
+  label: string;
+  countryList: countryType[];
+};
+
+export type reqCountiesCodeType = {
+  code: number;
+  message: string;
+  data: countryCodeType[];
 };
