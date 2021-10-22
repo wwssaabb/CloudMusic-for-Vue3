@@ -4,3 +4,13 @@
  * @LastEditTime: 2021-10-20 09:02:28
  * @FilePath: \CloudMusic-for-Vue3\src\views\User\Fans.vue
 -->
+<template>
+  <div class="user-fans-page"></div>
+</template>
+
+<script setup lang="ts"></script>
+
+<style lang="scss" scoped>
+.user-fans-page {
+}
+</style>

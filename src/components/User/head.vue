@@ -31,6 +31,7 @@
           class="item cur_p d_ib"
           v-for="item in countList"
           :key="item.count"
+          @click="router.push(item.path)"
         >
           <span class="count">{{ item.count }}</span
           ><br />
@@ -57,8 +58,12 @@
 
 <script setup lang="ts">
 import { PropType, computed } from "vue";
+import { useRouter } from "vue-router";
 import { UserDetailType } from "../../types/types";
 import { getCityName, getAgeArea } from "../../utils";
+
+const router = useRouter();
+const id: string | undefined = router.currentRoute.value.query.id?.toString();
 
 const props = defineProps({
   detail: {
@@ -73,9 +78,17 @@ const props = defineProps({
 });
 
 const countList = computed(() => [
-  { name: "动态", count: props.detail?.eventCount },
-  { name: "关注", count: props.detail?.follows },
-  { name: "粉丝", count: props.detail?.followeds },
+  {
+    name: "动态",
+    count: props.detail?.eventCount,
+    path: "/user/event?id=" + id,
+  },
+  {
+    name: "关注",
+    count: props.detail?.follows,
+    path: "/user/follows?id=" + id,
+  },
+  { name: "粉丝", count: props.detail?.followeds, path: "/user/fans?id=" + id },
 ]);
 </script>
 

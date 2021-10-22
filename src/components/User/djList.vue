@@ -1,11 +1,11 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-22 08:54:17
- * @LastEditTime: 2021-10-22 10:00:31
+ * @LastEditTime: 2021-10-22 16:05:57
  * @FilePath: \CloudMusic-for-Vue3\src\components\User\djList.vue
 -->
 <template>
-  <div class="user-dj-list">
+  <div class="user-dj-list" v-loading="list.length === 0">
     <Title>
       <template #title>
         <span class="title">{{ title }}</span>
@@ -46,6 +46,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .user-dj-list {
+  min-height: 321px;
   .title {
     font-size: 20px;
     line-height: 40px;

@@ -608,3 +608,10 @@ export type reqUserDjRadioType = {
   subCount: number;
   code: number;
 };
+
+//获取用户创建的歌单
+export type reqUserPlaylistType = {
+  more: boolean;
+  playlist: playListType[];
+  code: number;
+};

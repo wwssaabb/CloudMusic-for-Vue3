@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-29 14:36:54
- * @LastEditTime: 2021-10-19 09:42:30
+ * @LastEditTime: 2021-10-22 14:43:37
  * @FilePath: \CloudMusic-for-Vue3\src\components\AlbumList.vue
 -->
 
@@ -32,7 +32,7 @@
         >
           {{ item.name }}
         </div>
-        <div class="author fsc">
+        <div class="author fsc" v-if="showCreator">
           by
           <span
             class="td_u t_ovl1 d_ib"
@@ -60,6 +60,10 @@ const props = defineProps({
   playLists: {
     type: Array as PropType<playListType[] | undefined>,
     required: true,
+  },
+  showCreator: {
+    type: Boolean,
+    default: true,
   },
 });
 

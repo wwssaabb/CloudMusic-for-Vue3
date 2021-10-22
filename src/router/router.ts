@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-17 15:52:26
- * @LastEditTime: 2021-10-20 09:39:38
+ * @LastEditTime: 2021-10-22 16:17:28
  * @FilePath: \CloudMusic-for-Vue3\src\router\router.ts
  */
 import { createRouter, createWebHashHistory } from "vue-router";
@@ -87,6 +87,20 @@ export default createRouter({
         {
           path: "/user/home",
           component: () => import("../views/User/Home.vue"),
+          children: [
+            {
+              path: "/user/event",
+              component: () => import("../views/User/Event.vue"),
+            },
+            {
+              path: "/user/follows",
+              component: () => import("../views/User/Follows.vue"),
+            },
+            {
+              path: "/user/fans",
+              component: () => import("../views/User/Fans.vue"),
+            },
+          ],
         },
       ],
     },

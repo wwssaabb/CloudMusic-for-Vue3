@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-17 10:20:33
- * @LastEditTime: 2021-10-16 17:40:33
+ * @LastEditTime: 2021-10-22 15:40:13
  * @FilePath: \CloudMusic-for-Vue3\src\App.vue
 -->
 <template>
@@ -18,7 +18,7 @@
 import Head from "./components/Head.vue";
 import Foot from "./components/Foot.vue";
 import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 // const chooseMenuId=0
 
 const router = useRouter();
@@ -35,4 +35,11 @@ router.beforeEach((to, from, next) => {
   }
   next();
 });
+
+/* const onscroll = () => {
+  let body = window.document.body;
+  let s_h = body.scrollHeight - body.clientHeight;
+  let s_t = body.scrollTop;
+  if (s_t >= s_h) console.log("触底了");
+}; */
 </script>

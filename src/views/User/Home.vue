@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-20 08:55:44
- * @LastEditTime: 2021-10-22 10:04:13
+ * @LastEditTime: 2021-10-22 16:29:23
  * @FilePath: \CloudMusic-for-Vue3\src\views\User\Home.vue
 -->
 <template>
@@ -11,33 +11,53 @@
       :level="data.detail.level"
       v-if="data.detail"
     ></Head>
-    <SongRank
-      :list="data.playRecord.slice(0, 10)"
-      :listenSongs="data.detail.listenSongs"
-      :changeType="changeType"
-      :chooseType="data.playRecordType"
-      v-if="data.detail && data.detail.peopleCanSeeMyPlayRecord"
-    ></SongRank>
-    <DjList
-      v-if="data.detail"
-      :list="data.djRadios"
-      :title="data.detail.profile.nickname + '创建的电台'"
-    ></DjList>
+    <template v-if="data.isHome">
+      <SongRank
+        :list="data.playRecord.slice(0, 10)"
+        :listenSongs="data.detail.listenSongs"
+        :changeType="changeType"
+        :chooseType="data.playRecordType"
+        v-if="data.detail && data.detail.peopleCanSeeMyPlayRecord"
+      ></SongRank>
+      <DjList
+        v-if="data.detail && !data.jRadiosIsEmpty"
+        :list="data.djRadios"
+        :title="data.detail.profile.nickname + '创建的电台'"
+      ></DjList>
+      <Playlist
+        v-if="data.detail && !data.playlist.isEmpty"
+        :title="
+          data.detail.profile.nickname +
+          '创建的歌单®（' +
+          data.detail.profile.playlistCount +
+          '）'
+        "
+        :list="data.playlist.list"
+      ></Playlist>
+    </template>
+    <RouterView v-else></RouterView>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
-import { useRouter } from "vue-router";
-import { reqUserDetail, reqUserPlayRecord, reqUserDjRadio } from "../../api";
+import { useRouter, RouterView } from "vue-router";
+import {
+  reqUserDetail,
+  reqUserPlayRecord,
+  reqUserDjRadio,
+  reqUserPlaylist,
+} from "../../api";
 import {
   reqUserDetailType,
   PlayRecordType,
   DjRadioType,
+  playListType,
 } from "../../types/types";
 import Head from "../../components/User/head.vue";
 import SongRank from "../../components/User/songRank.vue";
 import DjList from "../../components/User/djList.vue";
+import Playlist from "../../components/User/playlist.vue";
 
 const router = useRouter();
 
@@ -50,6 +70,13 @@ type dataType = {
   playRecord: PlayRecordType[];
   djRadios: DjRadioType[];
   jRadiosIsEmpty: boolean;
+  playlist: {
+    currentPage: number;
+    more: boolean;
+    list: playListType[];
+    isEmpty: boolean;
+  };
+  isHome: boolean;
 };
 
 const data = ref<dataType>({
@@ -58,6 +85,13 @@ const data = ref<dataType>({
   playRecord: [],
   djRadios: [],
   jRadiosIsEmpty: false,
+  playlist: {
+    currentPage: 1,
+    more: false,
+    list: [],
+    isEmpty: false,
+  },
+  isHome: true,
 });
 
 const changeType = (type: 0 | 1) => {
@@ -75,6 +109,15 @@ const getUserDjRadio = async () => {
   if (data.value.djRadios.length === 0) data.value.jRadiosIsEmpty = true;
 };
 
+const getUserPlaylist = async () => {
+  if (!id) return;
+  let res = await reqUserPlaylist(id, data.value.playlist.currentPage, 19);
+  data.value.playlist.list = res.playlist;
+  data.value.playlist.more = res.more;
+  if (data.value.playlist.currentPage === 1 && res.playlist.length === 0)
+    data.value.playlist.isEmpty = true;
+};
+
 const getPlayRecord = async () => {
   if (!id) return;
   data.value.playRecord = (
@@ -88,9 +131,14 @@ onMounted(() => {
     getPlayRecord();
   });
   getUserDjRadio();
+  getUserPlaylist();
 });
 
 watch(() => data.value.playRecordType, getPlayRecord);
+watch(
+  () => router.currentRoute.value.path,
+  () => (data.value.isHome = router.currentRoute.value.path === "/user/home")
+);
 
 console.log(data.value);
 </script>
@@ -104,5 +152,9 @@ console.log(data.value);
   background: #fff;
   overflow: hidden;
   padding: 40px;
+
+  .user-dj-list {
+    margin-bottom: 24px;
+  }
 }
 </style>

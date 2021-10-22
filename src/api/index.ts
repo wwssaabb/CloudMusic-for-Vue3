@@ -48,6 +48,7 @@ import type {
   reqCountiesCodeType,
   reqUserPlayRecordType,
   reqUserDjRadioType,
+  reqUserPlaylistType,
 } from "../types/types";
 
 //获取banner数据
@@ -297,3 +298,15 @@ export const reqUserPlayRecord = (uid: number | string, type: 1 | 0 = 1) =>
 //获取用户创建电台列表
 export const reqUserDjRadio = (uid: number | string) =>
   http<reqUserDjRadioType>("/user/audio", { uid });
+
+//获取用户创建的歌单列表
+export const reqUserPlaylist = (
+  uid: number | string,
+  page: number = 1,
+  limit: number = 20
+) =>
+  http<reqUserPlaylistType>("/user/playlist", {
+    uid,
+    offset: (page - 1) * limit,
+    limit,
+  });
