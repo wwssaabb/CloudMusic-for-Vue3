@@ -224,12 +224,14 @@ export type reqProgramRecommendListType = {
 
 //dj 节目type
 export type DjRadioType = {
-  id: string;
+  id: number;
   category: string;
   picUrl: string;
   name: string;
   desc: string;
   rcmdtext: string;
+  programCount: number;
+  subCount: number;
 };
 
 //dj 类型请求结果
@@ -595,5 +597,14 @@ export type PlayRecordType = {
 export type reqUserPlayRecordType = {
   weekData: PlayRecordType[];
   allData: PlayRecordType[];
+  code: number;
+};
+
+//获取用户创建电台请求的type
+export type reqUserDjRadioType = {
+  djRadios: DjRadioType[];
+  hasMore: boolean;
+  count: number;
+  subCount: number;
   code: number;
 };

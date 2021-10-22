@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-18 15:23:45
- * @LastEditTime: 2021-10-21 15:08:13
+ * @LastEditTime: 2021-10-22 09:33:02
  * @FilePath: \CloudMusic-for-Vue3\src\api\index.ts
  */
 
@@ -47,6 +47,7 @@ import type {
   reqUserDetailType,
   reqCountiesCodeType,
   reqUserPlayRecordType,
+  reqUserDjRadioType,
 } from "../types/types";
 
 //获取banner数据
@@ -292,3 +293,7 @@ export const reqCountriesCode = () =>
 //获取用户播放记录  ,type 1为weekData 0为allData
 export const reqUserPlayRecord = (uid: number | string, type: 1 | 0 = 1) =>
   http<reqUserPlayRecordType>("/user/record", { uid, type });
+
+//获取用户创建电台列表
+export const reqUserDjRadio = (uid: number | string) =>
+  http<reqUserDjRadioType>("/user/audio", { uid });
