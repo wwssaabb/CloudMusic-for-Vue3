@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-18 15:23:45
- * @LastEditTime: 2021-10-22 09:33:02
+ * @LastEditTime: 2021-10-23 09:50:23
  * @FilePath: \CloudMusic-for-Vue3\src\api\index.ts
  */
 
@@ -49,6 +49,8 @@ import type {
   reqUserPlayRecordType,
   reqUserDjRadioType,
   reqUserPlaylistType,
+  reqUserEventType,
+  reqUserFollowType,
 } from "../types/types";
 
 //获取banner数据
@@ -306,6 +308,25 @@ export const reqUserPlaylist = (
   limit: number = 20
 ) =>
   http<reqUserPlaylistType>("/user/playlist", {
+    uid,
+    offset: (page - 1) * limit,
+    limit,
+  });
+
+//获取用户动态
+export const reqUserEvents = (
+  uid: number | string,
+  lasttime: number = -1,
+  limit: number = 30
+) => http<reqUserEventType>("/user/event", { uid, lasttime, limit });
+
+//获取用户关注列表
+export const reqUserFollows = (
+  uid: number | string,
+  page: number = 1,
+  limit: number = 20
+) =>
+  http<reqUserFollowType>("/user/follows", {
     uid,
     offset: (page - 1) * limit,
     limit,

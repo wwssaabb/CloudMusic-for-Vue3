@@ -615,3 +615,66 @@ export type reqUserPlaylistType = {
   playlist: playListType[];
   code: number;
 };
+
+//用户动态类型
+export type UserEventJsonParseType = {
+  msg: string;
+  song: SongType;
+};
+export type UserEventPicsType = {
+  format: string;
+  originUrl: string;
+  squareUrl: string;
+  rectangleUrl: string;
+  width: number;
+  height: number;
+};
+export type UserEventInfoType = {
+  commentThread: {
+    id: number;
+    userId: number;
+  };
+  commentCount: number;
+  likedCount: number;
+  shareCount: number;
+  resourceType: number;
+  resourceId: number;
+  threadId: number;
+  liked: boolean;
+};
+
+export type UserEventType = {
+  id: number;
+  type: number;
+  actName: string;
+  json: string;
+  user: UserDetailType;
+  showTime: string;
+  info: UserEventInfoType;
+  pics: UserEventPicsType[];
+};
+
+export type reqUserEventType = {
+  lasttime: number;
+  size: number;
+  more: boolean;
+  events: UserEventType[];
+  code: number;
+};
+
+export type UserFollowType = {
+  userId: number;
+  gender: number;
+  nickname: string;
+  avatarUrl: string;
+  follows: number;
+  followeds: number;
+  eventCount: number;
+  followed: boolean;
+};
+
+export type reqUserFollowType = {
+  follow: UserFollowType[];
+  more: boolean;
+  code: number;
+};

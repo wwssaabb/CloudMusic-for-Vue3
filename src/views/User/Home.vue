@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-20 08:55:44
- * @LastEditTime: 2021-10-22 16:29:23
+ * @LastEditTime: 2021-10-23 09:16:15
  * @FilePath: \CloudMusic-for-Vue3\src\views\User\Home.vue
 -->
 <template>
@@ -125,7 +125,11 @@ const getPlayRecord = async () => {
   )[data.value.playRecordType ? "weekData" : "allData"];
 };
 
+const checkIsHome = () =>
+  (data.value.isHome = router.currentRoute.value.path === "/user/home");
+
 onMounted(() => {
+  checkIsHome();
   getUserDetail().then((res) => {
     if (!data.value.detail?.peopleCanSeeMyPlayRecord) return;
     getPlayRecord();
@@ -137,7 +141,7 @@ onMounted(() => {
 watch(() => data.value.playRecordType, getPlayRecord);
 watch(
   () => router.currentRoute.value.path,
-  () => (data.value.isHome = router.currentRoute.value.path === "/user/home")
+  () => checkIsHome
 );
 
 console.log(data.value);
@@ -151,7 +155,7 @@ console.log(data.value);
   border-right: 1px solid #d3d3d3;
   background: #fff;
   overflow: hidden;
-  padding: 40px;
+  padding: 40px 40px 0;
 
   .user-dj-list {
     margin-bottom: 24px;
