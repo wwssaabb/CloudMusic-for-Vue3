@@ -1,17 +1,21 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-23 09:54:58
- * @LastEditTime: 2021-10-23 10:07:14
+ * @LastEditTime: 2021-10-23 14:31:27
  * @FilePath: \CloudMusic-for-Vue3\src\components\User\Event\follow.vue
 -->
 <template>
   <div class="user-event-follows">
     <div class="title">TA的关注</div>
     <div class="list">
-      <div class="item d_ib" v-for="item in list">
+      <div
+        class="item d_ib"
+        v-for="item in list"
+        @click="router.push('/user/home?id=' + item.userId)"
+      >
         <img :src="item.avatarUrl + '?param=64y64'" alt="" />
         <div class="name t_ovl1">
-          <span class="td_d">{{ item.nickname }}</span>
+          <span class="td_u">{{ item.nickname }}</span>
         </div>
       </div>
     </div>
@@ -20,7 +24,10 @@
 
 <script setup lang="ts">
 import { PropType } from "vue";
+import { useRouter } from "vue-router";
 import { UserFollowType } from "../../../types/types";
+
+const router = useRouter();
 
 const props = defineProps({
   list: {

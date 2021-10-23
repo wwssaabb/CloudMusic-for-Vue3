@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-29 16:35:36
- * @LastEditTime: 2021-10-21 17:25:01
+ * @LastEditTime: 2021-10-23 15:12:54
  * @FilePath: \CloudMusic-for-Vue3\src\utils\index.ts
  */
 
@@ -105,4 +105,37 @@ export const getAgeArea = (t: number) => {
   let os: string | number = parseInt(y[1]);
   os = (os > 5 ? 5 : 0) + "";
   return y[0] + os + "后";
+};
+
+//获取动态type
+type type = 18 | 19 | 17 | 22 | 39 | 35 | 24 | 41 | 13 | 21 | 28;
+export const getEventType = (type: type): string => {
+  type index = 18 | 19 | 17 | 22 | 39 | 24 | 13 | 21;
+  let index: index =
+    type === 28 ? 17 : type === 35 ? 13 : type === 41 ? 21 : type;
+  let event = {
+    "18": "分享单曲",
+    "19": "分享专辑",
+    "17": "分享电台节目", //28
+    "22": "转发",
+    "39": "发布视频",
+    "13": "分享歌单", //13
+    "24": "分享专栏文章",
+    "21": "分享视频", //21
+  };
+  return event[index];
+};
+
+//小于10加0
+export const getFullNumber = (n: number): string =>
+  n > 9 ? n.toString() : "0" + n;
+
+//获取时间 格式 10月20日 17:58
+export const timeFormat2 = (t: number): string => {
+  let time = new Date(t);
+  let m = getFullNumber(time.getMonth() + 1);
+  let d = getFullNumber(time.getDate());
+  let h = getFullNumber(time.getHours());
+  let mi = getFullNumber(time.getMinutes());
+  return m + "月" + d + "日 " + h + ":" + mi;
 };

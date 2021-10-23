@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-20 08:55:56
- * @LastEditTime: 2021-10-23 10:05:52
+ * @LastEditTime: 2021-10-23 15:30:20
  * @FilePath: \CloudMusic-for-Vue3\src\views\User\Event.vue
 -->
 <template>
@@ -12,9 +12,11 @@
       </template>
     </Title>
     <div class="content fss">
-      <div class="left"></div>
+      <div class="left">
+        <Events :list="data.events"></Events>
+      </div>
       <div class="right">
-        <Follow :list="data.foolows"></Follow>
+        <Follows :list="data.foolows"></Follows>
       </div>
     </div>
   </div>
@@ -26,7 +28,8 @@ import { useRouter } from "vue-router";
 import { reqUserEvents, reqUserFollows } from "../../api";
 import { UserEventType, UserFollowType } from "../../types/types";
 import Title from "../../components/Title.vue";
-import Follow from "../../components/User/Event/follow.vue";
+import Events from "../../components/User/Event/eventList.vue";
+import Follows from "../../components/User/Event/follow.vue";
 
 const router = useRouter();
 
@@ -48,7 +51,12 @@ const getUserEvents = async () => {
   if (!id) return;
   let res = await reqUserEvents(id);
   data.value.size = res.size;
-  data.value.events = res.events;
+  // data.value.events = res.events;
+  //处理json数据
+  data.value.events = res.events.map((i) => ({
+    ...i,
+    json: JSON.parse(i.json),
+  }));
 };
 
 const getUserFollows = async () => {
