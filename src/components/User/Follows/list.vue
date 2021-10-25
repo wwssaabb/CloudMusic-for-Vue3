@@ -5,9 +5,9 @@
  * @FilePath: \CloudMusic-for-Vue3\src\components\User\Follows\list.vue
 -->
 <template>
-  <div class="user-follows-list">
+  <div class="user-follows-list" v-loading="list.length===0">
     <div class="list fss fw">
-      <div class="item fss" v-for="item in list">
+      <div class="item fss" :class="index===list.length-1||index===list.length-2?'n':''" v-for="(item,index) in list">
         <img :src="item.avatarUrl + '?param=60y60'" alt="" />
         <div class="center ml10">
           <div class="name-wrap">
@@ -58,18 +58,35 @@ const props = defineProps({
 <style lang="scss" scoped>
 .user-follows-list {
   width: 900px;
+  min-height: 300px;
   .list {
     .item {
       width: 450px;
+      height: 100px;
       padding: 20px 20px 0;
+      background: #fff;
       border-right: 1px solid #d5d5d5;
       &:nth-child(2n + 1) {
         border-left: 1px solid #d5d5d5;
+      }
+      &:nth-child(4n - 1) {
+        background: #fafafa;
+      }
+      &:nth-child(4n) {
+        background: #fafafa;
+      }
+      
+      &.n{
+        border-bottom: 1px solid #d5d5d5;
+        img{
+          margin-bottom: 20px;
+        }
       }
 
       img {
         width: 60px;
         height: 60px;
+        // margin-bottom: 20px;
       }
       span {
         font-size: 12px;

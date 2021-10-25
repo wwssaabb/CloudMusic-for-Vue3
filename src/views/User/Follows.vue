@@ -8,16 +8,19 @@
   <div class="user-follows-page">
     <Title :title="'关注（' + total + '）'"></Title>
     <List :list="data.list"></List>
+    <Pagination :currentPage="data.currentPage" :endPage="data.endPage" :click="changePage" v-if="data.list.length!==0"></Pagination>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted,watch } from "vue";
 import { useRouter } from "vue-router";
-import { UserFollowType } from "../../types/types";
+import { UserFollowType,PaginationClickType } from "../../types/types";
 import { reqUserFollows } from "../../api";
 import Title from "../../components/Title.vue";
 import List from "../../components/User/Follows/list.vue";
+import Pagination from "../../components/Pagination.vue";
+
 
 const router = useRouter();
 
@@ -38,11 +41,23 @@ const data = ref<dataType>({
   endPage: 0,
 });
 
+const changePage = (type: PaginationClickType, page?: number): void => {
+  const p = data.value.currentPage;
+  const end = data.value.endPage;
+  const handle = {
+    page: () =>
+      type === "page" && page ? (data.value.currentPage = page) : null,
+    prev: () => (data.value.currentPage = p === 1 || p === 2 ? 1 : p - 1),
+    next: () =>
+      (data.value.currentPage = p === end || p + 1 === end ? end : p + 1),
+  };
+  handle[type]();
+};
+
 const getUserFollows = async () => {
   if (!id) return;
-  let res = await reqUserFollows(id, data.value.currentPage);
-  console.log(res);
-  data.value.list = res.follow;
+  data.value.list=[]
+  data.value.list = (await reqUserFollows(id, data.value.currentPage)).follow;
 };
 
 onMounted(() => {
@@ -50,10 +65,16 @@ onMounted(() => {
   getUserFollows();
 });
 
+watch(()=>data.value.currentPage,getUserFollows)
+
 console.log(data.value);
 </script>
 
 <style lang="scss" scoped>
 .user-follows-page {
+
+  .pagination-wrap{
+    margin: 20px 0;
+  }
 }
 </style>
