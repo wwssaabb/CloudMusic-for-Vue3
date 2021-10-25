@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-22 09:32:37
- * @LastEditTime: 2021-10-19 09:17:58
+ * @LastEditTime: 2021-10-25 17:40:56
  * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
 
@@ -667,6 +667,7 @@ export type UserFollowType = {
   gender: number;
   nickname: string;
   avatarUrl: string;
+  signature: string;
   follows: number;
   followeds: number;
   eventCount: number;
