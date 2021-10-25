@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-29 16:35:36
- * @LastEditTime: 2021-10-23 15:12:54
+ * @LastEditTime: 2021-10-25 10:37:25
  * @FilePath: \CloudMusic-for-Vue3\src\utils\index.ts
  */
 
@@ -138,4 +138,14 @@ export const timeFormat2 = (t: number): string => {
   let h = getFullNumber(time.getHours());
   let mi = getFullNumber(time.getMinutes());
   return m + "月" + d + "日 " + h + ":" + mi;
+};
+
+//user动态内容处理 成标签 #...#
+export const getUserEventContent = (
+  content: string,
+  actName: string,
+  actId: number
+): string => {
+  let tag = `<span class='td_u' style='color:#0c73c2;font-size:12px;' onclick="location.href='#/activity?id=${actId}'">#${actName}#</span>`;
+  return content.replaceAll("\n", `<br/>`).replace(`#${actName}#`, tag);
 };

@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-23 14:32:16
- * @LastEditTime: 2021-10-23 16:10:00
+ * @LastEditTime: 2021-10-25 10:41:20
  * @FilePath: \CloudMusic-for-Vue3\src\components\User\Event\EventList.vue
 -->
 <template>
@@ -14,23 +14,59 @@
           ><span>{{ getEventType(item.type) }}</span>
         </div>
         <div class="time">{{ timeFormat2(item.showTime) }}</div>
-        <div class="msg">{{ item.json.msg }}</div>
+        <div
+          class="msg"
+          v-html="getUserEventContent(item.json.msg, item.actName, item.actId)"
+        ></div>
         <div class="resource fss">
-          <img
-            src="http://p4.music.126.net/KgN_Zxn-OMnqH7jxvF58NA==/109951166383027277.jpg?param=40y40&quality=100"
-            alt=""
-          />
+          <img :src="item.json.song?.img80x80" alt="" />
           <div class="msg">
-            <div class="name td_u">Paradise</div>
-            <div class="artist td_u">Alan Walker/K-391/Boy In Space</div>
+            <div class="name td_u" v-if="item.json.song">
+              {{ item.json.song.name }}
+            </div>
+            <div
+              class="artist"
+              v-if="item.json.song"
+              v-html="
+                getCreatorHtml(
+                  item.json.song.artists,
+                  'name',
+                  'id',
+                  '/artist?id='
+                )
+              "
+            ></div>
           </div>
         </div>
         <div class="pics" v-if="item.pics">
           <img
-            :src="pic.squareUrl + '?param=110y110&quality=100'"
+            :src="
+              pic.squareUrl +
+              (item.pics.length !== 1
+                ? '?param=110y110&quality=100'
+                : '?param=338x0&quality=100')
+            "
             alt=""
             v-for="pic in item.pics"
           />
+        </div>
+        <div class="icons">
+          <span class="td_u"
+            ><i class="icon_user_liked"></i
+            ><span v-if="item.info.likedCount"
+              >({{ item.info.likedCount }})</span
+            ></span
+          >
+          <span class="td_u"
+            >转发<span v-if="item.info.shareCount"
+              >({{ item.info.shareCount }})</span
+            ></span
+          >
+          <span class="td_u"
+            >评论<span v-if="item.info.commentCount"
+              >({{ item.info.commentCount }})</span
+            ></span
+          >
         </div>
       </div>
     </div>
@@ -40,7 +76,12 @@
 <script setup lang="ts">
 import { PropType } from "vue";
 import { UserEventType } from "../../../types/types";
-import { getEventType, timeFormat2 } from "../../../utils";
+import {
+  getEventType,
+  timeFormat2,
+  getCreatorHtml,
+  getUserEventContent,
+} from "../../../utils";
 
 const props = defineProps({
   list: {
@@ -109,12 +150,36 @@ const props = defineProps({
       .pics {
         width: 338px;
         img {
-          width: 110px;
-          height: 110px;
+          // width: 110px;
+          // height: 110px;
+          max-width: 338px;
+          max-height: 338px;
           margin-top: 4px;
+          object-fit: contain;
           &:not(:nth-child(3n + 1)) {
             margin-left: 4px;
           }
+        }
+      }
+      .icons {
+        margin-top: 18px;
+        text-align: right;
+        color: #0c73c2;
+        span {
+          font-size: 12px;
+          color: #0c73c2;
+        }
+        & > span {
+          padding: 0 10px;
+          &:nth-child(2) {
+            padding: 0 12px;
+            line-height: 10px;
+            border-left: 1px solid #c7c7c7;
+            border-right: 1px solid #c7c7c7;
+          }
+        }
+        .icon_user_liked {
+          margin-right: 3px;
         }
       }
     }
