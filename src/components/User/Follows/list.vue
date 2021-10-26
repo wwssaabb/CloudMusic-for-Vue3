@@ -1,17 +1,27 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-25 16:21:13
- * @LastEditTime: 2021-10-25 17:51:23
+ * @LastEditTime: 2021-10-26 10:22:05
  * @FilePath: \CloudMusic-for-Vue3\src\components\User\Follows\list.vue
 -->
 <template>
-  <div class="user-follows-list" v-loading="list.length===0">
+  <div class="user-follows-list" v-loading="list.length === 0">
     <div class="list fss fw">
-      <div class="item fss" :class="index===list.length-1||index===list.length-2?'n':''" v-for="(item,index) in list">
+      <div
+        class="item fss"
+        :class="
+          index === list.length - 1 || index === list.length - 2 ? 'n' : ''
+        "
+        v-for="(item, index) in list"
+      >
         <img :src="item.avatarUrl + '?param=60y60'" alt="" />
         <div class="center ml10">
           <div class="name-wrap">
-            <span class="name c0 td_u">{{ item.nickname }}</span>
+            <span
+              class="name c0 td_u"
+              @click="router.push('/user/home?id=' + item.userId)"
+              >{{ item.nickname }}</span
+            >
             <i class="icon_user_follows_v"></i>
             <i
               :class="
@@ -36,7 +46,7 @@
           </div>
         </div>
         <div class="right">
-          <i class="user-follows-follow-btn"></i>
+          <i class="icon_user_follows_follow_btn"><span>关注</span></i>
         </div>
       </div>
     </div>
@@ -45,7 +55,10 @@
 
 <script setup lang="ts">
 import { PropType } from "vue";
+import { useRouter } from "vue-router";
 import { UserFollowType } from "../../../types/types";
+
+const router = useRouter();
 
 const props = defineProps({
   list: {
@@ -75,10 +88,10 @@ const props = defineProps({
       &:nth-child(4n) {
         background: #fafafa;
       }
-      
-      &.n{
+
+      &.n {
         border-bottom: 1px solid #d5d5d5;
-        img{
+        img {
           margin-bottom: 20px;
         }
       }
@@ -121,6 +134,18 @@ const props = defineProps({
       .desc span {
         width: 255px;
         color: #666;
+      }
+
+      .right {
+        padding-top: 5px;
+        .icon_user_follows_follow_btn {
+          padding-left: 30px;
+          span {
+            color: #fff;
+            letter-spacing: 3px;
+            line-height: 30px;
+          }
+        }
       }
     }
   }

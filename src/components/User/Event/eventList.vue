@@ -1,11 +1,11 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-23 14:32:16
- * @LastEditTime: 2021-10-25 10:41:20
+ * @LastEditTime: 2021-10-26 09:15:37
  * @FilePath: \CloudMusic-for-Vue3\src\components\User\Event\EventList.vue
 -->
 <template>
-  <div class="user-event-list">
+  <div class="user-event-list" v-loading="list.length === 0">
     <div class="item fss" v-for="item in list" :key="item.id">
       <img class="avatar" :src="item.user.avatarUrl + '?param=45y45'" alt="" />
       <div class="right">
@@ -93,6 +93,8 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .user-event-list {
+  min-height: 300px;
+
   .item {
     padding: 20px 0;
     border-bottom: 1px solid #e8e8e9;

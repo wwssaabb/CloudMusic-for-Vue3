@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-22 14:24:51
- * @LastEditTime: 2021-10-22 16:05:13
+ * @LastEditTime: 2021-10-26 09:12:51
  * @FilePath: \CloudMusic-for-Vue3\src\components\User\playlist.vue
 -->
 <template>
@@ -31,6 +31,6 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .user-playlist {
-  min-height: 884px;
+  min-height: 171px;
 }
 </style>

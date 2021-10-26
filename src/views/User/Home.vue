@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-20 08:55:44
- * @LastEditTime: 2021-10-23 09:16:15
+ * @LastEditTime: 2021-10-26 09:57:37
  * @FilePath: \CloudMusic-for-Vue3\src\views\User\Home.vue
 -->
 <template>
@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, nextTick } from "vue";
 import { useRouter, RouterView } from "vue-router";
 import {
   reqUserDetail,
@@ -125,8 +125,13 @@ const getPlayRecord = async () => {
   )[data.value.playRecordType ? "weekData" : "allData"];
 };
 
-const checkIsHome = () =>
-  (data.value.isHome = router.currentRoute.value.path === "/user/home");
+const checkIsHome = () => {
+  nextTick(() => {
+    console.log(router.currentRoute.value.path);
+    data.value.isHome = router.currentRoute.value.path === "/user/home";
+    console.log(data.value.isHome);
+  });
+};
 
 onMounted(() => {
   checkIsHome();

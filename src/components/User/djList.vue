@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-22 08:54:17
- * @LastEditTime: 2021-10-22 16:05:57
+ * @LastEditTime: 2021-10-26 09:12:02
  * @FilePath: \CloudMusic-for-Vue3\src\components\User\djList.vue
 -->
 <template>
@@ -46,7 +46,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .user-dj-list {
-  min-height: 321px;
+  min-height: 70px;
   .title {
     font-size: 20px;
     line-height: 40px;

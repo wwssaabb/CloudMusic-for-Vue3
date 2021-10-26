@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-17 10:20:33
- * @LastEditTime: 2021-10-22 15:40:13
+ * @LastEditTime: 2021-10-26 09:46:29
  * @FilePath: \CloudMusic-for-Vue3\src\App.vue
 -->
 <template>
@@ -31,7 +31,7 @@ router.beforeEach((to, from, next) => {
   const isSamePath = to.path === from.path;
   const isNoSameParamId = to.query.id !== from.query.id;
   if (isSamePath && isNoSameParamId) {
-    setTimeout(() => location.reload(), 0);
+    setTimeout(() => router.go(0), 0);
   }
   next();
 });
