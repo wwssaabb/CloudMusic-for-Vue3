@@ -51,6 +51,7 @@ import type {
   reqUserPlaylistType,
   reqUserEventType,
   reqUserFollowType,
+  reqUserFollowedsType,
 } from "../types/types";
 
 //获取banner数据
@@ -327,6 +328,18 @@ export const reqUserFollows = (
   limit: number = 20
 ) =>
   http<reqUserFollowType>("/user/follows", {
+    uid,
+    offset: (page - 1) * limit,
+    limit,
+  });
+
+//获取用户粉丝列表
+export const reqUserFolloweds = (
+  uid: number | string,
+  page: number = 1,
+  limit: number = 20
+) =>
+  http<reqUserFollowedsType>("/user/followeds", {
     uid,
     offset: (page - 1) * limit,
     limit,

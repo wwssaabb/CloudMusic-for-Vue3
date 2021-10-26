@@ -679,3 +679,10 @@ export type reqUserFollowType = {
   more: boolean;
   code: number;
 };
+
+//获取用户粉丝列表请求type
+export type reqUserFollowedsType = {
+  followeds: UserFollowType[];
+  more: boolean;
+  code: number;
+};

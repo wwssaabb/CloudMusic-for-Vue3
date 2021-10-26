@@ -1,26 +1,36 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-20 08:56:12
- * @LastEditTime: 2021-10-25 17:22:09
+ * @LastEditTime: 2021-10-26 08:51:02
  * @FilePath: \CloudMusic-for-Vue3\src\views\User\Follows.vue
 -->
 <template>
   <div class="user-follows-page">
-    <Title :title="'关注（' + total + '）'"></Title>
+    <Title>
+      <template #title>
+        <span class="title">
+          {{ "关注（" + total + "）" }}
+        </span>
+      </template>
+    </Title>
     <List :list="data.list"></List>
-    <Pagination :currentPage="data.currentPage" :endPage="data.endPage" :click="changePage" v-if="data.list.length!==0"></Pagination>
+    <Pagination
+      :currentPage="data.currentPage"
+      :endPage="data.endPage"
+      :click="changePage"
+      v-if="data.list.length !== 0"
+    ></Pagination>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted,watch } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
-import { UserFollowType,PaginationClickType } from "../../types/types";
+import { UserFollowType, PaginationClickType } from "../../types/types";
 import { reqUserFollows } from "../../api";
 import Title from "../../components/Title.vue";
 import List from "../../components/User/Follows/list.vue";
 import Pagination from "../../components/Pagination.vue";
-
 
 const router = useRouter();
 
@@ -56,7 +66,7 @@ const changePage = (type: PaginationClickType, page?: number): void => {
 
 const getUserFollows = async () => {
   if (!id) return;
-  data.value.list=[]
+  data.value.list = [];
   data.value.list = (await reqUserFollows(id, data.value.currentPage)).follow;
 };
 
@@ -65,15 +75,19 @@ onMounted(() => {
   getUserFollows();
 });
 
-watch(()=>data.value.currentPage,getUserFollows)
+watch(() => data.value.currentPage, getUserFollows);
 
 console.log(data.value);
 </script>
 
 <style lang="scss" scoped>
 .user-follows-page {
-
-  .pagination-wrap{
+  .title {
+    font-size: 20px;
+    line-height: 26px;
+    color: #666;
+  }
+  .pagination-wrap {
     margin: 20px 0;
   }
 }

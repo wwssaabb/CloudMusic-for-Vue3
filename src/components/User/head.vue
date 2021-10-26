@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-20 10:08:47
- * @LastEditTime: 2021-10-25 17:17:55
+ * @LastEditTime: 2021-10-26 08:59:24
  * @FilePath: \CloudMusic-for-Vue3\src\components\User\head.vue
 -->
 <template>
@@ -88,7 +88,11 @@ const countList = computed(() => [
     count: props.detail?.follows,
     path: "/user/follows?id=" + id + "&total=" + props.detail?.follows,
   },
-  { name: "粉丝", count: props.detail?.followeds, path: "/user/fans?id=" + id },
+  {
+    name: "粉丝",
+    count: props.detail?.followeds,
+    path: "/user/fans?id=" + id + "&total=" + props.detail?.followeds,
+  },
 ]);
 </script>
 
