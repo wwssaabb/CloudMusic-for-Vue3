@@ -12,6 +12,11 @@
       v-if="data.detail"
     ></Head>
     <template v-if="data.isHome">
+      <DjList
+        v-if="data.detail && !data.jRadiosIsEmpty"
+        :list="data.djRadios"
+        :title="data.detail.profile.nickname + '创建的电台'"
+      ></DjList>
       <SongRank
         :list="data.playRecord.slice(0, 10)"
         :listenSongs="data.detail.listenSongs"
@@ -19,11 +24,6 @@
         :chooseType="data.playRecordType"
         v-if="data.detail && data.detail.peopleCanSeeMyPlayRecord"
       ></SongRank>
-      <DjList
-        v-if="data.detail && !data.jRadiosIsEmpty"
-        :list="data.djRadios"
-        :title="data.detail.profile.nickname + '创建的电台'"
-      ></DjList>
       <Playlist
         v-if="data.detail && !data.playlist.isEmpty"
         :title="
@@ -144,10 +144,12 @@ onMounted(() => {
 });
 
 watch(() => data.value.playRecordType, getPlayRecord);
-watch(
-  () => router.currentRoute.value.path,
-  () => checkIsHome
-);
+
+router.beforeEach((to,form,next)=>{
+  console.log(to.path)
+  data.value.isHome=to.path=== "/user/home"
+  next()
+})
 
 console.log(data.value);
 </script>

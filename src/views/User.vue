@@ -6,7 +6,7 @@
 -->
 <template>
   <div>
-    <RouterView v-if="data.isRouterAlive"></RouterView>
+    <RouterView></RouterView>
   </div>
 </template>
 
@@ -14,31 +14,31 @@
 import { ref, nextTick, provide } from "vue";
 import { RouterView, useRouter } from "vue-router";
 
-const router = useRouter();
+// const router = useRouter();
 
-const data = ref({
-  isRouterAlive: true,
-});
+// const data = ref({
+//   isRouterAlive: true,
+// });
 
-const reload = () => {
-  data.value.isRouterAlive = false;
-  nextTick(function () {
-    data.value.isRouterAlive = true;
-  });
-};
+// const reload = () => {
+//   data.value.isRouterAlive = false;
+//   nextTick(function () {
+//     data.value.isRouterAlive = true;
+//   });
+// };
 
-provide("reload", reload);
+// provide("reload", reload);
 
-router.beforeEach((to, form, next) => {
-  console.log(to.path);
-  console.log(form.path);
-  let isUserPage = to.path.includes("/user/") && form.path.includes("/user/");
-  console.log(isUserPage);
-  if (isUserPage) {
-    reload();
-  }
-  next();
-});
+// router.beforeEach((to, form, next) => {
+//   console.log(to.path);
+//   console.log(form.path);
+//   let isUserPage = to.path.includes("/user/") && form.path.includes("/user/");
+//   console.log(isUserPage);
+//   if (isUserPage) {
+//     reload();
+//   }
+//   next();
+// });
 </script>
 
 <style lang="scss" scoped></style>

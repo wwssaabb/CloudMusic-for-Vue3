@@ -531,6 +531,11 @@ export type reqPlaylistRelatedListType = {
 export type reqPlaylistCommentsType = reqSongCommentsType;
 
 //获取用户详情 type
+export type AuthTypeType = {
+  desc: string;
+  tags: string[];
+  type: number;
+}
 
 export type UserDetailType = {
   userId: number;
@@ -552,6 +557,7 @@ export type UserDetailType = {
   nickname: string;
   avatarUrl: string;
   signature: string;
+  allAuthTypes: AuthTypeType[];
 };
 
 //请求获取用户详情 type

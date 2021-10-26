@@ -96,6 +96,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .user-song-rank {
+  margin-bottom: 20px;
   span {
     font-size: 12px;
     color: #666;
@@ -126,7 +127,7 @@ const props = defineProps({
   }
 
   .rank-list {
-    min-height: 380px;
+    min-height: 38px;
     border: 1px solid #e2e2e2;
     border-top: none;
 

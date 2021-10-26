@@ -10,8 +10,9 @@
       <img :src="detail.avatarUrl + '?param=180y180'" alt="" />
     </div>
     <div class="right">
-      <div class="top fsc">
-        <span class="name">{{ detail.nickname }}</span>
+      <div class="top">
+        <div class="msg fsc">
+          <span class="name">{{ detail.nickname }}</span>
         <img
           src="https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4357872479/15d6/b1b3/dff8/209585a9a787b00717324e75e55851d7.png"
           alt=""
@@ -25,6 +26,16 @@
         ></i>
         <i class="icon_user_email">发私信</i>
         <i class="icon_user_follow">关注</i>
+        </div>
+        <div class="auths">
+          <div class="item fsc" v-for="auth in detail.allAuthTypes" :key="auth.type">
+            <template v-if="auth.type!==400">
+              <i class="mr5" :class="'icon_user_home_auth_'+auth.type"></i>
+              <span class="mr5">{{auth.desc}}</span>
+              <span><span class="tag d_ib" v-for="tag in auth.tags">{{tag}}</span></span>
+            </template>
+          </div>
+        </div>
       </div>
       <div class="middle fss">
         <div
@@ -114,8 +125,8 @@ const countList = computed(() => [
   .right {
     flex: 1;
     .top {
-      height: 39px;
-      padding-bottom: 12px;
+      min-height: 39px;
+      // padding-bottom: 12px;
       margin-bottom: 10px;
       border-bottom: 1px solid #ddd;
       span.name {
@@ -135,6 +146,26 @@ const countList = computed(() => [
       .icon_user_sex_m,
       .icon_user_sex_w {
         margin-left: 8px;
+      }
+
+      .auths{
+        left: 20px;
+        padding-bottom: 12px;
+        span{
+          color: #666;
+        }
+        .item{
+          margin-top: 6px;
+          .tag{
+            font-size: 12px;
+            padding: 0 2px;
+            height: 16px;
+            line-height: 16px;
+            color: #00000066;
+            border:1px solid #00000033;
+            border-radius: 2px;
+          }
+        }
       }
     }
     .middle {
