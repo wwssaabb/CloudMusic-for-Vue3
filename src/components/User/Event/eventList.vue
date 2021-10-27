@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-23 14:32:16
- * @LastEditTime: 2021-10-26 09:15:37
+ * @LastEditTime: 2021-10-27 15:56:58
  * @FilePath: \CloudMusic-for-Vue3\src\components\User\Event\EventList.vue
 -->
 <template>
@@ -10,7 +10,7 @@
       <img class="avatar" :src="item.user.avatarUrl + '?param=45y45'" alt="" />
       <div class="right">
         <div class="nickname">
-          <span class="td_u">{{ item.user.nickname }}</span
+          <span class="td_u mr5">{{ item.user.nickname }}</span
           ><span>{{ getEventType(item.type) }}</span>
         </div>
         <div class="time">{{ timeFormat2(item.showTime) }}</div>
@@ -18,7 +18,7 @@
           class="msg"
           v-html="getUserEventContent(item.json.msg, item.actName, item.actId)"
         ></div>
-        <div class="resource fss">
+        <div class="resource fss" v-if="item.json.song">
           <img :src="item.json.song?.img80x80" alt="" />
           <div class="msg">
             <div class="name td_u" v-if="item.json.song">

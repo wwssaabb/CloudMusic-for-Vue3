@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-20 10:08:47
- * @LastEditTime: 2021-10-26 08:59:24
+ * @LastEditTime: 2021-10-27 15:46:31
  * @FilePath: \CloudMusic-for-Vue3\src\components\User\head.vue
 -->
 <template>
@@ -13,27 +13,54 @@
       <div class="top">
         <div class="msg fsc">
           <span class="name">{{ detail.nickname }}</span>
-        <img
-          src="https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4357872479/15d6/b1b3/dff8/209585a9a787b00717324e75e55851d7.png"
-          alt=""
-        />
-        <i class="icon_user_level pr" v-if="level"
-          ><span>{{ level }}</span> <i class="close pa"></i
-        ></i>
-        <i
-          :class="'icon_user_sex_' + (detail.gender === 1 ? 'm' : 'w')"
-          v-if="detail.gender"
-        ></i>
-        <i class="icon_user_email">发私信</i>
-        <i class="icon_user_follow">关注</i>
+          <img
+            src="https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4357872479/15d6/b1b3/dff8/209585a9a787b00717324e75e55851d7.png"
+            alt=""
+          />
+          <i class="icon_user_level pr" v-if="level"
+            ><span>{{ level }}</span> <i class="close pa"></i
+          ></i>
+          <i
+            :class="'icon_user_sex_' + (detail.gender === 1 ? 'm' : 'w')"
+            v-if="detail.gender"
+          ></i>
+          <i class="icon_user_email">发私信</i>
+          <i class="icon_user_follow">关注</i>
         </div>
         <div class="auths">
-          <div class="item fsc" v-for="auth in detail.allAuthTypes" :key="auth.type">
-            <template v-if="auth.type!==400">
-              <i class="mr5" :class="'icon_user_home_auth_'+auth.type"></i>
-              <span class="mr5">{{auth.desc}}</span>
-              <span><span class="tag d_ib" v-for="tag in auth.tags">{{tag}}</span></span>
-            </template>
+          <div
+            class="item fsc"
+            v-if="
+              detail.allAuthTypes.find((i) => i.type === 2 || i.type === 10)
+            "
+          >
+            <i class="icon_user_home_auth_2 mr5"></i>
+            <span class="mr5">{{
+              getTypeDesc(detail.allAuthTypes, [2, 10])
+            }}</span>
+            <!-- <span><span class="tag d_ib" v-for="tag in auth.tags">{{tag}}</span></span> -->
+          </div>
+          <div
+            class="item fsc"
+            v-if="detail.allAuthTypes.find((i) => i.type === 4)"
+          >
+            <i class="icon_user_home_auth_4 mr5"></i>
+            <span class="mr5">{{ getTypeDesc(detail.allAuthTypes, [4]) }}</span>
+            <!-- <span><span class="tag d_ib" v-for="tag in auth.tags">{{tag}}</span></span> -->
+          </div>
+          <div
+            class="item fsc"
+            v-if="
+              detail.allAuthTypes.find(
+                (i) => i.type === 200 || i.type === 204 || i.type === 207
+              )
+            "
+          >
+            <i class="icon_user_home_auth_204 mr5"></i>
+            <span class="mr5">{{
+              getTypeDesc(detail.allAuthTypes, [200, 204, 207])
+            }}</span>
+            <!-- <span><span class="tag d_ib" v-for="tag in auth.tags">{{tag}}</span></span> -->
           </div>
         </div>
       </div>
@@ -105,6 +132,20 @@ const countList = computed(() => [
     path: "/user/fans?id=" + id + "&total=" + props.detail?.followeds,
   },
 ]);
+
+const getTypeDesc = (
+  arr: { type: number; desc: string }[],
+  types: number[]
+): string => {
+  return arr
+    .reduce((p: string[], c) => {
+      if (types.includes(c.type)) {
+        p.push(c.desc);
+      }
+      return p;
+    }, [])
+    .join("、");
+};
 </script>
 
 <style lang="scss" scoped>
@@ -148,21 +189,21 @@ const countList = computed(() => [
         margin-left: 8px;
       }
 
-      .auths{
+      .auths {
         left: 20px;
         padding-bottom: 12px;
-        span{
+        span {
           color: #666;
         }
-        .item{
+        .item {
           margin-top: 6px;
-          .tag{
+          .tag {
             font-size: 12px;
             padding: 0 2px;
             height: 16px;
             line-height: 16px;
             color: #00000066;
-            border:1px solid #00000033;
+            border: 1px solid #00000033;
             border-radius: 2px;
           }
         }

@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-22 09:32:37
- * @LastEditTime: 2021-10-25 17:40:56
+ * @LastEditTime: 2021-10-27 14:23:06
  * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
 
@@ -535,7 +535,7 @@ export type AuthTypeType = {
   desc: string;
   tags: string[];
   type: number;
-}
+};
 
 export type UserDetailType = {
   userId: number;
@@ -678,6 +678,7 @@ export type UserFollowType = {
   followeds: number;
   eventCount: number;
   followed: boolean;
+  authStatus: number;
 };
 
 export type reqUserFollowType = {

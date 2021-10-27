@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-21 11:30:51
- * @LastEditTime: 2021-10-21 17:26:38
+ * @LastEditTime: 2021-10-27 15:16:12
  * @FilePath: \CloudMusic-for-Vue3\src\components\User\songRank.vue
 -->
 <template>
@@ -27,7 +27,11 @@
         >
       </template>
     </Title>
-    <div class="rank-list" v-loading="list.length === 0">
+    <div
+      class="rank-list"
+      v-loading="!isEmpty && list.length === 0"
+      v-if="!isEmpty"
+    >
       <div class="item fss" v-for="(item, index) in list" :key="item.song.id">
         <div class="index">{{ index + 1 }}.</div>
         <div class="center fsc t_ovl1">
@@ -62,6 +66,12 @@
         </div>
       </div>
     </div>
+    <div class="empty fcc" v-else="isEmpty">
+      <div class="content fcc">
+        <i class="icon_user_home_empty"></i>
+        <h2 class="text">暂无听歌记录</h2>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -91,12 +101,17 @@ const props = defineProps({
     type: Function as PropType<(type: 0 | 1) => void>,
     required: true,
   },
+  isEmpty: {
+    type: Boolean,
+    default: false,
+  },
 });
+console.log(props.isEmpty);
 </script>
 
 <style lang="scss" scoped>
 .user-song-rank {
-  margin-bottom: 20px;
+  margin-bottom: 36px;
   span {
     font-size: 12px;
     color: #666;
@@ -191,6 +206,19 @@ const props = defineProps({
           background: #4eb4f5;
           opacity: 0.1;
         }
+      }
+    }
+  }
+  .empty {
+    height: 298px;
+    padding: 105px 0;
+
+    .content {
+      padding-bottom: 38px;
+      .text {
+        font-size: 18px;
+        font-weight: bold;
+        margin-left: 20px;
       }
     }
   }

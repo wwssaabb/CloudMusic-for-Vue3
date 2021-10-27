@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-20 08:55:44
- * @LastEditTime: 2021-10-26 09:57:37
+ * @LastEditTime: 2021-10-27 15:09:46
  * @FilePath: \CloudMusic-for-Vue3\src\views\User\Home.vue
 -->
 <template>
@@ -22,7 +22,12 @@
         :listenSongs="data.detail.listenSongs"
         :changeType="changeType"
         :chooseType="data.playRecordType"
-        v-if="data.detail && data.detail.peopleCanSeeMyPlayRecord"
+        :isEmpty="data.playRecordStatus[data.playRecordType ? 0 : 1]"
+        v-if="
+          data.detail &&
+          data.detail.peopleCanSeeMyPlayRecord &&
+          !(data.playRecordStatus[0] && data.playRecordStatus[1])
+        "
       ></SongRank>
       <Playlist
         v-if="data.detail && !data.playlist.isEmpty"
@@ -68,6 +73,7 @@ type dataType = {
   detail: reqUserDetailType | null;
   playRecordType: 0 | 1;
   playRecord: PlayRecordType[];
+  playRecordStatus: boolean[];
   djRadios: DjRadioType[];
   jRadiosIsEmpty: boolean;
   playlist: {
@@ -83,6 +89,7 @@ const data = ref<dataType>({
   detail: null,
   playRecordType: 1,
   playRecord: [],
+  playRecordStatus: [false, false],
   djRadios: [],
   jRadiosIsEmpty: false,
   playlist: {
@@ -119,10 +126,25 @@ const getUserPlaylist = async () => {
 };
 
 const getPlayRecord = async () => {
-  if (!id) return;
+  if (!id || (data.value.playRecordStatus[0] && data.value.playRecordType)) {
+    data.value.playRecord = [];
+    return;
+  }
+  data.value.playRecord = [];
   data.value.playRecord = (
     await reqUserPlayRecord(id, data.value.playRecordType)
   )[data.value.playRecordType ? "weekData" : "allData"];
+  if (data.value.playRecord.length === 0 && !data.value.playRecordStatus[0]) {
+    data.value.playRecordStatus[data.value.playRecordType ? 0 : 1] = true;
+    if (data.value.playRecordStatus[0]) {
+      data.value.playRecordType = 0;
+    }
+  } else if (
+    data.value.playRecord.length === 0 &&
+    data.value.playRecordStatus[0]
+  ) {
+    data.value.playRecordStatus[1] = true;
+  }
 };
 
 const checkIsHome = () => {
@@ -145,11 +167,11 @@ onMounted(() => {
 
 watch(() => data.value.playRecordType, getPlayRecord);
 
-router.beforeEach((to,form,next)=>{
-  console.log(to.path)
-  data.value.isHome=to.path=== "/user/home"
-  next()
-})
+router.beforeEach((to, form, next) => {
+  console.log(to.path);
+  data.value.isHome = to.path === "/user/home";
+  next();
+});
 
 console.log(data.value);
 </script>
@@ -166,6 +188,9 @@ console.log(data.value);
 
   .user-dj-list {
     margin-bottom: 24px;
+  }
+  .user-song-rank {
+    margin-bottom: 36px;
   }
 }
 </style>

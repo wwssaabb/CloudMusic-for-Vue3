@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-29 16:35:36
- * @LastEditTime: 2021-10-25 10:37:25
+ * @LastEditTime: 2021-10-27 16:26:23
  * @FilePath: \CloudMusic-for-Vue3\src\utils\index.ts
  */
 
@@ -119,9 +119,9 @@ export const getEventType = (type: type): string => {
     "17": "分享电台节目", //28
     "22": "转发",
     "39": "发布视频",
-    "13": "分享歌单", //13
+    "13": "分享歌单", //35
     "24": "分享专栏文章",
-    "21": "分享视频", //21
+    "21": "分享视频", //41
   };
   return event[index];
 };

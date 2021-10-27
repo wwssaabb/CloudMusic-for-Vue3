@@ -1062,19 +1062,31 @@ $--foot_color:#f2f2f2; //脚步的背景色
       }
     }
 
-    &home_auth_ {
-      &4 {
-        @include get_btn(29, -150, -480, 68, 20);
+    &home_ {
+      &auth_ {
+
+        &4,
+        &10 {
+          @include get_btn(29, -150, -480, 68, 20);
+        }
+
+        &2 {
+          @include get_btn(29, 0, -480, 68, 20);
+        }
+
+        &200,
+        &204,
+        &207 {
+          @include get_btn(29, -75, -480, 68, 20);
+        }
+
       }
 
-      &2 {
-        @include get_btn(29, 0, -480, 68, 20);
-      }
-
-      &204 {
-        @include get_btn(29, -75, -480, 68, 20);
+      &empty {
+        @include get_btn(27, 0, -347, 64, 50);
       }
     }
+
 
   }
 }

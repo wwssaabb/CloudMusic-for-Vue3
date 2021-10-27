@@ -22,7 +22,7 @@
               @click="router.push('/user/home?id=' + item.userId)"
               >{{ item.nickname }}</span
             >
-            <i class="icon_user_follows_v"></i>
+            <i class="icon_user_follows_v" v-if="item.authStatus"></i>
             <i
               :class="
                 'icon_user_follows_gender_' + (item.gender === 1 ? 'm' : 'w')
