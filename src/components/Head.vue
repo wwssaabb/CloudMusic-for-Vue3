@@ -62,27 +62,17 @@
         </div>
       </div>
       <div class="framer">创作者中心</div>
-      <div class="login" @click="changeLoginModuleStatus">登录</div>
+      <div class="login cur_p" @click="changeLoginModuleStatus">登录</div>
     </div>
   </div>
-  <Popup v-if="loginModuleStatus" title="登录" :close="changeLoginModuleStatus">
-    <div>aaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-    <div>aaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-    <div>aaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-    <div>aaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-    <div>aaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-    <div>aaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-    <div>aaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-    <div>aaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-    <div>aaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-  </Popup>
+  <Login :status="loginModuleStatus" :close="changeLoginModuleStatus"></Login>
 </template>
 
 <script setup lang="ts">
 import { ElInput } from "element-plus";
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
-import Popup from "./Popup.vue";
+import Login from "./Popup/login.vue";
 
 // const ;
 
@@ -369,6 +359,9 @@ $--fixed_width: 1100px; //内容的宽度
       font-size: 12px;
       margin: 0 22px 0 20px;
       flex-shrink: 0;
+      &:hover{
+        color: #999;
+      }
     }
   }
 }

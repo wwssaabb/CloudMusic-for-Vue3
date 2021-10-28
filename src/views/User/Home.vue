@@ -149,9 +149,7 @@ const getPlayRecord = async () => {
 
 const checkIsHome = () => {
   nextTick(() => {
-    console.log(router.currentRoute.value.path);
     data.value.isHome = router.currentRoute.value.path === "/user/home";
-    console.log(data.value.isHome);
   });
 };
 

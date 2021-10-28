@@ -106,7 +106,6 @@ const props = defineProps({
     default: false,
   },
 });
-console.log(props.isEmpty);
 </script>
 
 <style lang="scss" scoped>
