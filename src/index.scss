@@ -155,6 +155,11 @@ body {
     //禁止操作提示
     cursor: not-allowed;
   }
+
+  &_m {
+    //可移动
+    cursor: move;
+  }
 }
 
 //设置文字hover时样式为underline
@@ -247,6 +252,18 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+//mask 全屏遮罩
+.m-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1001;
 }
 
 
@@ -453,6 +470,9 @@ $--foot_color:#f2f2f2; //脚步的背景色
   background: url("https://music.163.com/style/web2/img/icon2.png?c83d2ab86442ea81de8ea23cded38fdb") no-repeat;
 }
 
+.icons30_img {
+  background: url("https://s2.music.126.net/style/web2/img/layer/layer.png?be45ba8cfc718e885727493d3f4a9802") no-repeat;
+}
 
 //播放按钮
 .play_icon {
@@ -975,7 +995,7 @@ $--foot_color:#f2f2f2; //脚步的背景色
       }
 
       span {
-        margin: 0 0 0 29px;
+        margin: 0 2px 0 29px;
         line-height: 21px;
         color: #e03a24;
         font-weight: bold;
@@ -1088,5 +1108,11 @@ $--foot_color:#f2f2f2; //脚步的背景色
     }
 
 
+  }
+
+  &popup_ {
+    &close {
+      @include get_btn(30, 0, -95, 10, 10);
+    }
   }
 }

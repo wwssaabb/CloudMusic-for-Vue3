@@ -1,12 +1,18 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-22 14:24:51
- * @LastEditTime: 2021-10-26 09:12:51
+ * @LastEditTime: 2021-10-28 13:44:20
  * @FilePath: \CloudMusic-for-Vue3\src\components\User\playlist.vue
 -->
 <template>
   <div class="user-playlist" v-loading="list.length === 0">
-    <Title :title="title"></Title>
+    <Title>
+      <template #title>
+        <span class="title">
+          {{ title }}
+        </span>
+      </template>
+    </Title>
     <AlbunList :playLists="list" :showCreator="false"></AlbunList>
   </div>
 </template>
@@ -32,5 +38,11 @@ const props = defineProps({
 <style lang="scss" scoped>
 .user-playlist {
   min-height: 171px;
+
+  .title {
+    font-size: 20px;
+    line-height: 26px;
+    color: #333;
+  }
 }
 </style>

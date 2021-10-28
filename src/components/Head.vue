@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-17 16:24:12
- * @LastEditTime: 2021-10-16 09:03:56
+ * @LastEditTime: 2021-10-28 15:04:37
  * @FilePath: \CloudMusic-for-Vue3\src\components\Head.vue
 -->
 <template>
@@ -62,15 +62,27 @@
         </div>
       </div>
       <div class="framer">创作者中心</div>
-      <div class="login">登录</div>
+      <div class="login" @click="changeLoginModuleStatus">登录</div>
     </div>
   </div>
+  <Popup v-if="loginModuleStatus" title="登录" :close="changeLoginModuleStatus">
+    <div>aaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+    <div>aaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+    <div>aaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+    <div>aaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+    <div>aaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+    <div>aaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+    <div>aaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+    <div>aaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+    <div>aaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+  </Popup>
 </template>
 
 <script setup lang="ts">
 import { ElInput } from "element-plus";
-import { ref,watch } from "vue";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
+import Popup from "./Popup.vue";
 
 // const ;
 
@@ -114,22 +126,22 @@ const chooseMenuId = ref(0);
 //router实例化
 const router = useRouter();
 
-router.beforeEach((to,from,next)=>{
-  let path=to.path;
+router.beforeEach((to, from, next) => {
+  let path = to.path;
 
   //discover 子路由跳转监听切换chooseMenuId
-  if(path.includes('/discover')){
-    let menu=features[0].menu
-    if(menu){
-      let newMenuId=menu.find(i=>i.path===path)?.id
-      chooseMenuId.value=newMenuId?newMenuId:chooseMenuId.value
+  if (path.includes("/discover")) {
+    let menu = features[0].menu;
+    if (menu) {
+      let newMenuId = menu.find((i) => i.path === path)?.id;
+      chooseMenuId.value = newMenuId ? newMenuId : chooseMenuId.value;
     }
-  }else{
-    chooseMenuId.value=0
+  } else {
+    chooseMenuId.value = 0;
   }
-  
-  next()
-})
+
+  next();
+});
 
 const changeFeature = (item: featureType): void => {
   chooseId.value = item.id;
@@ -142,6 +154,11 @@ const changeTab = (item: MenuType): void => {
 
 //搜索框的值
 const searchText = ref("");
+
+//登录
+const loginModuleStatus = ref(false);
+const changeLoginModuleStatus = () =>
+  (loginModuleStatus.value = !loginModuleStatus.value);
 </script>
 
 <style lang="scss" scoped>

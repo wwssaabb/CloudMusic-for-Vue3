@@ -1,0 +1,91 @@
+<!--
+ * @Author: wwssaabb
+ * @Date: 2021-10-28 13:51:34
+ * @LastEditTime: 2021-10-28 15:07:54
+ * @FilePath: \CloudMusic-for-Vue3\src\components\Popup.vue
+-->
+<template>
+  <div class="popup-wrap pa" :style="style" ref="popup">
+    <div class="head user_ns cur_m pr">
+      {{ title }}
+      <div class="close pa fcc" title="关闭窗口" @click="close">
+        <i class="icon_popup_close"></i>
+      </div>
+    </div>
+    <slot></slot>
+  </div>
+  <div class="m-mask"></div>
+</template>
+
+<script setup lang="ts">
+import { computed, PropType, onMounted, ref } from "vue";
+const props = defineProps({
+  width: {
+    type: String,
+    default: "530px",
+  },
+  height: {
+    type: String,
+    default: "auto",
+  },
+  title: {
+    type: String,
+    default: "",
+  },
+  close: {
+    type: Function as PropType<() => void>,
+    default: () => {},
+  },
+});
+const popup = ref<Element>();
+const position = ref({
+  w: 0,
+  h: 0,
+});
+
+const style = computed(
+  () =>
+    `width:${props.width};height:${props.height};top:${position.value.w}px;left:${position.value.h}px;`
+);
+
+const getPosition = () => {
+  if (!popup.value) return;
+  let c_w = window.document.body.clientWidth;
+  let c_h = window.document.body.clientHeight;
+  let w = props.width.match(/\d+/)?.[0];
+  position.value.w = (c_w - parseInt(w ? w : "0")) / 2;
+  position.value.h = (c_h - popup.value.clientHeight) / 2;
+};
+
+onMounted(() => {
+  getPosition();
+});
+</script>
+
+<style lang="scss" scoped>
+.popup-wrap {
+  border-radius: 4px;
+  border: none;
+  box-shadow: 0 5px 16px rgb(0 0 0 / 80%);
+  z-index: 9998;
+
+  .head {
+    height: 38px;
+    line-height: 38px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    padding: 0 45px 0 18px;
+    background: #2d2d2d;
+    border-radius: 4px 4px 0 0;
+    border-bottom: 1px solid #191919;
+
+    .close {
+      top: 11px;
+      right: 15px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+</style>
