@@ -1,14 +1,14 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-28 13:51:34
- * @LastEditTime: 2021-10-28 15:07:54
+ * @LastEditTime: 2021-10-29 08:22:19
  * @FilePath: \CloudMusic-for-Vue3\src\components\Popup.vue
 -->
 <template>
   <div class="popup-wrap pa" :style="style" ref="popup">
     <div class="head user_ns cur_m pr">
       {{ title }}
-      <div class="close pa fcc" title="关闭窗口" @click="close">
+      <div class="close pa fcc cur_p" title="关闭窗口" @click="close">
         <i class="icon_popup_close"></i>
       </div>
     </div>

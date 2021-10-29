@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-22 09:32:37
- * @LastEditTime: 2021-10-27 14:23:06
+ * @LastEditTime: 2021-10-29 14:25:38
  * @FilePath: \CloudMusic-for-Vue3\src\types\types.d.ts
  */
 
@@ -692,4 +692,36 @@ export type reqUserFollowedsType = {
   followeds: UserFollowType[];
   more: boolean;
   code: number;
+};
+
+//获取二维码key的请求type
+export type QrKeyType = {
+  code: number;
+  unikey: string;
+};
+export type reqQrKeyType = {
+  data: QrKeyType;
+  code: number;
+};
+
+//二维码数据内容type
+export type QrContentType = {
+  qrurl: string;
+  qrimg: string;
+};
+//二维码生成接口type
+export type reqQrContentType = {
+  data: QrContentType;
+  code: number;
+};
+
+//二维码状态type
+export type qrStatusType = 0 | 800 | 801 | 802 | 803;
+export type reqQrStatusType = {
+  data: QrContentType;
+  code: qrStatusType;
+  message: string;
+  cookies: string;
+  nickname: string;
+  avatarUrl: string;
 };

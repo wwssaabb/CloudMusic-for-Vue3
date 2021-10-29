@@ -42,7 +42,7 @@ import hotRecommend from "../../components/Discover/hot_recommend.vue";
 import albumRecommend from "../../components/Discover/album_recommend.vue";
 import music_list from "../../components/Discover/music_list.vue";
 import djHot from "../../components/Discover/dj_hot.vue";
-import SwiperClass from "swiper/types/swiper-class";
+// import SwiperClass from "swiper/types/swiper-class";
 import { ref, onMounted } from "vue";
 import {
   reqBanner,

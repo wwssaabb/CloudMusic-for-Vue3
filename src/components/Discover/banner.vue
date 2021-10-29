@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-23 11:49:43
- * @LastEditTime: 2021-09-28 08:51:51
+ * @LastEditTime: 2021-10-29 14:19:26
  * @FilePath: \CloudMusic-for-Vue3\src\components\Discover\banner.vue
 -->
 <template>

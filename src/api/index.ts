@@ -1,7 +1,7 @@
 /*
  * @Author: wwssaabb
  * @Date: 2021-09-18 15:23:45
- * @LastEditTime: 2021-10-23 09:50:23
+ * @LastEditTime: 2021-10-29 16:10:11
  * @FilePath: \CloudMusic-for-Vue3\src\api\index.ts
  */
 
@@ -52,6 +52,9 @@ import type {
   reqUserEventType,
   reqUserFollowType,
   reqUserFollowedsType,
+  reqQrKeyType,
+  reqQrContentType,
+  reqQrStatusType,
 } from "../types/types";
 
 //获取banner数据
@@ -344,3 +347,14 @@ export const reqUserFolloweds = (
     offset: (page - 1) * limit,
     limit,
   });
+
+//获取二维码key
+export const reqQrKey = () => http<reqQrKeyType>("/login/qr/key");
+
+//二维码生成接口  qrimg获取base64数据
+export const reqQrContent = (key: string, qrimg: boolean = true) =>
+  http<reqQrContentType>("/login/qr/create", { key, qrimg });
+
+//用于轮询二维码状态的请求
+export const reqQrStatus = (key: string) =>
+  http<reqQrStatusType>("/login/qr/check", { key });
