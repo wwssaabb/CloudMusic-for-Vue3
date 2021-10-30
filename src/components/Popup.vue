@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-28 13:51:34
- * @LastEditTime: 2021-10-29 08:22:19
+ * @LastEditTime: 2021-10-30 11:18:46
  * @FilePath: \CloudMusic-for-Vue3\src\components\Popup.vue
 -->
 <template>
@@ -45,7 +45,7 @@ const position = ref({
 
 const style = computed(
   () =>
-    `width:${props.width};height:${props.height};top:${position.value.w}px;left:${position.value.h}px;`
+    `width:${props.width};height:${props.height};top:${position.value.h}px;left:${position.value.w}px;`
 );
 
 const getPosition = () => {
@@ -68,6 +68,7 @@ onMounted(() => {
   border: none;
   box-shadow: 0 5px 16px rgb(0 0 0 / 80%);
   z-index: 9998;
+  overflow: hidden;
 
   .head {
     height: 38px;

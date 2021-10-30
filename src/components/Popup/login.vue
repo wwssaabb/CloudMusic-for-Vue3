@@ -1,24 +1,42 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-29 08:20:20
- * @LastEditTime: 2021-10-29 16:18:42
+ * @LastEditTime: 2021-10-30 11:12:54
  * @FilePath: \CloudMusic-for-Vue3\src\components\Popup\login.vue
 -->
 <template>
   <Popup v-if="status" title="登录" :close="close">
     <div class="popup-login">
       <div class="content">
-        <img
-          class="phone-pic"
-          src="https://s2.music.126.net/style/web2/img/qr_guide.png?9e98b85f77a8356819cc2c0e68251f6b"
-          alt=""
-        />
-        <div class="qr-wrap d_ib">
-          <span class="title">扫码登录</span>
-          <div class="qr">
-            <img :src="data.qrBase64" alt="" />
+        <div
+          v-if="data.status === 0 || data.status === 800 || data.status === 801"
+        >
+          <img
+            class="phone-pic"
+            src="https://s2.music.126.net/style/web2/img/qr_guide.png?9e98b85f77a8356819cc2c0e68251f6b"
+            alt=""
+          />
+          <div class="qr-wrap d_ib">
+            <span class="title">扫码登录</span>
+            <div class="qr pr" v-loading="data.qrBase64 === ''">
+              <img :src="data.qrBase64" alt="" />
+              <div class="invalid pa fcc fdc" v-show="data.status === 800">
+                <div class="invalid-text mb5">二维码已失效</div>
+                <div class="refresh-btn" @click="refreshQr">点击刷新</div>
+              </div>
+            </div>
+            <span
+              >使用 <span class="app td_u">网易云音乐APP</span> 扫码登录</span
+            >
           </div>
-          <span>使用 <span class="app td_u">网易云音乐APP</span> 扫码登录</span>
+        </div>
+        <div class="scan-success" v-if="data.status === 802">
+          <img :src="data.scanSuccessImg" alt="" />
+          <div class="text">扫描成功</div>
+          <div class="tip">请在手机上确认登录</div>
+        </div>
+        <div class="changeOtherWay">
+          <div class="btn cur_p">选择其他登录模式</div>
         </div>
       </div>
     </div>
@@ -29,7 +47,6 @@
 import { ref, PropType, onMounted, onBeforeUnmount, watch } from "vue";
 import { reqQrKey, reqQrContent, reqQrStatus } from "../../api";
 import { qrStatusType } from "../../types/types";
-import { BASE_URL } from "../../api/http";
 import Popup from "../Popup.vue";
 
 const props = defineProps({
@@ -83,13 +100,20 @@ const onQrStatus = () => {
         avatarUrl: res.avatarUrl,
         nickname: res.nickname,
       };
+      props.close();
     }
   }, 1000);
 };
 const clearPollTimer = () => {
   if (data.value.pollTimer) clearInterval(data.value.pollTimer);
+  data.value.pollTimer = null;
+};
+
+const refreshQr = () => {
+  data.value.status = 0;
   data.value.key = "";
   data.value.qrBase64 = "";
+  qrLogin();
 };
 
 const qrLogin = () => {
@@ -146,6 +170,70 @@ console.log(data.value);
         width: 138px;
         height: 138px;
         margin: 13px auto;
+
+        .invalid {
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          background: rgba(255, 255, 255, 0.9);
+
+          .invalid-text {
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.8);
+            font-weight: 500;
+          }
+          .refresh-btn {
+            width: 66px;
+            height: 26px;
+            line-height: 24px;
+            text-align: center;
+            border-radius: 4px;
+            background: linear-gradient(180deg, #81dd81 0%, #55a055 100%);
+            border: 1px solid #5baf5b;
+            box-shadow: inset 0 -1px 1px 1px rgb(185 230 185 / 31%);
+            color: #fff;
+            font-size: 12px;
+          }
+        }
+      }
+    }
+
+    .scan-success {
+      img {
+        display: block;
+        width: 140px;
+        height: 140px;
+        margin: 0 auto;
+      }
+      .text {
+        margin-top: 12px;
+        font-size: 18px;
+        font-weight: 450;
+        line-height: 24px;
+        color: #000000cc;
+        text-align: center;
+      }
+      .tip {
+        margin: 4px 0 30px;
+        font-size: 14px;
+        color: #333;
+        text-align: center;
+      }
+    }
+
+    .changeOtherWay {
+      padding-top: 20px;
+      .btn {
+        width: 118px;
+        height: 28px;
+        margin: 20px auto 0;
+        font-size: 12px;
+        border: 1px solid #979797;
+        border-radius: 15px;
+        line-height: 28px;
+        text-align: center;
+        color: rgba(0, 0, 0, 0.8);
       }
     }
   }

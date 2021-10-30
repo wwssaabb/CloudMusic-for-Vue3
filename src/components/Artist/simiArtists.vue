@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-13 15:39:52
- * @LastEditTime: 2021-10-29 14:21:10
+ * @LastEditTime: 2021-10-30 09:37:10
  * @FilePath: \CloudMusic-for-Vue3\src\components\Artist\simiArtists.vue
 -->
 <template>
