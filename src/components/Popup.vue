@@ -1,24 +1,25 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-28 13:51:34
- * @LastEditTime: 2021-10-30 11:18:46
+ * @LastEditTime: 2021-11-09 15:04:00
  * @FilePath: \CloudMusic-for-Vue3\src\components\Popup.vue
 -->
 <template>
-  <div class="popup-wrap pa" :style="style" ref="popup">
+  <div class="popup-wrap pa" :style="style" ref="popup" v-draggable>
     <div class="head user_ns cur_m pr">
       {{ title }}
       <div class="close pa fcc cur_p" title="关闭窗口" @click="close">
         <i class="icon_popup_close"></i>
       </div>
     </div>
-    <slot></slot>
+    <slot @mousemove.stop=""></slot>
   </div>
   <div class="m-mask"></div>
 </template>
 
 <script setup lang="ts">
-import { computed, PropType, onMounted, ref } from "vue";
+import { computed, PropType, onMounted, ref, onUnmounted } from "vue";
+
 const props = defineProps({
   width: {
     type: String,
@@ -59,6 +60,10 @@ const getPosition = () => {
 
 onMounted(() => {
   getPosition();
+  window.addEventListener("resize", getPosition);
+});
+onUnmounted(() => {
+  window.removeEventListener("resize", getPosition);
 });
 </script>
 
