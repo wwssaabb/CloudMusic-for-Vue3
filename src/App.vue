@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-17 10:20:33
- * @LastEditTime: 2021-10-26 09:46:29
+ * @LastEditTime: 2021-11-11 17:21:50
  * @FilePath: \CloudMusic-for-Vue3\src\App.vue
 -->
 <template>
@@ -12,11 +12,13 @@
     </div>
     <div class="page-foot"><Foot></Foot></div>
   </div>
+  <Player></Player>
 </template>
 
 <script lang="ts" setup>
 import Head from "./components/Head.vue";
 import Foot from "./components/Foot.vue";
+import Player from "./components/Player.vue";
 import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 // const chooseMenuId=0
