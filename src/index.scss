@@ -478,6 +478,14 @@ $--foot_color:#f2f2f2; //脚步的背景色
   background: url("https://s2.music.126.net/style/web2/img/frame/playbar.png?c9e78ba73e0772a7f4f7f531a0aa94d5") no-repeat;
 }
 
+.icons32_img {
+  background: url("https://s2.music.126.net/style/web2/img/frame/statbar.png?b44c6d25ff3ffa7c2ca26bc949f4c09f") no-repeat;
+}
+
+.icons33_img {
+  background: url("https://s2.music.126.net/style/web2/img/iconall.png?878bc4ddd445a94be4e7a3b48ad1ede5") no-repeat;
+}
+
 //播放按钮
 .play_icon {
   display: inline-block;
@@ -1123,20 +1131,169 @@ $--foot_color:#f2f2f2; //脚步的背景色
   &player_ {
     &bg {
       @include get_btn(31, 0, 0, 0, 53);
-      width: calc(100vw - 67px);
+      width: 100vw;
       height: 53px;
+      padding-right: 67px;
+
+      &::after {
+        content: '';
+        position: absolute;
+        width: 67px;
+        height: 53px;
+        top: 0;
+        right: 0;
+        background: #f5f5f5;
+        z-index: 1;
+      }
 
       &:hover {
-        width: calc(100vw - 67px);
+        width: 100vw;
         height: 53px;
       }
 
       background-repeat: repeat-x;
-      margin-right: 60px;
     }
 
     &hand_bg {
-      @include get_btn(31, 0, -386, 67, 60);
+      @include get_btn(31, 0, -386, 67, 61);
+      z-index: 2;
     }
+
+    &last {
+      @include get_btn(31, 0, -130, 28, 28, -30, -130);
+    }
+
+    &play {
+      @include get_btn(31, 0, -204, 36, 36, -40, -204);
+    }
+
+    &pause {
+      @include get_btn(31, 0, -165, 36, 36, -40, -165);
+    }
+
+    &next {
+      @include get_btn(31, -80, -130, 28, 28, -110, -130);
+    }
+
+    &lock_0 {
+      @include get_btn(31, -80, -380, 18, 18, -80, -400);
+    }
+
+    &lock_1 {
+      @include get_btn(31, -100, -380, 18, 18, -100, -400);
+    }
+
+    &cover_mask {
+      @include get_btn(31, 0, -80, 34, 34);
+      top: 0;
+      left: 0;
+    }
+
+    &mv {
+      @include get_btn(31, 0, -57, 19, 17, -20, -57);
+    }
+
+    &link {
+      @include get_btn(31, -110, -103, 14, 15, -130, -103);
+    }
+
+    &process_ {
+      &bg {
+        @include get_btn(32, 0, 0, 466, 9);
+        background-position: right 0;
+      }
+
+      &load {
+        @include get_btn(32, 0, -30, 466, 9);
+        background-position: right -30px;
+      }
+
+      &done {
+        @include get_btn(32, 0, -66, 466, 9);
+
+        &::after {
+          content: '';
+          position: absolute;
+          @include get_btn(33, 0, -250, 22, 24);
+          top: -7px;
+          right: -13px;
+        }
+      }
+
+
+    }
+
+    &lyric {
+      display: inline-block;
+      background: url('https://p1.music.126.net/DLVi_1eymwAX8gDunfd2bg==/109951165524394991') no-repeat 0 0;
+      width: 25px;
+      height: 25px;
+
+      &:hover {
+        background-position: 0 -25px;
+      }
+    }
+
+    &collect {
+      @include get_btn(31, -88, -163, 25, 25, -88, -189);
+
+      &_n {
+        @include get_btn(31, -88, -214, 25, 25);
+      }
+    }
+
+    &share {
+      @include get_btn(31, -114, -163, 25, 25, -114, -189);
+
+      &_n {
+        @include get_btn(31, -114, -214, 25, 25);
+      }
+    }
+
+    &voice {
+      @include get_btn(31, -2, -248, 25, 25, -31, -248);
+
+      &_control {
+        @include get_btn(31, 0, -503, 32, 113);
+      }
+
+      &_cur {
+        @include get_btn(31, -40, -250, 4, 0);
+        background-position: -40px bottom;
+
+        &_dot {
+          @include get_btn(33, -40, -250, 18, 20);
+        }
+      }
+    }
+
+    &space {
+      @include get_btn(31, -147, -238, 13, 46);
+    }
+
+    &mode_ {
+      &loop {
+        @include get_btn(31, -3, -344, 25, 25, -33, -344);
+      }
+
+      &random {
+        @include get_btn(31, -66, -248, 25, 25, -93, -248);
+      }
+
+      &one {
+        @include get_btn(31, -66, -344, 25, 25, -93, -344);
+      }
+
+      &show_bg {
+        @include get_btn(31, 0, -457, 81, 39);
+      }
+    }
+
+    &list {
+      @include get_btn(31, -42, -68, 59, 25, -42, -98);
+      padding-left: 25px;
+      line-height: 27px;
+    }
+
   }
 }
