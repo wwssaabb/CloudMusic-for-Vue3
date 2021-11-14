@@ -68,8 +68,8 @@
             :height="186"
           >
             <swiper-slide v-for="item in albums" :key="item.id">
-              <div class="album-item">
-                <div class="cover pr">
+              <div class="album-item cur_p">
+                <div class="cover pr" @click="goAlbum(item.id)">
                   <div
                     class="cover_img box_ref"
                     :style="{
@@ -84,7 +84,7 @@
                   <i class="bg_cover_icon play_icon"></i>
                 </div>
                 <div class="name" :title="item.name">{{ item.name }}</div>
-                <div class="artists" :title="getArtistName(item)">
+                <div class="artists" :title="getArtistName(item)" @click="goArtist(item.artists[0].id)">
                   {{ getArtistName(item) }}
                 </div>
               </div>
@@ -101,6 +101,9 @@ import { ElSkeleton, ElSkeletonItem } from "element-plus";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import type { AlbumType } from "../../types/types";
 import { PropType } from "vue";
+import { useRouter } from 'vue-router'
+
+const router=useRouter()
 
 const props = defineProps({
   albums: {
@@ -112,6 +115,9 @@ const props = defineProps({
     required: true,
   },
 });
+
+const goAlbum=(id:number)=>router.push('/album?id='+id)
+const goArtist=(id:number)=>router.push('/artist?id='+id)
 </script>
 
 <style lang="scss" scoped>

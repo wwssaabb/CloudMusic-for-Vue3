@@ -51,8 +51,8 @@
         <div class="title fpbc pr">
           <div class="content fcc">
             <span>热门推荐</span>
-            <div class="tags" v-loading="tags.length === 0">
-              <span class="tag td_u" v-for="item in tags" :key="item.id">{{
+            <div class="tags cur_p" v-loading="tags.length === 0">
+              <span class="tag td_u" v-for="item in tags" :key="item.id"  @click="goPlaylistClass(item.name)">{{
                 item.name
               }}</span>
             </div>
@@ -66,7 +66,7 @@
           class="recommend-list fss fw"
           v-loading="recommendList.length === 0"
         >
-          <div class="item" v-for="item in recommendList" :key="item.id">
+          <div class="item cur_p" v-for="item in recommendList" :key="item.id" @click="goPlaylist(item.id)">
             <div
               class="cover pr box_bor_grad"
               :style="{
@@ -98,6 +98,9 @@
 import { ElSkeleton, ElSkeletonItem } from "element-plus";
 import { TagType, RecommendType } from "../../types/types";
 import { PropType } from "vue";
+import { useRouter } from 'vue-router'
+
+const router=useRouter()
 
 const props = defineProps({
   tags: {
@@ -113,6 +116,9 @@ const props = defineProps({
     required: true,
   },
 });
+
+const goPlaylist=(id:number)=>router.push('/playlist?id='+id)
+const goPlaylistClass=(cat:string)=>router.push('/discover/playlist?cat='+cat)
 </script>
 
 <style lang="scss" scoped>
