@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-11-11 17:11:06
- * @LastEditTime: 2021-11-13 17:35:24
+ * @LastEditTime: 2021-11-15 10:14:33
  * @FilePath: \CloudMusic-for-Vue3\src\components\Player.vue
 -->
 <template>
@@ -54,10 +54,9 @@
             style="width: 30%"
           ></div>
 
-          <div
-            class="done_line icon_player_process_done pa"
-            style="width: 10%"
-          ></div>
+          <div class="done_line icon_player_process_done pa" style="width: 10%">
+            <i class="icon_player_process_done_dot pa cur_p"></i>
+          </div>
           <div class="time_count pa">
             <span class="cur">{{ "00:00" }}</span> / <span>{{ "02:33" }}</span>
           </div>

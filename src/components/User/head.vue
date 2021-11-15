@@ -1,7 +1,7 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-10-20 10:08:47
- * @LastEditTime: 2021-10-27 15:46:31
+ * @LastEditTime: 2021-11-15 11:02:24
  * @FilePath: \CloudMusic-for-Vue3\src\components\User\head.vue
 -->
 <template>
@@ -31,7 +31,7 @@
           <div
             class="item fsc"
             v-if="
-              detail.allAuthTypes.find((i) => i.type === 2 || i.type === 10)
+              detail.allAuthTypes?.find((i) => i.type === 2 || i.type === 10)
             "
           >
             <i class="icon_user_home_auth_2 mr5"></i>
@@ -42,7 +42,7 @@
           </div>
           <div
             class="item fsc"
-            v-if="detail.allAuthTypes.find((i) => i.type === 4)"
+            v-if="detail.allAuthTypes?.find((i) => i.type === 4)"
           >
             <i class="icon_user_home_auth_4 mr5"></i>
             <span class="mr5">{{ getTypeDesc(detail.allAuthTypes, [4]) }}</span>
@@ -51,7 +51,7 @@
           <div
             class="item fsc"
             v-if="
-              detail.allAuthTypes.find(
+              detail.allAuthTypes?.find(
                 (i) => i.type === 200 || i.type === 204 || i.type === 207
               )
             "

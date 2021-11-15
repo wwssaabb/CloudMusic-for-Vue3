@@ -1,14 +1,14 @@
 <!--
  * @Author: wwssaabb
  * @Date: 2021-09-29 14:36:54
- * @LastEditTime: 2021-10-22 14:43:37
+ * @LastEditTime: 2021-11-15 11:09:51
  * @FilePath: \CloudMusic-for-Vue3\src\components\AlbumList.vue
 -->
 
 <template>
   <div class="album-list d_f fw" v-if="playLists !== undefined">
     <div v-for="item in playLists" :key="item.id" class="item cur_p f_nog">
-      <div class="cover pr">
+      <div class="cover pr" @click="router.push('/playlist?id=' + item.id)">
         <img
           :src="item.coverImgUrl + '?param=140y140'"
           alt=""

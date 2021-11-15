@@ -1211,10 +1211,8 @@ $--foot_color:#f2f2f2; //脚步的背景色
       &done {
         @include get_btn(32, 0, -66, 466, 9);
 
-        &::after {
-          content: '';
-          position: absolute;
-          @include get_btn(33, 0, -250, 22, 24);
+        &_dot {
+          @include get_btn(33, 0, -250, 22, 24, 0, -280);
           top: -7px;
           right: -13px;
         }
@@ -1262,7 +1260,7 @@ $--foot_color:#f2f2f2; //脚步的背景色
         background-position: -40px bottom;
 
         &_dot {
-          @include get_btn(33, -40, -250, 18, 20);
+          @include get_btn(33, -40, -250, 18, 20, -40, -280);
         }
       }
     }
